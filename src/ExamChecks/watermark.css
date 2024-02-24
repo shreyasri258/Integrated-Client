@@ -1,0 +1,21 @@
+.watermark {
+    position: fixed;
+    font-size: 24px; /* Set the font size */
+    color: rgba(0, 0, 0, 0.5); /* Set the color with some transparency */
+    z-index: 9999; /* Set a high z-index to ensure it's on top of other elements */
+    pointer-events: none; /* Make the watermark non-interactive */
+}
+
+.watermark.name {
+    top: 10%;
+    left: 10%;
+    transform: rotate(-45deg);
+}
+
+.watermark.email {
+    top: 20%;
+    left: 20%;
+    transform: rotate(-45deg);
+}
+
+/* Add more styles for other instances of the watermark if needed */
