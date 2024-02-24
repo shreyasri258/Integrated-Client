@@ -1,0 +1,47 @@
+.dashboard-tabs {
+    height: auto;
+    position: fixed;
+    top: 5px;
+    left: 0;
+    right: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    border: 0.29px solid black;
+    border-style: dotted;
+    border-radius: 10px;
+  }
+  
+  .dashboard-tab {
+    margin-left: 20px;
+    margin: 0 12px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .dashboard-content {
+    position: fixed;
+    top: calc(5rem + 10px);
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    height: calc(100% - 5rem - 10px);
+  }
+  
+  .exam-card {
+    padding: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    position: relative;
+
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .start-button {
+    margin-bottom: 8px;
+  }
+  

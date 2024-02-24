@@ -1,0 +1,20 @@
+.buttonBox {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-top: 10px;
+    overflow: hidden; /* No scrollbar */
+}
+
+.button {
+    margin: 0 10px; /* Create space around the buttons */
+}
+
+.or-text {
+    margin: 0 10px; /* Create space around the "Or" text */
+}
