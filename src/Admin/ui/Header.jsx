@@ -14,7 +14,7 @@ function Header() {
       <div className="ml-12 flex items-center justify-between w-1/4">
         <div className="text-indigo-500  text-2xl transition-colors duration-300 ease-in-out  ">
           <Link to="/app">
-            <span className="font-pacifico indigo_gradient">Formaker</span>
+            <span className="font-pacifico indigo_gradient">ProctorPal</span>
           </Link>
         </div>
         {user.isAuthenticated && (

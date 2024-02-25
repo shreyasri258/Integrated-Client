@@ -11,7 +11,7 @@ const BASE_URL = 'http://localhost:8081';
 
 export async function getQuestionForm(formId) {
   const res = await axios
-    .get(`${BASE_URL}/ansForm/${formId}`)
+    .get(`${BASE_URL}/ansform/${formId}`)
     .catch((error) => error.response);
   return res;
 }
@@ -43,7 +43,7 @@ const ansFormSlice = createSlice({
 
 export async function submitForm(answers, formId) {
   const res = await axios
-    .post(`${BASE_URL}/ansForm`, { formId, answers })
+    .post(`${BASE_URL}/ansform`, { formId, answers })
     .catch((error) => error.response);
   return res;
 }

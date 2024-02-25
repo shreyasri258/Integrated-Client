@@ -4,9 +4,9 @@ import { BsEyeFill } from "react-icons/bs";
 import { BiSort } from "react-icons/bi";
 import copy from "clipboard-copy";
 import { useState } from "react";
-import Badge from "../../Admin/ui/Badge";
+import Badge from "../ui/Badge";
 import { useNavigate } from "react-router-dom";
-import { getDate } from "../../Admin/utils";
+import { getDate } from "../utils/index";
 
 function FormsTable({ displayForms, setDisplayForms }) {
   const [order, setOrder] = useState("ASC");
@@ -145,7 +145,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
               </td>
               <td className="p-3 tracking-wide text-center">
                 <button
-                  onClick={() => copy(`${CLIENT_URL}/ansForm/${form._id}`)}
+                  onClick={() => copy(`${`http://localhost:5173`}/ansForm/${form._id}`)}
                   className={`hover:ring-8 ${
                     idx % 2 === 0 ? "ring-indigo-100" : "ring-indigo-200"
                   } active:text-indigo-600 rounded-full hover:transition-all duration-500 ease-in-out`}

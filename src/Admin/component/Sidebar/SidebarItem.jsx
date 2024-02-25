@@ -65,13 +65,13 @@ function SidebarItem({
 }
 
 SidebarItem.propTypes = {
-  type: PropTypes.oneOf(["title", "info", "link"]).isRequired,
+  type: PropTypes.oneOf(["title","info" ,"link"]).isRequired,
   content: PropTypes.string,
   selectedIcon: PropTypes.node,
   unselectedIcon: PropTypes.node,
   icon: PropTypes.node,
   info: PropTypes.string,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   to: PropTypes.string,
 };
 

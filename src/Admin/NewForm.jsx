@@ -1,4 +1,4 @@
-import Question from "../Admin/component/Question";
+import Question from "./component/Question";
 import { useDispatch, useSelector } from "react-redux";
 import {
   activateDescription,
@@ -14,7 +14,7 @@ import {
 } from "../store/slices/newForm";
 import { useNavigate } from "react-router-dom";
 import { BsPlusCircleDotted, BsExclamationCircle } from "react-icons/bs";
-import Button from "../Admin/ui/Button";
+import Button from "./ui/Button";
 import { useState } from "react";
 import { useAuth } from "../store/UserAuth";
 

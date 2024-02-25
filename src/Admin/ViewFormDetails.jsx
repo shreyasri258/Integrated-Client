@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { deleteForm, getFormFromServer } from "../store/slices/newForm";
-import Badge from "../Admin/ui/Badge";
+import Badge from "./ui/Badge";
 import copy from "clipboard-copy";
 import { MdContentCopy } from "react-icons/md";
 import LoadingSpinner from "./LoadingSpinner";
-import Switch from "../Admin/ui/Switch";
-import Sidebar from "../Admin/component/Sidebar/Sidebar";
-import SidebarItem from "../Admin/component/Sidebar/SidebarItem";
+import Switch from "./ui/Switch";
+import Sidebar from "./component/Sidebar/Sidebar";
+import SidebarItem from "./component/Sidebar/SidebarItem";
 import { PiNotepad } from "react-icons/pi";
 import { FaWpforms } from "react-icons/fa";
 import { HiViewBoards } from "react-icons/hi";
@@ -52,12 +52,11 @@ function ViewFormDetails() {
       </div>
     );
   }
-
+console.log('form-details -> ',form);
   return (
     <div className="relative ml-64">
       <Sidebar>
         <SidebarItem type={"title"} content={form.title} />
-
         <SidebarItem
           type={"info"}
           icon={<FaWpforms color="rgb(99 102 241)" fontSize={"1.3rem"} />}
@@ -83,7 +82,7 @@ function ViewFormDetails() {
             <HiViewBoards color="rgb(99 102 241)" fontSize={"1.3rem"} />
           }
           label={"View"}
-          to="submissions"
+          to={`/formDetails/${formId}/submissions`}
         />
 
         <SidebarItem
@@ -95,7 +94,7 @@ function ViewFormDetails() {
             <VscGraph color="rgb(255 255 255)" fontSize={"1.3rem"} />
           }
           label={"Stats"}
-          to="stats"
+          to={`/formDetails/${formId}/stats`}
         />
 
         <SidebarItem
@@ -107,14 +106,14 @@ function ViewFormDetails() {
             <AiOutlineMail color="rgb(255 255 255)" fontSize={"1.3rem"} />
           }
           label={"Email"}
-          to="sendByEmail"
+          to={`/formDetails/${formId}/sendbymail`}
         />
 
         <hr className="my-3" />
 
         <div className="flex p-2">
           <button
-            onClick={() => copy(`${CLIENT_URL}/ansForm/${form._id}`)}
+            onClick={() => copy(`${`http://localhost:5173`}/ansForm/${form._id}`)}
             className={`hover:ring-4 active:ring-8 active:ring-indigo-400 hover:ring-indigo-200 rounded-full transition-all hover:duration-300 active:duration-150 ease-in-out`}
           >
             <MdContentCopy color="rgb(99 102 241)" fontSize={"1.3rem"} />

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Option from "../../Admin/component/Option";
+import Option from "../component/Option";
 import { useDispatch, useSelector } from "react-redux";
 import { addOption, getActiveInfo } from "../../store/slices/newForm";
 import CheckBox from "../ui/CheckBox";
