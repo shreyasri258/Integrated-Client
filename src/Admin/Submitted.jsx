@@ -6,7 +6,7 @@ function Submitted() {
       <div className="flex justify-center items-center p-6">
         <span className="ml-12 text-indigo-500 text-3xl transition-colors duration-300 ease-in-out ">
           <Link to="/app">
-            <span className="font-pacifico indigo_gradient">Formaker</span>
+            <span className="font-pacifico indigo_gradient">ProctorPal</span>
           </Link>
         </span>
       </div>

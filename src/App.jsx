@@ -20,6 +20,8 @@ import PerPersonSubmissions from './Admin/PerPersonSubmissions';
 import PerQuestionStats from './Admin/PerQuestionStats'; 
 import AnsForm from './Admin/AnsForm';
 import Submitted from './Admin/Submitted';
+import SendByEmail from './Admin/SendByMail';
+
 
 const App = () => {
   return (
@@ -40,11 +42,13 @@ const App = () => {
           <Route path="/instructions" element={<Instructions />} />
           <Route path="/exam" element={<Exam />} />
           <Route path="/create-form" element={<NewForm />} />
-          <Route path="/ansForm/:formId" element={<AnsForm />} />
-          <Route path="/ansForm/submitted" element={<Submitted />} />
-          <Route path="formDetails/:formId/submissions" element={<ViewFormDetails />} />
-          <Route path="submissions" element={<PerPersonSubmissions />} />
-          <Route path="stats" element={<PerQuestionStats />} />
+          <Route path="/ansform/:formId" element={<AnsForm />} />
+          <Route path="/ansform/submitted" element={<Submitted />} />
+          <Route path="formDetails/:formId" element={<ViewFormDetails />} >
+            <Route path="submissions" element={<PerPersonSubmissions />} />
+            <Route path="stats" element={<PerQuestionStats />} />
+            <Route path="sendbymail" element={<SendByEmail />} />
+          </Route>
           <Route path="/exam/:title/:duration/:url" element={<Exam />} />
 
           {/* Dynamic route with parameters */}

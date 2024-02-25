@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import QuestionAns from "../Admin/component/QuestionAns";
+import QuestionAns from "./component/QuestionAns";
 import {
   getForm,
   getResponseIdx,

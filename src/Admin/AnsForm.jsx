@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import QuestionAns from "../Admin/component/QuestionAns";
+import QuestionAns from "./component/QuestionAns";
 import {
   getAnswers,
   getQuestionForm,
@@ -10,9 +10,9 @@ import {
   submitForm,
 } from "../store/slices/ansForm";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "../Admin/ui/Button";
+import Button from "./ui/Button";
 import { BsExclamationCircle } from "react-icons/bs";
-import LoadingSpinner from "../Admin/LoadingSpinner";
+import LoadingSpinner from "./LoadingSpinner";
 
 function AnsForm() {
   const { formId } = useParams();
@@ -66,7 +66,7 @@ function AnsForm() {
       if (res.status === 201) {
         dispatch(setTriedSubmitting(false));
         console.log("submitted");
-        navigate("/ansForm/submitted");
+        navigate("/ansform/submitted");
       }
       if (res.status === 302) {
         dispatch(setTriedSubmitting(true));
@@ -88,8 +88,8 @@ function AnsForm() {
         <div className="w-4/6">
           <div className="flex justify-center pt-3">
             <span className="ml-12 text-indigo-500  text-3xl transition-colors duration-300 ease-in-out  ">
-              <Link to="/app">
-                <span className="font-pacifico indigo_gradient">Formaker</span>
+              <Link to="/admin-dashboard">
+                <span className="font-pacifico indigo_gradient">ProctorPal</span>
               </Link>
             </span>
           </div>

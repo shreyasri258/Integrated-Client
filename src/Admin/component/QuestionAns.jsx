@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import RadioButton from "../../Admin/ui/RadioButton";
-import CheckBox from "../../Admin/ui/CheckBox";
+import RadioButton from "../ui/RadioButton";
+import CheckBox from "../ui/CheckBox";
 
 function QuestionAns({ questionObj, answer }) {
   const { question, type, options, required } = questionObj;
