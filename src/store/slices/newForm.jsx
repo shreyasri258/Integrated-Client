@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useAuth } from "../../store/UserAuth";
+//import { useAuth } from "../../store/UserAuth";
+import { AdminContext } from "../../contextCalls/adminContext/AdminContext";
+import { useContext } from "react";
+
 
 const initialQuestion = {
   question: "",
@@ -126,10 +129,13 @@ const newFormSlice = createSlice({
   },
 });
 
-const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+const BASE_URL = 'http://localhost:8081';
 
 export async function postRefinedForm(refinedForm) {
   try {
+    
+   
+   // const  token = JSON.parse(adminData).token;
     console.log(refinedForm);
     const token = localStorage.getItem("token");
     const res = await axios
@@ -138,7 +144,7 @@ export async function postRefinedForm(refinedForm) {
           Authorization: `${token}`,
         },
       })
-      .catch((error) => error.response);
+      .catch((error) => console.log(error.response));
     return res;
   } catch (error) {
     console.log(error);
@@ -177,8 +183,11 @@ export async function getFormsList() {
       const forms = res.data.forms;
       return forms;
     } else if (res.status === 401) {
+      return "";
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function getFormFromServer(formId) {

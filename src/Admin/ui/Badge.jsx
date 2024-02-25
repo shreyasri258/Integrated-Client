@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 function Badge({ children, type }) {
   if (type === "accept") {
     return (
@@ -15,5 +17,10 @@ function Badge({ children, type }) {
     );
   }
 }
+
+Badge.propTypes = {
+  children: PropTypes.node.isRequired,
+  type: PropTypes.oneOf(["accept", "reject"]).isRequired,
+};
 
 export default Badge;

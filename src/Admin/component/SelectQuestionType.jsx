@@ -1,7 +1,6 @@
+import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { changeType } from "../../store/slices/newForm";
-
-// &#8628; down arrow
 
 function SelectQuestionType({
   questionIdx,
@@ -88,5 +87,12 @@ function SelectQuestionType({
     </div>
   );
 }
+
+SelectQuestionType.propTypes = {
+  questionIdx: PropTypes.number.isRequired,
+  isSelectOpen: PropTypes.bool.isRequired,
+  setIsSelectOpen: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+};
 
 export default SelectQuestionType;

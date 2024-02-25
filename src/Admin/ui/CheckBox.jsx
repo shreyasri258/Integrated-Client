@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 function CheckBox({
   option,
   idx,
@@ -51,5 +53,15 @@ function CheckBox({
     </div>
   );
 }
+
+CheckBox.propTypes = {
+  option: PropTypes.string.isRequired,
+  idx: PropTypes.number.isRequired,
+  selected: PropTypes.arrayOf(PropTypes.number).isRequired,
+  setSelected: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  type: PropTypes.string.isRequired,
+  answers: PropTypes.arrayOf(PropTypes.number).isRequired,
+};
 
 export default CheckBox;

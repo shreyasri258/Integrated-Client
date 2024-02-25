@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 function SidebarItem({
@@ -61,5 +63,16 @@ function SidebarItem({
     );
   }
 }
+
+SidebarItem.propTypes = {
+  type: PropTypes.oneOf(["title", "info", "link"]).isRequired,
+  content: PropTypes.string,
+  selectedIcon: PropTypes.node,
+  unselectedIcon: PropTypes.node,
+  icon: PropTypes.node,
+  info: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  to: PropTypes.string,
+};
 
 export default SidebarItem;

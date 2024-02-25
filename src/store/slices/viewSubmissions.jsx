@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+const BASE_URL = 'http://localhost:8081';
 
 const initialState = {
   responseIdx: 0,

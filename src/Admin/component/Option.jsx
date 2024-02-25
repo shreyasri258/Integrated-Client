@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+import React from "react";
 import {
   activateOption,
   deleteOption,
@@ -74,5 +76,12 @@ function Option({ children, type, questionIdx, optionIdx }) {
     </div>
   );
 }
+
+Option.propTypes = {
+  children: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  questionIdx: PropTypes.number.isRequired,
+  optionIdx: PropTypes.number.isRequired,
+};
 
 export default Option;

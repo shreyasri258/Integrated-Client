@@ -9,7 +9,7 @@ const initialState = {
   ansForms: {},
 };
 
-const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+const BASE_URL = 'http://localhost:8081';
 
 const UserAuthContext = createContext();
 

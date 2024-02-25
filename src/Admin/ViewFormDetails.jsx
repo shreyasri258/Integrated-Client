@@ -6,8 +6,8 @@ import copy from "clipboard-copy";
 import { MdContentCopy } from "react-icons/md";
 import LoadingSpinner from "./LoadingSpinner";
 import Switch from "../Admin/ui/Switch";
-import Sidebar from "../Components/Sidebar/Sidebar";
-import SidebarItem from "../Components/Sidebar/SidebarItem";
+import Sidebar from "../Admin/component/Sidebar/Sidebar";
+import SidebarItem from "../Admin/component/Sidebar/SidebarItem";
 import { PiNotepad } from "react-icons/pi";
 import { FaWpforms } from "react-icons/fa";
 import { HiViewBoards } from "react-icons/hi";
@@ -24,7 +24,7 @@ function ViewFormDetails() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const CLIENT_URL = import.meta.env.VITE_REACT_APP_CLIENT_URL;
+  const CLIENT_URL = 'http://localhost:8081';
 
   useEffect(() => {
     async function setFormObj() {
@@ -41,7 +41,7 @@ function ViewFormDetails() {
   async function handleDelete(formId) {
     const res = await deleteForm(formId);
     if (res.status === 200) {
-      navigate("/dashboard");
+      navigate("/admin-dashboard");
     }
   }
 

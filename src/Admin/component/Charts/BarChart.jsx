@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
@@ -38,5 +39,11 @@ function BarChart({ answersFreq, labels, chartLabel }) {
   ChartJS.defaults.font.size = 20;
   return <Bar data={chartData} options={options} />;
 }
+
+BarChart.propTypes = {
+  answersFreq: PropTypes.arrayOf(PropTypes.number).isRequired,
+  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  chartLabel: PropTypes.string.isRequired,
+};
 
 export default BarChart;
