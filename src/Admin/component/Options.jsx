@@ -1,40 +1,46 @@
+import PropTypes from "prop-types";
 import Option from "../../Admin/component/Option";
 import { useDispatch, useSelector } from "react-redux";
 import { addOption, getActiveInfo } from "../../store/slices/newForm";
 import CheckBox from "../ui/CheckBox";
 import RadioButton from "../ui/RadioButton";
 
+// Define the valid option types
+const OptionType = {
+  CHECKBOXES: "check-boxes",
+  MULTIPLE_CHOICE: "multiple-choice",
+  DROPDOWN: "dropdown",
+};
+
 function Options({ type, options, questionIdx }) {
   const dispatch = useDispatch();
-
   const active = useSelector(getActiveInfo);
-
   const isQuestionActive = active.questionIdx === questionIdx;
+
+  const renderOption = (option, idx) => (
+    <Option
+      type={type}
+      key={option.id}
+      questionIdx={questionIdx}
+      optionIdx={idx}
+    >
+      {option}
+    </Option>
+  );
 
   return (
     <div className="flex flex-col">
       <ul>
-        {options.map((option, idx) => {
-          return (
-            <Option
-              type={type}
-              key={idx}
-              questionIdx={questionIdx}
-              optionIdx={idx}
-            >
-              {option}
-            </Option>
-          );
-        })}
+        {options.map(renderOption)}
 
         <div className="flex py-3">
-          {isQuestionActive && type === "check-boxes" && (
+          {isQuestionActive && type === OptionType.CHECKBOXES && (
             <CheckBox disabled={true} />
           )}
-          {isQuestionActive && type === "multiple-choice" && (
+          {isQuestionActive && type === OptionType.MULTIPLE_CHOICE && (
             <RadioButton disabled={true} />
           )}
-          {isQuestionActive && type === "dropdown" && (
+          {isQuestionActive && type === OptionType.DROPDOWN && (
             <p className="inline">{options.length + 1}.</p>
           )}
           {isQuestionActive && (
@@ -58,5 +64,11 @@ function Options({ type, options, questionIdx }) {
     </div>
   );
 }
+
+Options.propTypes = {
+  type: PropTypes.oneOf(Object.values(OptionType)).isRequired,
+  options: PropTypes.array.isRequired,
+  questionIdx: PropTypes.number.isRequired,
+};
 
 export default Options;

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import Options from "./Options";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -114,5 +115,16 @@ function Question({ questionObj, questionIdx }) {
     </div>
   );
 }
+
+Question.propTypes = {
+  questionObj: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    options: PropTypes.array.isRequired,
+    required: PropTypes.bool.isRequired,
+    question: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  }),
+  questionIdx: PropTypes.number.isRequired,
+};
 
 export default Question;

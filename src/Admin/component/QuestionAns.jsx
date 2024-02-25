@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import RadioButton from "../../Admin/ui/RadioButton";
 import CheckBox from "../../Admin/ui/CheckBox";
 
@@ -76,5 +77,19 @@ function QuestionAns({ questionObj, answer }) {
     </div>
   );
 }
+
+QuestionAns.propTypes = {
+  questionObj: PropTypes.shape({
+    question: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    options: PropTypes.arrayOf(PropTypes.string).isRequired,
+    required: PropTypes.bool.isRequired,
+  }),
+  answer: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.number,
+  ]),
+};
 
 export default QuestionAns;

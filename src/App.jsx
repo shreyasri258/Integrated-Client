@@ -15,6 +15,11 @@ import Instructions from "./User/Instructions";
 import RegisterHandler from "./GeneralFiles/RegisterHandler";
 import Home from "./Admin/Home";
 import NewForm from "./Admin/NewForm";
+import ViewFormDetails from "./Admin/ViewFormDetails";
+import PerPersonSubmissions from './Admin/PerPersonSubmissions';
+import PerQuestionStats from './Admin/PerQuestionStats'; 
+import AnsForm from './Admin/AnsForm';
+import Submitted from './Admin/Submitted';
 
 const App = () => {
   return (
@@ -30,11 +35,18 @@ const App = () => {
           <Route path="/login" element={<LoginHandler />} />
           <Route path="/student-login" element={<StudentLogin />} />
           <Route path="/teacher-login" element={<TeacherLogin />} />
-          <Route path="/admin-dashboard" element={<NewForm />} />
+          <Route path="/admin-dashboard" element={<Home />} />
           <Route path="/student-dashboard" element={<StudentDashboard />} />
           <Route path="/instructions" element={<Instructions />} />
           <Route path="/exam" element={<Exam />} />
+          <Route path="/create-form" element={<NewForm />} />
+          <Route path="/ansForm/:formId" element={<AnsForm />} />
+          <Route path="/ansForm/submitted" element={<Submitted />} />
+          <Route path="formDetails/:formId/submissions" element={<ViewFormDetails />} />
+          <Route path="submissions" element={<PerPersonSubmissions />} />
+          <Route path="stats" element={<PerQuestionStats />} />
           <Route path="/exam/:title/:duration/:url" element={<Exam />} />
+
           {/* Dynamic route with parameters */}
         </Routes>
       </Router>

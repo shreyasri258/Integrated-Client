@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
@@ -43,5 +44,10 @@ function PieChart({ answersFreq, labels }) {
 
   return <Pie data={chartData} />;
 }
+
+PieChart.propTypes = {
+  answersFreq: PropTypes.arrayOf(PropTypes.number).isRequired,
+  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default PieChart;

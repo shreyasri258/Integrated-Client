@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { MdContentCopy } from "react-icons/md";
 import { BsEyeFill } from "react-icons/bs";
 import { BiSort } from "react-icons/bi";
@@ -11,7 +12,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
   const [order, setOrder] = useState("ASC");
   const navigate = useNavigate();
 
-  const CLIENT_URL = import.meta.env.VITE_REACT_APP_CLIENT_URL;
+  const CLIENT_URL = 'http://localhost:8081';
 
   function sortByTitles() {
     if (order === "ASC") {
@@ -121,7 +122,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
             <tr
               key={idx}
               className={`${
-                idx % 2 === 0 ? "bg-indigo-200 bor" : ""
+                idx % 2 === 0 ? "bg-indigo-200" : ""
               } border-x-2 border-b-2 border-indigo-200`}
             >
               <td className="p-3 tracking-wide text-center">{idx + 1}</td>
@@ -171,5 +172,10 @@ function FormsTable({ displayForms, setDisplayForms }) {
     </table>
   );
 }
+
+FormsTable.propTypes = {
+  displayForms: PropTypes.array.isRequired,
+  setDisplayForms: PropTypes.func.isRequired,
+};
 
 export default FormsTable;

@@ -7,7 +7,7 @@ import {
   getQuestionIdx,
   setQuestionIdx,
 } from "../store/slices/viewSubmissions";
-import ShowCharts from "../Components/PreviewSubmission.jsx/ShowCharts";
+import ShowCharts from "../Admin/component/ShowCharts";
 
 function PerQuestionStats() {
   const form = useSelector(getForm);

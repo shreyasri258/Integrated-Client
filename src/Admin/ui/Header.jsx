@@ -19,7 +19,7 @@ function Header() {
         </div>
         {user.isAuthenticated && (
           <>
-            <Link to="/dashboard">
+            <Link to="/admin-dashboard">
               <span
                 className={`flex items-center text-indigo-500 ${
                   currentPage === "dashboard" && "underline underline-offset-8"

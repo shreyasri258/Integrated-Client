@@ -7,7 +7,7 @@ const initialState = {
   answers: [],
 };
 
-const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+const BASE_URL = 'http://localhost:8081';
 
 export async function getQuestionForm(formId) {
   const res = await axios

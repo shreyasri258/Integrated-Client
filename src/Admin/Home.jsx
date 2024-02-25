@@ -18,9 +18,13 @@ function Home() {
     async function setForms() {
       setIsLoading(true);
       const temp = await getFormsList();
-      const forms = temp.reverse();
-      setFormsList(forms);
-      setDisplayForms(forms);
+      if (Array.isArray(temp)) { // Check if temp is an array
+        const forms = temp.reverse();
+        setFormsList(forms);
+        setDisplayForms(forms);
+      } else {
+        console.error("getFormsList() did not return an array:", temp);
+      }
       setIsLoading(false);
     }
     setForms();
@@ -47,7 +51,7 @@ function Home() {
     return (
       <div className="flex min-h-screen justify-center items-center">
         <h3 className="mb-32 text-lg text-indigo-600">
-          Hi {user.name.toUpperCase()}, you currently don't have any forms.
+          Hi , you currently dont have any forms.
         </h3>
       </div>
     );
@@ -72,7 +76,7 @@ function Home() {
         {displayForms.length === 0 ? (
           <div className="flex justify-center items-center mt-48">
             <p className="text-lg text-indigo-700">
-              No forms whose title contains "{search}"
+              No forms whose title contains 
             </p>
           </div>
         ) : (
