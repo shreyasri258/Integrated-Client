@@ -16,6 +16,7 @@
     margin: 0 12px;
     display: flex;
     justify-content: center;
+    margin-right: 40px;
   }
   
   .dashboard-content {
@@ -45,3 +46,20 @@
     margin-bottom: 8px;
   }
   
+  .search-input {
+    padding-left: 30px;
+    
+  }
+
+  .search-icon{
+    position: relative;
+  top: 50%; /* Adjust this value to move the icon up or down */
+  transform: translateY(50%);
+  left: 8px;
+  bottom: 28px;
+  }
+
+ .search-wrapper-navbar{
+  margin-top: 10px;
+  margin-left: 40px;
+  }
