@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './../../components/navbar/navbar.css';
-import Name from '../../images/logo.png'
+import Name from '../../images/Proctorpal.png'
 
 const NavLinks = () => (
 	<React.Fragment>

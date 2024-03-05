@@ -87,18 +87,21 @@ const StudentRegister = () => {
       socket.emit('image', { img: base64Image }); // Emit the base64 encoded image to the server
     }
   };
-  
+  // http://localhost:8800/Server/user/register
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    // Handle registration logic here
+    const formData = new FormData(e.target);
+    const data = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
     try{
-      const response = await axios.post("http://localhost:8800/Server/user/register",inputValues)
+      await axios.post("http://localhost:8800/Server/user/register",data);
       console.log(JSON.stringify(response));
     } catch(error){
       console.log('Registration Failed!', error.message);
     }
-
     console.log('Registration values:', inputValues);
     setShowModal(true);
   };
@@ -113,42 +116,23 @@ const StudentRegister = () => {
   const allFieldsFilled = Object.values(inputValues).every(value => value.trim() !== '');
 
   return (
-    <div className="user-register">
-      <div className="logo">
+    <div className="user-register" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+      <div className="logo"  >
         <img src={Icon} alt="proctorpal-logo" />
       </div>
-      <div className="register-form">
-        <h1 className="title-heading">Examinee Register</h1>
-        <div className="input-fields">
-          {inputField.map((item) => {
-            let type;
-            switch (item) {
-              case "email":
-                type = "email";
-                break;
-              case "username":
-                type = "text";
-                break;
-              case "password":
-                type = "password";
-                break;
-              case "institutionName":
-                type = "text";
-                break;
-              default:
-                type = "text";
-            }
-            return (
-              <CommonInput
-                key={item}
-                placeholderText={item}
-                value={inputValues[item]}
-                onChange={(value) => handleInputChange(item, value)}
-                type={type}
-              />
-            );
-          })}
-        </div>
+      <div className="register-form" style={{ border: '1px solid #ccc', borderRadius: '14px', padding: '20px', boxShadow: '0 0 20px rgba(0, 0, 0, 0.2)' }}>
+        <h1 className="title-heading" style={{ textAlign: 'center', marginBottom: '20px' }}>Examinee Register</h1>
+        <form onSubmit={handleRegister}>
+        <div className="input-fields" style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
+            <input type="text" name="adminname" placeholder="Admin Name" />
+            <input type="text" name="institutionName" placeholder="Institution Name" />
+            <input type="email" name="email" placeholder="Email" />
+            <input type="password" name="password" placeholder="Password" />
+          </div>
+          <button type="submit">Register</button>
+        </form>
+  
+        
         {capturedImage && <img src={capturedImage} alt="captured" />}
         <video ref={videoRef} autoPlay playsInline style={{ display: 'none' }} />
         <canvas ref={canvasRef} style={{ display: 'none' }} />
