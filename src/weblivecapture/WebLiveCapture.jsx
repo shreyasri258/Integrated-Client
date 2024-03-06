@@ -83,6 +83,7 @@ import React, { useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
 import './weblivecapture.css';
 import socketIOClient from 'socket.io-client';
+import Swal from 'sweetalert2';
 
 const videoConstraints = {
   width: 2000,
@@ -94,11 +95,14 @@ const WebLiveCapture = () => {
   const webcamRef = React.useRef(null);
   const [error, setError] = useState('');
   const [numPeople, setNumPeople] = useState(0);
+  const [numMobiles, setNumMobiles] = useState(0); // State for number of mobile phones detected
   const [socket, setSocket] = useState(null);
   const [peopleCount, setPeopleCount] = useState(0);
   const [malpracticesCount, setMalpracticesCount] = useState(0);
   const [terminateExam, setTerminateExam] = useState(false);
-
+  const [warningCnt, setWarningCnt] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  // const sound = new Audio(Warning);
   useEffect(() => {
     const socket = socketIOClient('http://localhost:8080');
     setSocket(socket);
@@ -135,24 +139,40 @@ const WebLiveCapture = () => {
     // Listen for 'result' event from the server
     if (socket) {
       socket.on('result', (data) => {
-        const { status, message, num_people, pose } = data;
+        const { status, message, num_people, num_mobiles, pose } = data;
         console.log(data);
         if (status === 'success') {
           setNumPeople(num_people);
+          setNumMobiles(num_mobiles); // Update state with the number of mobile phones detected
+          setTotalCount(totalCount => totalCount + 1);
           // Additional logic based on the number of people detected
-          if (num_people > 2) {
+          if (num_people > 1) {
             setPeopleCount(peopleCount => peopleCount + 1);
-            if (peopleCount > 2) {
+            if (peopleCount > 1 || totalCount > 8) {
               setTerminateExam(true);
+              clearInterval(intervalId); // Stop capturing images
             }
           } else if (num_people === 0) {
             setPeopleCount(peopleCount => peopleCount + 1);
-            // if (peopleCount > 10) {
-            //   setTerminateExam(true);
-            // }
           } else if (num_people !== 1) {
             setMalpracticesCount(prevCount => prevCount + 1);
           }
+
+          // Display warning message for multiple people
+          if (num_people !== 1) {
+            // sound.play()
+            Swal.fire({
+              icon: 'warning',
+              title: 'Warning',
+              text: `Only single person should take the exam, Warning count: ${warningCnt}`,
+              customClass: {
+                popup: 'my-popup-class',
+              },
+            }).then(() => {
+              setWarningCnt(warningCnt + 1);
+            });
+          }
+          
           // Handle pose data if available
           if (pose) {
             // Process pose data here, if needed
@@ -163,35 +183,39 @@ const WebLiveCapture = () => {
       });
     }
   
-    // Cleanup socket listener and interval on component unmount
+    // Cleanup socket listener on component unmount
     return () => {
-      clearInterval(intervalId);
       if (socket) {
         socket.off('result');
       }
     };
-  }, [socket, numPeople, peopleCount, setNumPeople, setPeopleCount]);
+  }, [socket, numPeople, peopleCount, warningCnt, totalCount]);
+
+  useEffect(() => {
+    if (terminateExam) {
+      // sound.play()
+      Swal.fire({
+        title: 'Exam Terminated',
+        text: 'Total count exceeded, exam terminated.',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        showConfirmButton: false
+      });
+    }
+  }, [terminateExam]);
 
   return (
-    <div>
-      {error && <div className="error">{error}</div>}
-      <div className="content">
-        <h1>Number of people detected: {numPeople}</h1>
-        <h2>People Malpractices: {malpracticesCount}</h2>
-        <h2>Terminate Exam: {terminateExam ? 'Yes' : 'No'}</h2>
-      </div>
-
-      <React.Fragment>
-        <Webcam
-          audio={false}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          height={150}
-          width={300}
-          videoConstraints={videoConstraints}
-        />
-      </React.Fragment>
-    </div>
+    <React.Fragment>
+      <Webcam
+        audio={false}
+        ref={webcamRef}
+        screenshotFormat="image/jpeg"
+        height={150}
+        width={300}
+        videoConstraints={videoConstraints}
+      />
+    </React.Fragment>
   );
 };
 
