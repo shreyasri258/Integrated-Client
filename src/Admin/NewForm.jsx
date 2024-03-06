@@ -23,6 +23,7 @@ const initialQuestion = {
   type: "",
   options: [],
   required: false,
+  correctAnswer:null,
 };
 
 function NewForm() {
@@ -52,65 +53,50 @@ function NewForm() {
 
   return (
     <div className="flex items-center justify-center w-screen mb-8 mt-4">
-      <div className="w-4/6">
-        <div className="text-lg text-indigo-500 font-semibold mb-2">
+      <div className="w-full max-w-3xl px-4">
+        <div className="text-lg text-indigo-500 font-semibold mb-4">
           Make Form
         </div>
-        <div className="border-2 border-indigo-100 rounded-md my-3">
+        <div className="border-2 border-gray-200 rounded-md my-3">
+          {/* Updated border color here */}
           <div
             onClick={() => {
               dispatch(activateTitle());
             }}
+            className="p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50"
           >
+            {/* Updated placeholder text color here */}
             {active.title ? (
               <input
-                className="h-10 w-full py-2 bg-indigo-100 border-b-2 border-indigo-600 text-lg  my-3 focus:outline-none placeholder:text-lg "
-                style={{
-                  borderLeft: "2px solid transparent",
-                  borderRight: "2px solid transparent",
-                  borderTop: "2px solid transparent",
-                }}
+                className="w-full py-2 bg-gray-100 border-b-2 border-gray-600 text-lg focus:outline-none placeholder-gray-600"
                 value={title}
                 placeholder="Enter Form Title"
                 onChange={(e) => dispatch(updateTitle(e.target.value))}
               />
             ) : (
-              <p
-                className="h-10 py-2 text-lg my-3"
-                style={{ border: "2px solid transparent" }}
-              >
-                {title || (
-                  <span className="text-slate-400">Enter Form Title</span>
-                )}
+              <p className="text-lg text-gray-600">
+                {title || "Enter Form Title"}
               </p>
             )}
           </div>
 
+          
           <div
             onClick={() => {
               dispatch(activateDescription());
             }}
+            className="p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50"
           >
             {active.description ? (
               <input
-                className="h-8 w-full py-2 bg-indigo-100 border-b-2 border-indigo-600 text-base  my-6  focus:outline-none placeholder:text-base"
-                style={{
-                  borderLeft: "2px solid transparent",
-                  borderRight: "2px solid transparent",
-                  borderTop: "2px solid transparent",
-                }}
+                className="w-full py-2 bg-gray-100 border-b-2 border-gray-600 text-base focus:outline-none placeholder-gray-600"
                 value={description}
                 placeholder="Enter Form Description"
                 onChange={(e) => dispatch(updateDescription(e.target.value))}
               />
             ) : (
-              <p
-                className="h-8 py-2 text-base my-6"
-                style={{ border: "2px solid transparent" }}
-              >
-                {description || (
-                  <span className="text-slate-400">Enter Form Description</span>
-                )}
+              <p className="text-base text-gray-600">
+                {description || "Enter Form Description"}
               </p>
             )}
           </div>
@@ -120,9 +106,9 @@ function NewForm() {
           return <Question questionObj={q} questionIdx={idx} key={idx} />;
         })}
 
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col items-end mt-4">
           <button
-            className="mt-3 p-2 rounded-full hover:ring-8 ring-indigo-300 transition-all duration-300 ease-in-out"
+            className="p-2 rounded-full hover:bg-gray-500 hover:ring-2 hover:ring-gray-300 transition-all duration-300 ease-in-out"
             onClick={() => {
               dispatch(
                 addQuestionObj({
@@ -131,18 +117,19 @@ function NewForm() {
               );
             }}
           >
-            <BsPlusCircleDotted className="text-2xl text-indigo-500" />
+            <BsPlusCircleDotted className="text-2xl text-gray-500" />
           </button>
-          <div className="self-start flex">
+          <div className="self-start flex mt-4">
             <Button
-              classes="hover:ring-8 ring-indigo-200"
+            style={{ backgroundColor: 'blue', /* Add other styles as needed */ }}
+              classes="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full hover:ring-2 hover:ring-blue-300 transition-all duration-300 ease-in-out"
               onClick={() => handleCreatingForm(form)}
               type="submit"
             >
               Create Form
             </Button>
             {msg && (
-              <span className="text-xl text-rose-500 pl-3 flex items-center">
+              <span className="text-xl text-red-500 pl-3 flex items-center">
                 <BsExclamationCircle className="text-2xl" />
                 <p className="ml-2">{msg}</p>
               </span>

@@ -5,7 +5,7 @@ import AdminRegister from "./Admin/AdminRegister";
 import StudentRegister from "./User/StudentRegister";
 import { GlobalStateProvider } from "./GlobalState";
 import StudentLogin from "./User/StudentLogin";
-import TeacherLogin from "./Admin/TeacherLogin";
+import AdminLogin from "./Admin/AdminLogin";
 import LoginHandler from "./GeneralFiles/LoginHandler";
 import AdminDashboard from "./Admin/AdminDashboard";
 import StudentDashboard from "./User/StudentDashboard";
@@ -36,9 +36,8 @@ const App = () => {
           <Route path="/teacher-register" element={<AdminRegister />} />
           <Route path="/login" element={<LoginHandler />} />
           <Route path="/student-login" element={<StudentLogin />} />
-          <Route path="/teacher-login" element={<TeacherLogin />} />
-          <Route path="/admin-dashboard" element={<Home />} />
-          {/* <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
+          <Route path="/teacher-login" element={<AdminLogin />} />
+          <Route path="/admin-dashboard" element={<Home/>} />
           <Route path="/student-dashboard" element={<StudentDashboard />} />
           <Route path="/instructions" element={<Instructions />} />
           <Route path="/exam" element={<Exam />} />
@@ -60,3 +59,4 @@ const App = () => {
 };
 
 export default App;
+ 
