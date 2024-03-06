@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import StudentLogin from '../User/StudentLogin';
-import TeacherLogin from '../Admin/TeacherLogin';
+import TeacherLogin from '../Admin/AdminLogin';
 
 const LoginHandler = () => {
  const location = useLocation();
