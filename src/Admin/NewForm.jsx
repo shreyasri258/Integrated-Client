@@ -11,6 +11,8 @@ import {
   resetForm,
   updateDescription,
   updateTitle,
+  updateDuration,
+  updateTimeDuration
 } from "../store/slices/newForm";
 import { useNavigate } from "react-router-dom";
 import { BsPlusCircleDotted, BsExclamationCircle } from "react-icons/bs";
@@ -32,12 +34,12 @@ function NewForm() {
   // const { authUser } = useAuth();
   const questions = useSelector(getQuestions);
   const form = useSelector(getForm);
-  const { title, description, active } = form;
+  const { title, description, active, timeDuration } = form;
   const navigate = useNavigate();
   const [msg, setMsg] = useState(null);
   const { admin } = useContext(AdminContext);
   // const [adminDetails, setAdminDetails] = useState({ name: "", email: "" });
-
+  console.log('form in create - ',form);
   async function handleCreatingForm(form) {
     if (title !== "") {
       const refinedForm = getRefinedForm(form);
@@ -83,6 +85,16 @@ function NewForm() {
             )}
           </div>
 
+          <div
+            className="p-4 border-b border-gray-200"
+          >
+            <input
+              className="w-full py-2 bg-gray-100 border-b-2 border-gray-600 text-lg focus:outline-none placeholder-gray-600"
+              value={timeDuration}
+              placeholder="Enter Form Duration (in minutes)"
+              onChange={(e) => dispatch(updateTimeDuration(e.target.value))}
+            />
+          </div>
           
           <div
             onClick={() => {
@@ -124,7 +136,7 @@ function NewForm() {
           </button>
           <div className="self-start flex mt-4">
             <Button
-            style={{ backgroundColor: 'blue', /* Add other styles as needed */ }}
+              style={{ backgroundColor: 'blue', /* Add other styles as needed */ }}
               classes="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full hover:ring-2 hover:ring-blue-300 transition-all duration-300 ease-in-out"
               onClick={() => handleCreatingForm(form)}
               type="submit"

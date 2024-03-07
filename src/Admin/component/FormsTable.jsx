@@ -11,8 +11,15 @@ import { getDate } from "../utils/index";
 function FormsTable({ displayForms, setDisplayForms }) {
   const [order, setOrder] = useState("ASC");
   const navigate = useNavigate();
-
-  const CLIENT_URL = `http://localhst:8800`//'http://localhost:8081';
+  
+  //const CLIENT_URL = `http://localhst:8800`//'http://localhost:8081';
+  const CLIENT_URL = 'http://localhost:8081';
+  const handlePost = (formId) => {
+    const updatedForms = displayForms.map((form) =>
+      form._id === formId ? { ...form, posted: !form.posted } : form
+    );
+    setDisplayForms(updatedForms);
+  };
 
   function sortByTitles() {
     if (order === "ASC") {
@@ -71,8 +78,8 @@ function FormsTable({ displayForms, setDisplayForms }) {
   }
 
   return (
-    <table className="w-full">
-      <thead className="p-6 bg-indigo-50 border-2 border-indigo-200 ">
+    <table className="w-full max-w-full " style={{ width: '1250px' }}>
+      <thead className="p-6 bg-blue-50 border-2 border-indigo-200 ">
         <tr className=" text-indigo-600">
           <th className="p-3 font-semibold tracking-wide text-center">
             <span>No.</span>
@@ -87,6 +94,9 @@ function FormsTable({ displayForms, setDisplayForms }) {
                 <BiSort fontSize={"1.4rem"} />
               </span>
             </div>
+          </th>
+          <th className="p-3 font-semibold tracking-wide text-center">
+            <span>Duration</span>
           </th>
           <th className="p-3 w-40 font-semibold tracking-wide text-center">
             <div
@@ -114,10 +124,14 @@ function FormsTable({ displayForms, setDisplayForms }) {
           <th className="p-3 font-semibold tracking-wide text-center">
             <span>View</span>
           </th>
+          <th className="p-3 font-semibold tracking-wide text-center">
+            <span>Posted</span>
+          </th>
         </tr>
       </thead>
       <tbody>
         {displayForms.map((form, idx) => {
+          console.log('form in dashboard - ', form);
           return (
             <tr
               key={idx}
@@ -127,14 +141,15 @@ function FormsTable({ displayForms, setDisplayForms }) {
             >
               <td className="p-3 tracking-wide text-center">{idx + 1}</td>
               <td className="p-3 tracking-wide text-center">{form.title}</td>
+              <td className="p-3 tracking-wide text-center">{form.timeDuration} min</td>
               <td className="p-3 tracking-wide text-center">
-                {/* {getDate(form.created)} */}
+                {getDate(form.created)}
               </td>
               <td className="p-3 tracking-wide text-center">
                 {form.questions.length}
               </td>
               <td className="p-3 tracking-wide text-center">
-                {/* {form.ansForms.length} */}
+                {form.ansForms.length}
               </td>
               <td className="p-3 tracking-wide text-center">
                 {form.accepting ? (
@@ -164,6 +179,18 @@ function FormsTable({ displayForms, setDisplayForms }) {
                 >
                   <BsEyeFill fontSize={"1.5rem"} color="rgb(55 48 163)" />
                 </button>
+              </td>
+              <td className="p-3 tracking-wide text-center">
+                {form.posted ? (
+                  <Badge type={"accept"} onClick={() => handlePost(form._id)}>Posted</Badge>
+                ) : (
+                  <button
+                    onClick={() => handlePost(form._id)}
+                    className={`rounded-md px-2 py-1 bg-indigo-500 text-white hover:bg-indigo-600`}
+                  >
+                    Post
+                  </button>
+                )}
               </td>
             </tr>
           );

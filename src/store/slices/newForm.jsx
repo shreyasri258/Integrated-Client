@@ -20,6 +20,7 @@ const initialState = {
   timeDuration : "",
   active: { title: true, description: false, questionIdx: null ,timeDuration:null},
   questions: [initialQuestion],
+  duration: "", // Add duration to initial state
 };
 
 const newFormSlice = createSlice({
@@ -46,6 +47,13 @@ const newFormSlice = createSlice({
     updateDescription(state, action) {
       const description = action.payload;
       state.description = description;
+    },
+    updateTimeDuration(state, action) {
+      const timeDuration = action.payload;
+      state.timeDuration = timeDuration;
+    },
+    updateDuration(state, action) {
+      state.duration = action.payload;
     },
     addQuestionObj(state, action) {
       const { newQuestion } = action.payload;
@@ -238,6 +246,8 @@ export const {
   deleteQuestionObj,
   updateTitle,
   updateDescription,
+  updateDuration, // Added updateDuration action
+  updateTimeDuration,
   updateQuestion,
   changeType,
   addOption,
@@ -266,7 +276,7 @@ export const getRefinedForm = (form) => {
   const refinedForm = {
     title: form.title,
     description: form.description,
-    timeDuration:"0",
+    timeDuration:form.timeDuration,
     questions: form.questions.map((q) => {
       const { question, type, options, required } = q;
       if (type === "") {
@@ -275,6 +285,6 @@ export const getRefinedForm = (form) => {
       return { question, type, options, required };
     }),
   };
-
+  console.log('refined-form - ', refinedForm)
   return refinedForm;
 };
