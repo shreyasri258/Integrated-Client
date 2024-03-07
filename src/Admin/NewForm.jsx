@@ -15,8 +15,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { BsPlusCircleDotted, BsExclamationCircle } from "react-icons/bs";
 import Button from "./ui/Button";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { useAuth } from "../store/UserAuth";
+import {AdminContext} from "../contextCalls/adminContext/AdminContext"
 
 const initialQuestion = {
   question: "",
@@ -28,12 +29,14 @@ const initialQuestion = {
 
 function NewForm() {
   const dispatch = useDispatch();
-  const { authUser } = useAuth();
+  // const { authUser } = useAuth();
   const questions = useSelector(getQuestions);
   const form = useSelector(getForm);
   const { title, description, active } = form;
   const navigate = useNavigate();
   const [msg, setMsg] = useState(null);
+  const { admin } = useContext(AdminContext);
+  // const [adminDetails, setAdminDetails] = useState({ name: "", email: "" });
 
   async function handleCreatingForm(form) {
     if (title !== "") {
@@ -44,7 +47,7 @@ function NewForm() {
         navigate("/admin-dashboard");
       }
       if (res.status === 401) {
-        await authUser();
+        //await authUser();
       }
     } else {
       setMsg("Title is necessary to create the form");

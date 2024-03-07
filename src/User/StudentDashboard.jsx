@@ -42,7 +42,7 @@ const UserDashboard = () => {
         console.error("No token available");
         return;
       }
-      const response = await axios.get("http://localhost:8800/exams/exams", {
+      const response = await axios.get("http://localhost:8800/exams/questionforms", {
         headers: {
           "x-auth-token": token, // Include the token in header
         },

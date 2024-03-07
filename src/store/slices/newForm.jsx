@@ -17,7 +17,8 @@ const initialState = {
   id: null,
   title: "",
   description: "",
-  active: { title: true, description: false, questionIdx: null },
+  timeDuration : "",
+  active: { title: true, description: false, questionIdx: null ,timeDuration:null},
   questions: [initialQuestion],
 };
 
@@ -26,14 +27,17 @@ const newFormSlice = createSlice({
   initialState,
   reducers: {
     activateTitle(state, action) {
-      state.active = { title: true, description: false, questionIdx: null };
+      state.active = { title: true, description: false, questionIdx: null ,timeDuration : null};
     },
     activateDescription(state, action) {
-      state.active = { title: false, description: true, questionIdx: null };
+      state.active = { title: false, description: true, questionIdx: null ,timeDuration:null};
+    },
+    activateTime(state, action) {
+      state.active = { title: false, description: true, questionIdx: null ,timeDuration:true};
     },
     activateQuestion(state, action) {
       const questionIdx = action.payload;
-      state.active = { title: false, description: false, questionIdx };
+      state.active = { title: false, description: false, questionIdx ,timeDuration:false};
     },
     updateTitle(state, action) {
       const title = action.payload;
@@ -137,11 +141,14 @@ export async function postRefinedForm(refinedForm) {
    
    // const  token = JSON.parse(adminData).token;
     console.log(refinedForm);
-    const token = localStorage.getItem("token");
+    const adminLocalStorageString = localStorage.getItem('admin');
+    const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+    const token = adminLocalStorageObject.token;
+    console.log('admin - token - ', token);
     const res = await axios
-      .post(`${BASE_URL}/questionForm`, refinedForm, {
+      .post(`${`http://localhost:8800/exams/admin`}/questionforms`, refinedForm, {
         headers: {
-          Authorization: `${token}`,
+          'x-auth-token': `${token}`,
         },
       })
       .catch((error) => console.log(error.response));
@@ -153,7 +160,8 @@ export async function postRefinedForm(refinedForm) {
 
 export async function deleteForm(formId) {
   try {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("admin").token;
+    console.log('token - ',token);
     const res = await axios.delete(`${BASE_URL}/questionForm/${formId}`, {
       headers: {
         Authorization: `${token}`,
@@ -167,22 +175,29 @@ export async function deleteForm(formId) {
 }
 
 export async function getFormsList() {
-  const token = localStorage.getItem("token");
+  const adminLocalStorageString = localStorage.getItem("admin");
+  const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+  const token = adminLocalStorageObject.token;
+  console.log('admin - token - ', token);
   try {
     const res = await axios
-      .get(`${BASE_URL}/questionForm/forms`, {
+      .get(`${`http://localhost:8800/exams/admin/questionforms`}`, {
         headers: {
-          Authorization: `${token}`,
+          'x-auth-token': `${token}`,
         },
       })
       .catch((error) => {
         console.log(error);
         return error.response;
       });
-    if (res.status === 200) {
-      const forms = res.data.forms;
-      return forms;
-    } else if (res.status === 401) {
+      if (res.status === 200) {
+        console.log('resp - ', res.data);
+        const forms = res.data;
+        //const allQuestions = forms.reduce((acc, form) => acc.concat(form.questions), []);
+        console.log(forms);
+        return forms;
+      }
+       else if (res.status === 401) {
       return "";
     }
   } catch (error) {
@@ -251,6 +266,7 @@ export const getRefinedForm = (form) => {
   const refinedForm = {
     title: form.title,
     description: form.description,
+    timeDuration:"0",
     questions: form.questions.map((q) => {
       const { question, type, options, required } = q;
       if (type === "") {

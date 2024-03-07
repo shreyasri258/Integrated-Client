@@ -12,7 +12,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
   const [order, setOrder] = useState("ASC");
   const navigate = useNavigate();
 
-  const CLIENT_URL = 'http://localhost:8081';
+  const CLIENT_URL = `http://localhst:8800`//'http://localhost:8081';
 
   function sortByTitles() {
     if (order === "ASC") {
@@ -128,13 +128,13 @@ function FormsTable({ displayForms, setDisplayForms }) {
               <td className="p-3 tracking-wide text-center">{idx + 1}</td>
               <td className="p-3 tracking-wide text-center">{form.title}</td>
               <td className="p-3 tracking-wide text-center">
-                {getDate(form.created)}
+                {/* {getDate(form.created)} */}
               </td>
               <td className="p-3 tracking-wide text-center">
                 {form.questions.length}
               </td>
               <td className="p-3 tracking-wide text-center">
-                {form.ansForms.length}
+                {/* {form.ansForms.length} */}
               </td>
               <td className="p-3 tracking-wide text-center">
                 {form.accepting ? (
