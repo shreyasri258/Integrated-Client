@@ -278,15 +278,15 @@ function Home() {
       </div>
     );
 
-  // if (formsList.length === 0) {
-  //   return (
-  //     <div className="flex min-h-screen justify-center items-center">
-  //       <h3 className="mb-32 text-lg text-indigo-600">
-  //         Hi, you currently don't have any forms.
-  //       </h3>
-  //     </div>
-  //   );
-  // }
+  if (formsList.length === 0) {
+    return (
+      <div className="flex min-h-screen justify-center items-center">
+        <h3 className="mb-32 text-lg text-indigo-600">
+          Hi, you currently don't have any forms.
+        </h3>
+      </div>
+    );
+  }
   
   const handleMakeForm = () => {
     navigate("/create-form");
