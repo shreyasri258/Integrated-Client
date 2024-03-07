@@ -19,6 +19,7 @@ const initialState = {
   description: "",
   active: { title: true, description: false, questionIdx: null },
   questions: [initialQuestion],
+  duration: "", // Add duration to initial state
 };
 
 const newFormSlice = createSlice({
@@ -42,6 +43,9 @@ const newFormSlice = createSlice({
     updateDescription(state, action) {
       const description = action.payload;
       state.description = description;
+    },
+    updateDuration(state, action) {
+      state.duration = action.payload;
     },
     addQuestionObj(state, action) {
       const { newQuestion } = action.payload;
@@ -223,6 +227,7 @@ export const {
   deleteQuestionObj,
   updateTitle,
   updateDescription,
+  updateDuration, // Added updateDuration action
   updateQuestion,
   changeType,
   addOption,

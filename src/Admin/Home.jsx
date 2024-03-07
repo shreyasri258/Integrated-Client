@@ -86,6 +86,25 @@ function Home() {
   const handleCloseCreateExamPopup = () => {
     setShowCreateExamPopup(false);
   };
+  //To set sample Data for testing purposes
+//   const [sampleForm, setSampleForm] = useState({
+//     title: "Sample Form",
+//     created: new Date().toISOString(),
+//     questions: [],
+//     ansForms: [],
+//     accepting: true,
+//     duration:"23",
+//   });
+
+//   const [sampleFormAdded, setSampleFormAdded] = useState(false);
+
+// useEffect(() => {
+//   if (!sampleFormAdded) {
+//     setFormsList([sampleForm, ...formsList]); // Add the sample form to the beginning of the formsList
+//     setDisplayForms([sampleForm, ...formsList]); // Update the displayForms as well
+//     setSampleFormAdded(true);
+//   }
+// }, []);
 
   const handleSubmitCreateExam = async (newExam) => {
     try {
@@ -259,15 +278,15 @@ function Home() {
       </div>
     );
 
-  if (formsList.length === 0) {
-    return (
-      <div className="flex min-h-screen justify-center items-center">
-        <h3 className="mb-32 text-lg text-indigo-600">
-          Hi, you currently don't have any forms.
-        </h3>
-      </div>
-    );
-  }
+  // if (formsList.length === 0) {
+  //   return (
+  //     <div className="flex min-h-screen justify-center items-center">
+  //       <h3 className="mb-32 text-lg text-indigo-600">
+  //         Hi, you currently don't have any forms.
+  //       </h3>
+  //     </div>
+  //   );
+  // }
   
   const handleMakeForm = () => {
     navigate("/create-form");
@@ -427,8 +446,8 @@ function Home() {
             <p className="no-results-text">No forms whose title contains</p>
           </div>
         ) : (
-          <div c
-          lassName="forms-table" 
+          <div 
+          className="forms-table" 
           style={{ marginTop: "16%" }}>
             <FormsTable
               displayForms={displayForms}
