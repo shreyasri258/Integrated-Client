@@ -12,7 +12,7 @@ function SelectQuestionType({
   return (
     <div className="relative">
       <button
-        className="bg-indigo-500 text-white p-1.5 w-52 rounded-md hover:bg-indigo-600"
+        className="bg-blue-700 text-white p-1.5 w-52 rounded-md hover:bg-blue-600"
         onClick={() => setIsSelectOpen(!isSelectOpen)}
       >
         {type ? (
@@ -32,13 +32,13 @@ function SelectQuestionType({
         )}
       </button>
       <div
-        className={`absolute bg-indigo-50 mt-2 left-0 right-0 ${
+        className={`absolute bg-blue-50 mt-2 left-0 right-0 ${
           isSelectOpen ? "flex flex-col" : "hidden"
         } `}
       >
         <ul className="text-sm">
           <li
-            className="p-2 self-stretch hover:bg-indigo-400 hover:text-white cursor-pointer"
+            className="p-2 self-stretch hover:bg-blue-400 hover:text-white cursor-pointer"
             onClick={() => {
               dispatch(changeType({ questionIdx, type: "short-ans" }));
               setIsSelectOpen(false);
@@ -47,7 +47,7 @@ function SelectQuestionType({
             Short Answer
           </li>
           <li
-            className="p-2 self-stretch hover:bg-indigo-400 hover:text-white cursor-pointer"
+            className="p-2 self-stretch hover:bg-blue-400 hover:text-white cursor-pointer"
             onClick={(e) => {
               dispatch(changeType({ questionIdx, type: "long-ans" }));
               setIsSelectOpen(false);
@@ -56,7 +56,7 @@ function SelectQuestionType({
             Long Answer
           </li>
           <li
-            className="p-2 self-stretch hover:bg-indigo-400 hover:text-white cursor-pointer"
+            className="p-2 self-stretch hover:bg-blue-400 hover:text-white cursor-pointer"
             onClick={(e) => {
               dispatch(changeType({ questionIdx, type: "multiple-choice" }));
               setIsSelectOpen(false);
@@ -65,7 +65,7 @@ function SelectQuestionType({
             Multiple Choice
           </li>
           <li
-            className="p-2 self-stretch hover:bg-indigo-400 hover:text-white cursor-pointer"
+            className="p-2 self-stretch hover:bg-blue-400 hover:text-white cursor-pointer"
             onClick={(e) => {
               dispatch(changeType({ questionIdx, type: "check-boxes" }));
               setIsSelectOpen(false);
@@ -74,7 +74,7 @@ function SelectQuestionType({
             Check Boxes
           </li>
           <li
-            className="p-2 self-stretch hover:bg-indigo-400 hover:text-white cursor-pointer"
+            className="p-2 self-stretch hover:bg-blue-400 hover:text-white cursor-pointer"
             onClick={(e) => {
               dispatch(changeType({ questionIdx, type: "dropdown" }));
               setIsSelectOpen(false);

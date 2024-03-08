@@ -87,24 +87,24 @@ function Home() {
     setShowCreateExamPopup(false);
   };
   //To set sample Data for testing purposes
-//   const [sampleForm, setSampleForm] = useState({
-//     title: "Sample Form",
-//     created: new Date().toISOString(),
-//     questions: [],
-//     ansForms: [],
-//     accepting: true,
-//     duration:"23",
-//   });
+  const [sampleForm, setSampleForm] = useState({
+    title: "Sample Form",
+    created: new Date().toISOString(),
+    questions: [],
+    ansForms: [],
+    accepting: true,
+    duration:"23",
+  });
 
-//   const [sampleFormAdded, setSampleFormAdded] = useState(false);
+  const [sampleFormAdded, setSampleFormAdded] = useState(false);
 
-// useEffect(() => {
-//   if (!sampleFormAdded) {
-//     setFormsList([sampleForm, ...formsList]); // Add the sample form to the beginning of the formsList
-//     setDisplayForms([sampleForm, ...formsList]); // Update the displayForms as well
-//     setSampleFormAdded(true);
-//   }
-// }, []);
+useEffect(() => {
+  if (!sampleFormAdded) {
+    setFormsList([sampleForm, ...formsList]); // Add the sample form to the beginning of the formsList
+    setDisplayForms([sampleForm, ...formsList]); // Update the displayForms as well
+    setSampleFormAdded(true);
+  }
+}, []);
 
   const handleSubmitCreateExam = async (newExam) => {
     try {
@@ -281,7 +281,7 @@ function Home() {
   if (formsList.length === 0) {
     return (
       <div className="flex min-h-screen justify-center items-center">
-        <h3 className="mb-32 text-lg text-indigo-600">
+        <h3 className="mb-32 text-lg text-blue-600">
           Hi, you currently don't have any forms.
         </h3>
       </div>
@@ -303,35 +303,35 @@ function Home() {
         >
           <Tab
             className="dashboard-tab"
+            
             icon={
               <a href="/admin-dashboard">
                 <img
                   src={Icon}
                   alt="Logo"
                   className="logo-image"
-                  style={{ maxWidth: "50px", maxHeight: "50px" }}
+                  style={{ maxWidth: "50px", maxHeight: "50px" ,margin:"10px"}}
+                 
                 />
               </a>
             }
           />
+        
           <Tab
-            className="dashboard-tab"
+            className="dashboard-tab "
             label="Create Exam"
-            onClick={handleCreateExamClick}
-          />
-          <Tab
-            className="dashboard-tab"
-            label="Make Form"
             onClick={handleMakeForm}
           />
-          <div className="search-wrapper-navbar">
-            <div className="search-input-wrapper">
+          <div className="search-wrapper-navbar" style={{ width: "60%" }}>
+            <div   className="search-input-wrapper">
               {/* <span className="search-icon">
                 <AiOutlineSearch />
               </span> */}
               <input
-                className="search-input"
-                placeholder="Search by title..."
+                
+                className="search-input w-full"
+                
+                placeholder="Search Exam By Title..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 />
@@ -351,7 +351,7 @@ function Home() {
             className="details-button"
             sx={{
               position: "absolute",
-              top: 0,
+              top: 10,
               right: 0,
               margin: 1,
               borderRadius: "15px",
@@ -394,47 +394,9 @@ function Home() {
           </Modal>
         </Tabs>
 
-        <div className="cards-wrapper">
-          {examData.map((exam, index) => (
-            <Card key={index} className="card-item">
-              <Typography variant="h6" gutterBottom>
-                {exam.title}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                Google Form Link: {exam.googleFormLink}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                Exam Duration: {exam.timeDuration} minutes
-              </Typography>
-              <div className="button-wrapper">
-                {exam.postedForStudents ? (
-                  <Button
-                    variant="contained"
-                    color="error"
-                    onClick={() => handleRemoveExam(index)}
-                  >
-                    Remove
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="success"
-                    onClick={() => handlePostExam(index)}
-                  >
-                    Post
-                  </Button>
-                )}
-              </div>
-            </Card>
-          ))}
-        </div>
+        
 
-        {showCreateExamPopup && (
-          <CreateExamPopup
-            onSubmit={handleSubmitCreateExam}
-            onClose={handleCloseCreateExamPopup}
-          />
-        )}
+       
       </Card>
 
       <div className="search-wrapper">
@@ -442,13 +404,17 @@ function Home() {
           
         </div> 
         {displayForms.length === 0 ? (
-          <div className="no-results">
-            <p className="no-results-text">No forms whose title contains</p>
-          </div>
+       <div className="flex justify-center items-center h-screen">
+       <div className="no-results">
+         <p className="no-results-text" >No Exam With Such Title </p>
+       </div>
+     </div>
+     
+        
         ) : (
           <div 
           className="forms-table" 
-          style={{ marginTop: "16%" }}>
+          style={{ marginTop: "10%" }}>
             <FormsTable
               displayForms={displayForms}
               setDisplayForms={setDisplayForms}

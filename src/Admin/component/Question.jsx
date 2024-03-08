@@ -28,8 +28,8 @@ function Question({ questionObj, questionIdx }) {
     <div
       className={`flex flex-col  bg-white rounded-md p-2  mt-3 ${
         isQuestionActive
-          ? "border-l-8 border-l-indigo-500 border-y-2 border-y-indigo-300 border-r-2 border-r-indigo-300 transition-all duration-400 ease-in-out"
-          : "border-2 border-indigo-300 transition-all duration-300 ease-in-out"
+          ? "border-l-8 border-l-blue-500 border-y-2 border-y-blue-700 border-r-2 border-r-blue-700 transition-all duration-400 ease-in-out"
+          : "border-2 border-blue-700 transition-all duration-300 ease-in-out"
       } `}
       key={questionObj.id}
       onClick={() => dispatch(activateQuestion(questionIdx))}
@@ -37,7 +37,7 @@ function Question({ questionObj, questionIdx }) {
       <div className="p-2 flex flex-row justify-between">
         {isQuestionActive ? (
           <input
-            className="h-9 w-3/4 text-base focus:outline-none focus:border-b-2 border-indigo-500 "
+            className="h-9 w-3/4 text-base focus:outline-none focus:border-b-2 border-blue-700 "
             placeholder="Please Enter Question"
             value={question}
             onChange={(e) => {

@@ -78,8 +78,8 @@ function FormsTable({ displayForms, setDisplayForms }) {
 
   return (
     <table className="w-full max-w-full " style={{ width: '1250px' }}>
-      <thead className="p-6 bg-blue-50 border-2 border-indigo-200 ">
-        <tr className=" text-indigo-600">
+      <thead className="p-6  border border-blue-600 ">
+        <tr className="text-black-200 ">
           <th className="p-3 font-semibold tracking-wide text-center">
             <span>No.</span>
           </th>
@@ -134,8 +134,8 @@ function FormsTable({ displayForms, setDisplayForms }) {
             <tr
               key={idx}
               className={`${
-                idx % 2 === 0 ? "bg-indigo-200" : ""
-              } border-x-2 border-b-2 border-indigo-200`}
+                idx % 2 === 0 ? "bg--200" : ""
+              } border-x-2 border border-blue-600`}
             >
               <td className="p-3 tracking-wide text-center">{idx + 1}</td>
               <td className="p-3 tracking-wide text-center">{form.title}</td>
@@ -159,9 +159,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
               <td className="p-3 tracking-wide text-center">
                 <button
                   onClick={() => copy(`${`http://localhost:5173`}/ansForm/${form._id}`)}
-                  className={`hover:ring-8 ${
-                    idx % 2 === 0 ? "ring-indigo-100" : "ring-indigo-200"
-                  } active:text-indigo-600 rounded-full hover:transition-all duration-500 ease-in-out`}
+                  className={`hover:ring-8  active:text-blue-600 rounded-full hover:transition-all duration-500 ease-in-out`}
                 >
                   <MdContentCopy fontSize={"1.5rem"} />
                 </button>
@@ -171,9 +169,9 @@ function FormsTable({ displayForms, setDisplayForms }) {
                   onClick={() =>
                     navigate(`/formDetails/${form._id}/submissions`)
                   }
-                  className={`hover:ring-8 ${
-                    idx % 2 === 0 ? "ring-indigo-100" : "ring-indigo-200"
-                  } active:text-indigo-600 rounded-full hover:transition-all duration-500 ease-in-out`}
+                  className={`hover:ring-8 
+                 
+                  active: rounded-full hover:transition-all duration-500 ease-in-out`}
                 >
                   <BsEyeFill fontSize={"1.5rem"} color="rgb(55 48 163)" />
                 </button>
@@ -184,7 +182,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
                 ) : (
                   <button
                     onClick={() => handlePost(form._id)}
-                    className={`rounded-md px-2 py-1 bg-indigo-500 text-white hover:bg-indigo-600`}
+                    className={`rounded-md px-2 py-1 text-white`}
                   >
                     Post
                   </button>
