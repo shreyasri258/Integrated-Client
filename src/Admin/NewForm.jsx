@@ -13,13 +13,15 @@ import {
   resetForm,
   updateDescription,
   updateTitle,
-  updateDuration
+  updateDuration,
+  updateTimeDuration
 } from "../store/slices/newForm";
 import { useNavigate } from "react-router-dom";
 import { BsPlusCircleDotted, BsExclamationCircle } from "react-icons/bs";
 import Button from "./ui/Button";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { useAuth } from "../store/UserAuth";
+import {AdminContext} from "../contextCalls/adminContext/AdminContext"
 
 const initialQuestion = {
   question: "",
@@ -31,23 +33,25 @@ const initialQuestion = {
 
 function NewForm() {
   const dispatch = useDispatch();
-  const { authUser } = useAuth();
+  // const { authUser } = useAuth();
   const questions = useSelector(getQuestions);
   const form = useSelector(getForm);
-  const { title, description, active, duration } = form;
+  const { title, description, active, timeDuration } = form;
   const navigate = useNavigate();
   const [msg, setMsg] = useState(null);
-
+  const { admin } = useContext(AdminContext);
+  // const [adminDetails, setAdminDetails] = useState({ name: "", email: "" });
+  console.log('form in create - ',form);
   async function handleCreatingForm(form) {
-    if (title !== "" && duration !=="") {
+    if (title !== "" && timeDuration !=="") {
       const refinedForm = getRefinedForm(form);
       const res = await postRefinedForm(refinedForm);
-      if (res.status === 200) {
+      if (res.status === 201) {
         dispatch(resetForm());
         navigate("/admin-dashboard");
       }
       if (res.status === 401) {
-        await authUser();
+        //await authUser();
       }
     } else {
       setMsg("Title and Duration are necessary to create the Exam");
@@ -105,10 +109,11 @@ function NewForm() {
 
           <div className="p-4 border-b border-black-200">
             <input
-              className="w-full py-2 bg-black-100 border-b-2 border-black-600 text-lg focus:outline-none placeholder-black-600"
-              value={duration}
+              className="w-full py-2 bg-gray-100 border-b-2 border-gray-600 text-lg focus:outline-none placeholder-gray-600"
+              value={timeDuration}
+
               placeholder="Enter Form Duration (in minutes)"
-              onChange={(e) => dispatch(updateDuration(e.target.value))}
+              onChange={(e) => dispatch(updateTimeDuration(e.target.value))}
             />
           </div>
 
@@ -154,7 +159,7 @@ function NewForm() {
             <Button
               className=" bg-blue-700 hover:bg-blue-700 text-white px-4 py-2 rounded-full hover:ring-2 hover:ring-blue-700 transition-all duration-300 ease-in-out "
               onClick={() => {
-                if (!title || !duration) {
+                if (!title || !timeDuration) {
                   Swal.fire({
                     icon: 'error',
                     title: 'Error Creating Exam',

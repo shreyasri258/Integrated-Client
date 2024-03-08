@@ -30,6 +30,7 @@ function ViewFormDetails() {
     async function setFormObj() {
       setIsLoading(true);
       const newForm = await getFormFromServer(formId);
+      console.log('newForm client - ',newForm);
       dispatch(setForm(newForm));
       setAcceptingStatus(newForm.accepting);
       setIsLoading(false);

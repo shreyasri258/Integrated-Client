@@ -32,7 +32,8 @@ function AnsForm() {
         const res = await getQuestionForm(formId);
         console.log(res);
         if (res.status === 200) {
-          const form = res.data.form;
+          const form = res.data;
+          console.log('form - ',form);
           setForm(form);
           dispatch(readyAns(form.questions.length));
         }
@@ -116,6 +117,7 @@ function AnsForm() {
               )}
 
               {questions.map((q, idx) => {
+                console.log('ques - ',q);
                 return (
                   <QuestionAns questionIdx={idx} questionObj={q} key={idx} />
                 );

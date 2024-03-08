@@ -23,9 +23,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import '../css/userDashboard.css';
 import InputAdornment from "@mui/material/InputAdornment";
 import { useNavigate } from "react-router-dom";
+// import { AdminContext } from "../contextCalls/adminContext/AdminContext"; // Import 
 
 function Home() {
-  const { user } = useAuth();
+  // const { user } = useAuth();
+  
   const [formsList, setFormsList] = useState([]);
   const [displayForms, setDisplayForms] = useState([]);
   const [search, setSearch] = useState("");
@@ -49,35 +51,35 @@ function Home() {
     setOpen(false);
   };
 
-  useEffect(() => {
-    fetchExamData();
-  }, []);
+  // useEffect(() => {
+  //   fetchExamData();
+  // }, []);
 
-  const fetchExamData = async () => {
-    try {
-      const adminData = localStorage.getItem("admin");
-      const token = JSON.parse(adminData).token;
+  // const fetchExamData = async () => {
+  //   try {
+  //     const adminData = localStorage.getItem("admin");
+  //     const token = JSON.parse(adminData).token;
 
-      if (!token) {
-        console.error("No token available");
-        return;
-      }
+  //     if (!token) {
+  //       console.error("No token available");
+  //       return;
+  //     }
 
-      const response = await axios.get(
-        "http://localhost:8800/exams/admin/exams",
-        {
-          headers: {
-            "x-auth-token": token,
-          },
-        }
-      );
+  //     const response = await axios.get(
+  //       "http://localhost:8800/exams/admin/exams",
+  //       {
+  //         headers: {
+  //           "x-auth-token": token,
+  //         },
+  //       }
+  //     );
 
-      console.log("successful fetch -> ", response.data);
-      setExamData(response.data);
-    } catch (error) {
-      console.error("Error fetching exam data:", error);
-    }
-  };
+  //     console.log("successful fetch -> ", response.data);
+  //     setExamData(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching exam data:", error);
+  //   }
+  // };
 
   const handleCreateExamClick = () => {
     setShowCreateExamPopup(true);
@@ -87,24 +89,24 @@ function Home() {
     setShowCreateExamPopup(false);
   };
   //To set sample Data for testing purposes
-  const [sampleForm, setSampleForm] = useState({
-    title: "Sample Form",
-    created: new Date().toISOString(),
-    questions: [],
-    ansForms: [],
-    accepting: true,
-    duration:"23",
-  });
+//   const [sampleForm, setSampleForm] = useState({
+//     title: "Sample Form",
+//     created: new Date().toISOString(),
+//     questions: [],
+//     ansForms: [],
+//     accepting: true,
+//     duration:"23",
+//   });
 
-  const [sampleFormAdded, setSampleFormAdded] = useState(false);
+//   const [sampleFormAdded, setSampleFormAdded] = useState(false);
 
-useEffect(() => {
-  if (!sampleFormAdded) {
-    setFormsList([sampleForm, ...formsList]); // Add the sample form to the beginning of the formsList
-    setDisplayForms([sampleForm, ...formsList]); // Update the displayForms as well
-    setSampleFormAdded(true);
-  }
-}, []);
+// useEffect(() => {
+//   if (!sampleFormAdded) {
+//     setFormsList([sampleForm, ...formsList]); // Add the sample form to the beginning of the formsList
+//     setDisplayForms([sampleForm, ...formsList]); // Update the displayForms as well
+//     setSampleFormAdded(true);
+//   }
+// }, []);
 
   const handleSubmitCreateExam = async (newExam) => {
     try {
@@ -152,11 +154,11 @@ useEffect(() => {
     setValue(newValue);
   };
 
-  const handleDeleteExam = (index) => {
-    const updatedExamData = [...examData];
-    updatedExamData.splice(index, 1);
-    setExamData(updatedExamData);
-  };
+  // const handleDeleteExam = (index) => {
+  //   const updatedExamData = [...examData];
+  //   updatedExamData.splice(index, 1);
+  //   setExamData(updatedExamData);
+  // };
 
   const handlePostExam = async (index) => {
     try {
@@ -248,14 +250,18 @@ useEffect(() => {
 
   console.log("the exams are ", examData);
 
+  
   useEffect(function () {
     async function setForms() {
       setIsLoading(true);
       const temp = await getFormsList();
+      console.log(temp);
       if (Array.isArray(temp)) {
         const forms = temp.reverse();
+        console.log('forms in Dashboard - ', forms)
         setFormsList(forms);
         setDisplayForms(forms);
+
       } else {
         console.error("getFormsList() did not return an array:", temp);
       }

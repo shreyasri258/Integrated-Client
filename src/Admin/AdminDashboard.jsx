@@ -56,7 +56,7 @@ const handleCloseDetails = () => {
         return;
       }
       // Send a GET request to fetch exam data from the server
-      const response = await axios.get('http://localhost:8800/exams/admin/exams', {
+      const response = await axios.get('http://localhost:8800/exams/admin/questionforms', {
         headers: {
           'x-auth-token': token // Include the admin's authentication token in the request header
         }
@@ -107,7 +107,7 @@ const handleCloseDetails = () => {
       const token = adminData.token;
       console.log(newExam);
       // Send a POST request to the server to create a new exam
-      const response = await axios.post('http://localhost:8800/exams/admin/exams', {
+      const response = await axios.post('http://localhost:8800/exams/admin/questionforms', {
         title: newExam.examTitle,
         timeDuration: newExam.examDuration,
         googleFormLink: newExam.googleFormLink,
@@ -195,7 +195,7 @@ const handlePostExam = async (index) => {
       console.log('put-token ',token)
     // Send the PUT request to update the exam on the server
     const response = await axios.put(
-      `http://localhost:8800/exams/admin/exams/${updatedExamData[index]._id}`,
+      `http://localhost:8800/exams/admin/questionforms/${updatedExamData[index]._id}`,
       requestData,
       {
         headers: {
@@ -243,7 +243,7 @@ const handleRemoveExam = async (index) => {
       // Extract the token from the admin data object
       const token = adminData.token;
     console.log('examdata-> ',examData[index]);
-    await axios.delete(`http://localhost:8800/exams/admin/exams/${examData[index]._id}`, {
+    await axios.delete(`http://localhost:8800/exams/admin/questionforms/${examData[index]._id}`, {
       headers: {
         'x-auth-token': token  // Include the admin's authentication token in the request header
       }

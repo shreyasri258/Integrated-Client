@@ -17,7 +17,8 @@ const initialState = {
   id: null,
   title: "",
   description: "",
-  active: { title: true, description: false, questionIdx: null },
+  timeDuration : "",
+  active: { title: true, description: false, questionIdx: null ,timeDuration:null},
   questions: [initialQuestion],
   duration: "", // Add duration to initial state
 };
@@ -27,14 +28,17 @@ const newFormSlice = createSlice({
   initialState,
   reducers: {
     activateTitle(state, action) {
-      state.active = { title: true, description: false, questionIdx: null };
+      state.active = { title: true, description: false, questionIdx: null ,timeDuration : null};
     },
     activateDescription(state, action) {
-      state.active = { title: false, description: true, questionIdx: null };
+      state.active = { title: false, description: true, questionIdx: null ,timeDuration:null};
+    },
+    activateTime(state, action) {
+      state.active = { title: false, description: true, questionIdx: null ,timeDuration:true};
     },
     activateQuestion(state, action) {
       const questionIdx = action.payload;
-      state.active = { title: false, description: false, questionIdx };
+      state.active = { title: false, description: false, questionIdx ,timeDuration:false};
     },
     updateTitle(state, action) {
       const title = action.payload;
@@ -43,6 +47,10 @@ const newFormSlice = createSlice({
     updateDescription(state, action) {
       const description = action.payload;
       state.description = description;
+    },
+    updateTimeDuration(state, action) {
+      const timeDuration = action.payload;
+      state.timeDuration = timeDuration;
     },
     updateDuration(state, action) {
       state.duration = action.payload;
@@ -133,7 +141,7 @@ const newFormSlice = createSlice({
   },
 });
 
-const BASE_URL = 'http://localhost:8081';
+const BASE_URL = 'http://localhost:8800';//8081
 
 export async function postRefinedForm(refinedForm) {
   try {
@@ -141,11 +149,14 @@ export async function postRefinedForm(refinedForm) {
    
    // const  token = JSON.parse(adminData).token;
     console.log(refinedForm);
-    const token = localStorage.getItem("token");
+    const adminLocalStorageString = localStorage.getItem('admin');
+    const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+    const token = adminLocalStorageObject.token;
+    console.log('admin - token - ', token);
     const res = await axios
-      .post(`${BASE_URL}/questionForm`, refinedForm, {
+      .post(`${`http://localhost:8800/exams/admin`}/questionforms`, refinedForm, {
         headers: {
-          Authorization: `${token}`,
+          'x-auth-token': `${token}`,
         },
       })
       .catch((error) => console.log(error.response));
@@ -157,10 +168,13 @@ export async function postRefinedForm(refinedForm) {
 
 export async function deleteForm(formId) {
   try {
-    const token = localStorage.getItem("token");
-    const res = await axios.delete(`${BASE_URL}/questionForm/${formId}`, {
+    const adminLocalStorageString = localStorage.getItem('admin');
+    const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+    const token = adminLocalStorageObject.token;
+    console.log('token - ',token);
+    const res = await axios.delete(`${BASE_URL}/exams/admin/questionforms/${formId}`, {
       headers: {
-        Authorization: `${token}`,
+        'x-auth-token': `${token}`,
       },
     });
 
@@ -171,22 +185,29 @@ export async function deleteForm(formId) {
 }
 
 export async function getFormsList() {
-  const token = localStorage.getItem("token");
+  const adminLocalStorageString = localStorage.getItem("admin");
+  const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+  const token = adminLocalStorageObject.token;
+  console.log('admin - token - ', token);
   try {
     const res = await axios
-      .get(`${BASE_URL}/questionForm/forms`, {
+      .get(`${`http://localhost:8800/exams/admin/questionforms`}`, {
         headers: {
-          Authorization: `${token}`,
+          'x-auth-token': `${token}`,
         },
       })
       .catch((error) => {
         console.log(error);
         return error.response;
       });
-    if (res.status === 200) {
-      const forms = res.data.forms;
-      return forms;
-    } else if (res.status === 401) {
+      if (res.status === 200) {
+        console.log('resp - ', res.data);
+        const forms = res.data;
+        //const allQuestions = forms.reduce((acc, form) => acc.concat(form.questions), []);
+        console.log(forms);
+        return forms;
+      }
+       else if (res.status === 401) {
       return "";
     }
   } catch (error) {
@@ -195,25 +216,50 @@ export async function getFormsList() {
 }
 
 export async function getFormFromServer(formId) {
-  const token = localStorage.getItem("token");
-  const res = await axios.get(`${BASE_URL}/questionForm/${formId}`, {
+  const adminLocalStorageString = localStorage.getItem("admin");
+  const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+  const token = adminLocalStorageObject.token;
+  // const token = localStorage.getItem("token");
+  const res = await axios.get(`${`http://localhost:8800/exams/admin/questionforms`}/${formId}`, {
     headers: {
-      Authorization: token,
+      'x-auth-token': token,
     },
   });
 
-  const form = res.data.form;
+  const form = res.data;
+  console.log('form received - ',res.data);
   return form;
 }
 
-export async function toggleAcceptingStatus(formId) {
-  const token = localStorage.getItem("token");
-  const res = await axios.post(
-    `${BASE_URL}/questionForm/formStatus/${formId}`,
+export async function postToStudents(formId) {
+  const adminLocalStorageString = localStorage.getItem("admin");
+  const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+  const token = adminLocalStorageObject.token;
+  const res = await axios.put(
+    `${BASE_URL}/exams/admin/questionforms/${formId}`,
     null,
     {
       headers: {
-        Authorization: `${token}`,
+        'x-auth-token': `${token}`,
+      },
+    }
+  );
+  if (res.status === 200) return true;
+
+  return false;
+}
+
+
+export async function toggleAcceptingStatus(formId) {
+  const adminLocalStorageString = localStorage.getItem("admin");
+  const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+  const token = adminLocalStorageObject.token;
+  const res = await axios.post(
+    `${BASE_URL}/exams/admin/questionforms/${formId}/toggle/`,
+    null,
+    {
+      headers: {
+        'x-auth-token': `${token}`,
       },
     }
   );
@@ -228,6 +274,7 @@ export const {
   updateTitle,
   updateDescription,
   updateDuration, // Added updateDuration action
+  updateTimeDuration,
   updateQuestion,
   changeType,
   addOption,
@@ -256,6 +303,7 @@ export const getRefinedForm = (form) => {
   const refinedForm = {
     title: form.title,
     description: form.description,
+    timeDuration:form.timeDuration,
     questions: form.questions.map((q) => {
       const { question, type, options, required } = q;
       if (type === "") {
@@ -264,6 +312,6 @@ export const getRefinedForm = (form) => {
       return { question, type, options, required };
     }),
   };
-
+  console.log('refined-form - ', refinedForm)
   return refinedForm;
 };

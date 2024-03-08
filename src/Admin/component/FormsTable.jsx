@@ -7,17 +7,24 @@ import { useState } from "react";
 import Badge from "../ui/Badge";
 import { useNavigate } from "react-router-dom";
 import { getDate } from "../utils/index";
+import axios from 'axios'
+import {postToStudents} from "../../store/slices/newForm"
 
 function FormsTable({ displayForms, setDisplayForms }) {
   const [order, setOrder] = useState("ASC");
   const navigate = useNavigate();
-
-  const CLIENT_URL = 'http://localhost:8081';
-  const handlePost = (formId) => {
-    const updatedForms = displayForms.map((form) =>
-      form._id === formId ? { ...form, posted: !form.posted } : form
-    );
-    setDisplayForms(updatedForms);
+  
+  //const CLIENT_URL = `http://localhst:8800`//'http://localhost:8081';
+  const BASE_URL = 'http://localhost:8800'; // 8081
+  const handlePost = async (formId) => {
+    const res = await postToStudents(formId);
+    if (res) {
+      console.log('form updated');
+      const updatedForms = displayForms.map((form) =>
+        form._id === formId ? { ...form, posted: !form.posted } : form
+      );
+      setDisplayForms(updatedForms);
+    }
   };
 
   function sortByTitles() {
@@ -130,6 +137,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
       </thead>
       <tbody>
         {displayForms.map((form, idx) => {
+          console.log('form in dashboard - ', form);
           return (
             <tr
               key={idx}
@@ -139,7 +147,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
             >
               <td className="p-3 tracking-wide text-center">{idx + 1}</td>
               <td className="p-3 tracking-wide text-center">{form.title}</td>
-              <td className="p-3 tracking-wide text-center">{form.duration}</td>
+              <td className="p-3 tracking-wide text-center">{form.timeDuration} min</td>
               <td className="p-3 tracking-wide text-center">
                 {getDate(form.created)}
               </td>
@@ -159,7 +167,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
               <td className="p-3 tracking-wide text-center">
                 <button
                   onClick={() => copy(`${`http://localhost:5173`}/ansForm/${form._id}`)}
-                  className={`hover:ring-8  active:text-blue-600 rounded-full hover:transition-all duration-500 ease-in-out`}
+                  className={`hover:ring-8  bg-red-400 rounded-full hover:transition-all duration-500 ease-in-out`}
                 >
                   <MdContentCopy fontSize={"1.5rem"} />
                 </button>
@@ -169,15 +177,15 @@ function FormsTable({ displayForms, setDisplayForms }) {
                   onClick={() =>
                     navigate(`/formDetails/${form._id}/submissions`)
                   }
-                  className={`hover:ring-8 
+                  className={`hover:ring-8 bg-red-400
                  
                   active: rounded-full hover:transition-all duration-500 ease-in-out`}
                 >
-                  <BsEyeFill fontSize={"1.5rem"} color="rgb(55 48 163)" />
+                  <BsEyeFill fontSize={"1.5rem"} color="" />
                 </button>
               </td>
               <td className="p-3 tracking-wide text-center">
-                {form.posted ? (
+                {form.postedForStudents ? (
                   <Badge type={"accept"} onClick={() => handlePost(form._id)}>Posted</Badge>
                 ) : (
                   <button
