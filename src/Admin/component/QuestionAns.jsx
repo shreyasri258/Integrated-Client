@@ -76,11 +76,11 @@ function QuestionAns({ questionObj, answer }) {
         )} */}
         {type === "dropdown" && (
           <div className="flex">
-            <button className="bg-indigo-500 text-white p-2 w-52 rounded-md ">
+            <button className="bg-blue-700 text-white p-2 w-52 rounded-md ">
               <span>Select Answer</span>
               <span className="text-lg "> &#8595;</span>
             </button>
-            <span className="self-center ml-6 text-lg border-b-2 border-indigo-600">
+            <span className="self-center ml-6 text-lg border-b-2 border-blue-700">
               {options.find((option) => option === answer)}
             </span>
           </div>

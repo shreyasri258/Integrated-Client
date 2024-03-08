@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   activateDescription,
   activateTitle,
+  activateTime,
   addQuestionObj,
   getForm,
   getQuestions,
@@ -22,6 +23,8 @@ import Button from "./ui/Button";
 import { useState,useContext } from "react";
 import { useAuth } from "../store/UserAuth";
 import {AdminContext} from "../contextCalls/adminContext/AdminContext"
+import { color } from "framer-motion";
+import { red } from "@mui/material/colors";
 
 const initialQuestion = {
   question: "",
@@ -61,9 +64,9 @@ function NewForm() {
   return (
     
     <div className="flex items-center justify-center w-screen mb-8 mt-4">
-       <div className="fixed top-10 left-10 mt-2 ml-2">
+       <div className="bg-transparent fixed top-10 left-10 mt-2 ml-2">
            
-            <img src={Icon} alt="Icon" />
+            <img className="bg-transparent" src={Icon} alt="Icon" />
           </div>
 
           <div className="fixed bottom-10 right-10 z-50">
@@ -80,7 +83,7 @@ function NewForm() {
           Create Exam
         </div>
 
-        <div className="border-2 border-black-200 rounded-md my-3 relative">
+        <div className="  relative">
           {/* Space reserved for your icon */}
          
 
@@ -88,11 +91,12 @@ function NewForm() {
             onClick={() => {
               dispatch(activateTitle());
             }}
-            className="p-4 border-b border-black-200 cursor-pointer hover:bg-black-50"
+            className="p-4 cursor-pointer  hover:bg-black-50"
           >
             {active.title ? (
               <input
-                className="w-full py-2 bg-black-100 border-b-2 border-black-600 text-lg focus:outline-none placeholder-black-600"
+              
+                className="bg-transparent rounded-none  border-t-0 border-b-2 border-blue-700 border-l-0 border-r-0 text-lg  placeholder-black-600"
                 value={title}
                 placeholder="Enter Form Title"
                 onChange={(e) => {
@@ -106,32 +110,48 @@ function NewForm() {
               </p>
             )}
           </div>
-
-          <div className="p-4 border-b border-black-200">
-            <input
-              className="w-full py-2 bg-gray-100 border-b-2 border-gray-600 text-lg focus:outline-none placeholder-gray-600"
-              value={timeDuration}
-
-              placeholder="Enter Form Duration (in minutes)"
-              onChange={(e) => dispatch(updateTimeDuration(e.target.value))}
-            />
+          <div
+            onClick={() => {
+              dispatch(activateTime());
+            }}
+            className="p-4  cursor-pointer hover:bg-black-50"
+          >
+            {active.timeDuration ? (
+              <input
+                className="bg-transparent rounded-none border-t-0 border-b-2 border-blue-700 border-l-0 border-r-0 text-lg bg-color-slate placeholder-black-600"
+                value={timeDuration}
+                placeholder="Enter Form Duration (in minutes)"
+                onChange={(e) => {
+                  dispatch(updateTimeDuration(e.target.value));
+                  setMsg(null);
+                }}
+              />
+            ) : (
+              <p className="text-lg text-black-600">
+                {timeDuration || "Enter Form Duration"}
+              </p>
+            )}
           </div>
 
+          
           <div
             onClick={() => {
               dispatch(activateDescription());
             }}
-            className="p-4 border-b border-black-200 cursor-pointer hover:bg-black-50"
+            className="p-4 700 cursor-pointer hover:bg-black-50"
           >
             {active.description ? (
               <input
-                className="w-full py-2 bg-black-100 border-b-2 border-black-600 text-base focus:outline-none placeholder-black-600"
+                className="bg-transparent rounded-none border-t-0 border-b-2 border-blue-700 border-l-0 border-r-0 text-lg bg-color-slate placeholder-black-600"
                 value={description}
                 placeholder="Enter Form Description"
-                onChange={(e) => dispatch(updateDescription(e.target.value))}
+                onChange={(e) => {
+                  dispatch(updateDescription(e.target.value));
+                  setMsg(null);
+                }}
               />
             ) : (
-              <p className="text-base text-black-600">
+              <p className="text-lg text-black-600">
                 {description || "Enter Form Description"}
               </p>
             )}

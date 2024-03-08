@@ -26,9 +26,9 @@ function Question({ questionObj, questionIdx }) {
 
   return (
     <div
-      className={`flex flex-col  bg-white rounded-md p-2  mt-3 ${
+      className={`flex flex-col  bg-blue rounded-md p-2  mt-3 ${
         isQuestionActive
-          ? "border-l-8 border-l-blue-500 border-y-2 border-y-blue-700 border-r-2 border-r-blue-700 transition-all duration-400 ease-in-out"
+          ? "border-l-8 border-blue-700 border-y-2 border-y-blue-700 border-r-2 border-r-blue-700 transition-all duration-400 ease-in-out"
           : "border-2 border-blue-700 transition-all duration-300 ease-in-out"
       } `}
       key={questionObj.id}
@@ -47,7 +47,7 @@ function Question({ questionObj, questionIdx }) {
             }}
           />
         ) : (
-          <p className="text-base border-0">
+          <p className="text-base border-blue">
             {question || (
               <span className="text-slate-400">Please Enter Question</span>
             )}
@@ -72,13 +72,13 @@ function Question({ questionObj, questionIdx }) {
       <div className="px-2 pb-3 flex justify-between flex-col">
         <div className="">
           {type === "short-ans" && (
-            <p className="text-base underline underline-offset-2 text-slate-400 decoration-slate-300">
+            <p className="text-base  underline-offset-2 text-slate-400 decoration-blue-900">
               Short answer text
             </p>
           )}
 
           {type === "long-ans" && (
-            <p className="text-base underline underline-offset-2 text-slate-400 decoration-slate-300">
+            <p className="text-base  underline-offset-2 text-slate-400 decoration-blue-900">
               Long answer text
             </p>
           )}
