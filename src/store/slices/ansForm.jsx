@@ -7,12 +7,13 @@ const initialState = {
   answers: [],
 };
 
-const BASE_URL = 'http://localhost:8081';
+const BASE_URL = 'http://localhost:8800';//8081
 
 export async function getQuestionForm(formId) {
   const res = await axios
-    .get(`${BASE_URL}/ansform/${formId}`)
-    .catch((error) => error.response);
+    .get(`${BASE_URL}/exams/questionforms/${formId}`)
+    .catch((error) => error.response)
+    console.log(res);
   return res;
 }
 
@@ -42,8 +43,10 @@ const ansFormSlice = createSlice({
 });
 
 export async function submitForm(answers, formId) {
+  const score = 0
+  const malpracticeAttempts = 0
   const res = await axios
-    .post(`${BASE_URL}/ansform`, { formId, answers })
+    .post(`${BASE_URL}/exams/questionforms/${formID}/attempts`, { formId, answers , score , malpracticeAttempts })
     .catch((error) => error.response);
   return res;
 }

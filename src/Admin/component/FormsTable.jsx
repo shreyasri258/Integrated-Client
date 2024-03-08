@@ -7,18 +7,24 @@ import { useState } from "react";
 import Badge from "../ui/Badge";
 import { useNavigate } from "react-router-dom";
 import { getDate } from "../utils/index";
+import axios from 'axios'
+import {postToStudents} from "../../store/slices/newForm"
 
 function FormsTable({ displayForms, setDisplayForms }) {
   const [order, setOrder] = useState("ASC");
   const navigate = useNavigate();
   
   //const CLIENT_URL = `http://localhst:8800`//'http://localhost:8081';
-  const CLIENT_URL = 'http://localhost:8081';
-  const handlePost = (formId) => {
-    const updatedForms = displayForms.map((form) =>
-      form._id === formId ? { ...form, posted: !form.posted } : form
-    );
-    setDisplayForms(updatedForms);
+  const BASE_URL = 'http://localhost:8800'; // 8081
+  const handlePost = async (formId) => {
+    const res = await postToStudents(formId);
+    if (res) {
+      console.log('form updated');
+      const updatedForms = displayForms.map((form) =>
+        form._id === formId ? { ...form, posted: !form.posted } : form
+      );
+      setDisplayForms(updatedForms);
+    }
   };
 
   function sortByTitles() {
@@ -181,7 +187,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
                 </button>
               </td>
               <td className="p-3 tracking-wide text-center">
-                {form.posted ? (
+                {form.postedForStudents ? (
                   <Badge type={"accept"} onClick={() => handlePost(form._id)}>Posted</Badge>
                 ) : (
                   <button

@@ -141,7 +141,7 @@ const newFormSlice = createSlice({
   },
 });
 
-const BASE_URL = 'http://localhost:8081';
+const BASE_URL = 'http://localhost:8800';//8081
 
 export async function postRefinedForm(refinedForm) {
   try {
@@ -168,11 +168,13 @@ export async function postRefinedForm(refinedForm) {
 
 export async function deleteForm(formId) {
   try {
-    const token = localStorage.getItem("admin").token;
+    const adminLocalStorageString = localStorage.getItem('admin');
+    const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+    const token = adminLocalStorageObject.token;
     console.log('token - ',token);
-    const res = await axios.delete(`${BASE_URL}/questionForm/${formId}`, {
+    const res = await axios.delete(`${BASE_URL}/exams/admin/questionforms/${formId}`, {
       headers: {
-        Authorization: `${token}`,
+        'x-auth-token': `${token}`,
       },
     });
 
@@ -214,25 +216,50 @@ export async function getFormsList() {
 }
 
 export async function getFormFromServer(formId) {
-  const token = localStorage.getItem("token");
-  const res = await axios.get(`${BASE_URL}/questionForm/${formId}`, {
+  const adminLocalStorageString = localStorage.getItem("admin");
+  const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+  const token = adminLocalStorageObject.token;
+  // const token = localStorage.getItem("token");
+  const res = await axios.get(`${`http://localhost:8800/exams/admin/questionforms`}/${formId}`, {
     headers: {
-      Authorization: token,
+      'x-auth-token': token,
     },
   });
 
-  const form = res.data.form;
+  const form = res.data;
+  console.log('form received - ',res.data);
   return form;
 }
 
-export async function toggleAcceptingStatus(formId) {
-  const token = localStorage.getItem("token");
-  const res = await axios.post(
-    `${BASE_URL}/questionForm/formStatus/${formId}`,
+export async function postToStudents(formId) {
+  const adminLocalStorageString = localStorage.getItem("admin");
+  const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+  const token = adminLocalStorageObject.token;
+  const res = await axios.put(
+    `${BASE_URL}/exams/admin/questionforms/${formId}`,
     null,
     {
       headers: {
-        Authorization: `${token}`,
+        'x-auth-token': `${token}`,
+      },
+    }
+  );
+  if (res.status === 200) return true;
+
+  return false;
+}
+
+
+export async function toggleAcceptingStatus(formId) {
+  const adminLocalStorageString = localStorage.getItem("admin");
+  const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+  const token = adminLocalStorageObject.token;
+  const res = await axios.post(
+    `${BASE_URL}/exams/admin/questionforms/${formId}/toggle/`,
+    null,
+    {
+      headers: {
+        'x-auth-token': `${token}`,
       },
     }
   );

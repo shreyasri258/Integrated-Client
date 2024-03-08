@@ -44,7 +44,7 @@ function NewForm() {
     if (title !== "") {
       const refinedForm = getRefinedForm(form);
       const res = await postRefinedForm(refinedForm);
-      if (res.status === 200) {
+      if (res.status === 201) {
         dispatch(resetForm());
         navigate("/admin-dashboard");
       }
