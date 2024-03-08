@@ -36,7 +36,7 @@ function Option({ children, type, questionIdx, optionIdx }) {
             {type === "dropdown" && <p>{optionIdx + 1}.</p>}
 
             <input
-              className={`text-base m-3 w-full focus:outline-none border-b-2 border-b-indigo-500`}
+              className={`text-base m-3 w-full focus:outline-none border-b-2 border-b-blue-500`}
               defaultValue={value}
               onChange={(e) => {
                 dispatch(
