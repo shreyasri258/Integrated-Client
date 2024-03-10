@@ -16,7 +16,7 @@ function SidebarItem({
   const { pathname } = useLocation();
 
   if (type === "title") {
-    return <div className="text-lg text-indigo-500 p-2 py-3">{content}</div>;
+    return <div className="text-lg text-blue-500 p-2 py-3">{content}</div>;
   }
 
   if (type === "info") {
@@ -24,9 +24,9 @@ function SidebarItem({
       <div className="flex items-center p-2 justify-between ">
         <div className="flex">
           <span className="">{icon}</span>
-          <span className="text-base px-2 text-indigo-600">{label}</span>
+          <span className="text-base px-2 text-blue-600">{label}</span>
         </div>
-        <span className="px-2 text-sm text-white bg-indigo-500 rounded-full justify-self-end ">
+        <span className="px-2 text-sm text-white bg-blue-500 rounded-full justify-self-end ">
           {info}
         </span>
       </div>
@@ -42,8 +42,8 @@ function SidebarItem({
       <Link to={to}>
         <div
           className={`flex p-2 ${
-            isCurrentPage && "bg-indigo-300"
-          } hover:bg-indigo-300 hover:text-white rounded-md transition-all items-center duration-300 ease-in-out`}
+            isCurrentPage && "bg-blue-300"
+          } hover:bg-blue-300 hover:text-white rounded-md transition-all items-center duration-300 ease-in-out`}
         >
           {isCurrentPage ? (
             <span className="text-slate-100">{selectedIcon}</span>
@@ -53,7 +53,7 @@ function SidebarItem({
 
           <span
             className={`px-2 text-base ${
-              isCurrentPage ? "text-slate-50" : "text-indigo-600"
+              isCurrentPage ? "text-slate-50" : "text-blue-600"
             } `}
           >
             {label}

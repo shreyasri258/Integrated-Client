@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Button({ children, type, to, onClick, classes }) {
   if (type === "Link") {
     return (
-      <div className="bg-indigo-500 text-white py-2 px-2.5 text-sm rounded-md font-medium transition-all duration-300 ease-in-out hover:bg-indigo-600">
+      <div className="bg-blue-500 text-white py-2 px-2.5 text-sm rounded-md font-medium transition-all duration-300 ease-in-out hover:bg-blue-600">
         <Link to={to}>{children}</Link>
       </div>
     );
@@ -12,7 +12,7 @@ function Button({ children, type, to, onClick, classes }) {
 
   if (type === "FormButton") {
     return (
-      <button className="bg-indigo-500 text-white py-1.5 px-.5 text-sm rounded-md font-medium transition-all duration-300 ease-in-out hover:bg-indigo-700">
+      <button className="bg-blue-500 text-white py-1.5 px-.5 text-sm rounded-md font-medium transition-all duration-300 ease-in-out hover:bg-blue-700">
         {children}
       </button>
     );
@@ -21,7 +21,7 @@ function Button({ children, type, to, onClick, classes }) {
   if (type === "action" || type === "submit") {
     return (
       <button
-        className={`bg-indigo-500 text-white py-2 px-2.5 text-sm rounded-${type === "submit" ? "full" : "md"} font-medium transition-all duration-300 ease-in-out hover:bg-indigo-600 ${classes}`}
+        className={`bg-blue-500 text-white py-2 px-2.5 text-sm rounded-${type === "submit" ? "full" : "md"} font-medium transition-all duration-300 ease-in-out hover:bg-blue-600 ${classes}`}
         onClick={onClick}
       >
         {children}

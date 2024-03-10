@@ -65,11 +65,11 @@ function QuestionAns({ questionObj, answer }) {
         )}
         {/* {type === "dropdown" && (
           <div className="flex">
-            <button className="bg-indigo-500 text-white p-2 w-52 rounded-md ">
+            <button className="bg-blue-500 text-white p-2 w-52 rounded-md ">
               <span>Select Answer</span>
               <span className="text-lg "> &#8595;</span>
             </button>
-            <span className="self-center ml-6 text-lg border-b-2 border-indigo-600">
+            <span className="self-center ml-6 text-lg border-b-2 border-blue-600">
               {options[answer]}
             </span>
           </div>
@@ -139,11 +139,11 @@ export default QuestionAns;
 
 //       {!options.length && (
 //         <div className="m-3">
-//           <button className="bg-indigo-500 text-white p-2 w-52 rounded-md ">
+//           <button className="bg-blue-500 text-white p-2 w-52 rounded-md ">
 //             <span>Select Answer</span>
 //             <span className="text-lg "> &#8595;</span>
 //           </button>
-//           <span className="self-center ml-6 text-lg border-b-2 border-indigo-600">
+//           <span className="self-center ml-6 text-lg border-b-2 border-blue-600">
 //             {answer}
 //           </span>
 //         </div>

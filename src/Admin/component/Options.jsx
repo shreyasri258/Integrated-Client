@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addOption, getActiveInfo } from "../../store/slices/newForm";
 import CheckBox from "../ui/CheckBox";
 import RadioButton from "../ui/RadioButton";
+import { useState } from "react";
 
 // Define the valid option types
 const OptionType = {
@@ -16,6 +17,11 @@ function Options({ type, options, questionIdx }) {
   const dispatch = useDispatch();
   const active = useSelector(getActiveInfo);
   const isQuestionActive = active.questionIdx === questionIdx;
+  const [value,setValue]=useState('')
+
+  function handleInput(event) {
+    setValue(event.target.value);
+  }
 
   const renderOption = (option, idx) => (
     <Option
@@ -58,8 +64,14 @@ function Options({ type, options, questionIdx }) {
                 Add option
               </span>
             </button>
+
           )}
         </div>
+        <label>
+          Set Correct Answer:
+          <input type="text" value={value} onChange={handleInput}  style={{ width: '500px', margin:"20px"}} />
+        </label>
+        
       </ul>
     </div>
   );

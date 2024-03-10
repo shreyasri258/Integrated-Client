@@ -6,12 +6,12 @@ function ShowCharts({ labels, answersFreq, chartLabel }) {
   const [selectedChart, setSelectedChart] = useState("bar");
   return (
     <div className=" flex flex-col gap-3 justify-start items-center w-full h-screen">
-      <div className=" flex w-1/6 justify-between rounded-full border-1 border-indigo-500">
+      <div className=" flex w-1/6 justify-between rounded-full border-1 border-blue-500">
         <div
           className={`flex justify-center flex-1 p-1 rounded-l-full cursor-pointer ${
             selectedChart === "bar"
-              ? "bg-indigo-400 text-white "
-              : " hover:bg-indigo-300"
+              ? "bg-blue-400 text-white "
+              : " hover:bg-blue-300"
           } `}
           onClick={() => setSelectedChart("bar")}
         >
@@ -22,8 +22,8 @@ function ShowCharts({ labels, answersFreq, chartLabel }) {
         <div
           className={`flex justify-center flex-1 p-1 rounded-r-full cursor-pointer ${
             selectedChart === "pie"
-              ? "bg-indigo-400 text-white "
-              : " hover:bg-indigo-300"
+              ? "bg-blue-400 text-white "
+              : " hover:bg-blue-300"
           } `}
           onClick={() => setSelectedChart("pie")}
         >
