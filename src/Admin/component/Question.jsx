@@ -1,61 +1,48 @@
-import PropTypes from "prop-types";
-import Options from "./Options";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { AiFillDelete } from 'react-icons/ai';
 import {
   activateQuestion,
   deleteQuestionObj,
-  getActiveInfo,
   updateQuestion,
-} from "../../store/slices/newForm";
-import { useState } from "react";
-import SelectQuestionType from "../component/SelectQuestionType";
-import { AiFillDelete } from "react-icons/ai";
-import Switch from "../ui/Switch";
+  updateCorrectAnswer, // Import updateCorrectAnswer action
+} from '../../store/slices/newForm';
+import Switch from '../ui/Switch';
+import Options from './Options';
+import SelectQuestionType from './SelectQuestionType';
 
 function Question({ questionObj, questionIdx }) {
-  const { options, required, question, type } = questionObj;
-
   const dispatch = useDispatch();
-  const active = useSelector(getActiveInfo);
+  const { options, required, question, type, correctAnswer } = questionObj;
+  const active = useSelector((state) => state.newForm.active);
 
   const [isSelectOpen, setIsSelectOpen] = useState(false);
 
   const isQuestionActive = active.questionIdx === questionIdx;
-  const hasOptions =
-    type === "multiple-choice" || type === "check-boxes" || type === "dropdown";
+  const hasOptions = ['multiple-choice', 'check-boxes', 'dropdown'].includes(type);
+
+  const handleCorrectAnswerChange = (e) => {
+    dispatch(updateCorrectAnswer({ questionIdx, correctAnswer: e.target.value }));
+  };
 
   return (
     <div
-      className={`flex flex-col  bg-white rounded-md p-2  mt-3 ${
+      className={`flex flex-col bg-white rounded-md p-2 mt-3 ${
         isQuestionActive
-          ? "border-l-8 border-l-blue-500 border-y-2 border-y-blue-700 border-r-2 border-r-blue-700 transition-all duration-400 ease-in-out"
-          : "border-2 border-blue-700 transition-all duration-300 ease-in-out"
-      } `}
+          ? 'border-l-8 border-l-blue-500 border-y-2 border-y-blue-700 border-r-2 border-r-blue-700 transition-all duration-400 ease-in-out'
+          : 'border-2 border-blue-700 transition-all duration-300 ease-in-out'
+      }`}
       key={questionObj.id}
       onClick={() => dispatch(activateQuestion(questionIdx))}
     >
-      <div className="p-2 flex flex-row justify-between">
-        {isQuestionActive ? (
-          <input
-            className="h-9 w-3/4 text-base focus:outline-none focus:border-b-2 border-blue-700 "
-            placeholder="Please Enter Question"
-            value={question}
-            onChange={(e) => {
-              dispatch(
-                updateQuestion({ questionIdx, question: e.target.value })
-              );
-            }}
-          />
-        ) : (
-          <p className="text-base border-0">
-            {question || (
-              <span className="text-slate-400">Please Enter Question</span>
-            )}
-            {question && required && (
-              <span className="text-rose-500 px-1">*</span>
-            )}
-          </p>
-        )}
+      <div className="p-4 border-b border-gray-200 flex justify-between">
+        <input
+          className="w-3/4 py-2 bg-gray-100 border-b-2 border-gray-600 text-lg focus:outline-none placeholder-gray-600"
+          value={question}
+          placeholder="Enter Question"
+          onChange={(e) => dispatch(updateQuestion({ questionIdx, question: e.target.value }))}
+        />
 
         <div className="">
           {isQuestionActive && (
@@ -71,20 +58,21 @@ function Question({ questionObj, questionIdx }) {
 
       <div className="px-2 pb-3 flex justify-between flex-col">
         <div className="">
-          {type === "short-ans" && (
-            <p className="text-base underline underline-offset-2 text-slate-400 decoration-slate-300">
-              Short answer text
-            </p>
-          )}
-
-          {type === "long-ans" && (
-            <p className="text-base underline underline-offset-2 text-slate-400 decoration-slate-300">
-              Long answer text
-            </p>
-          )}
-
           {hasOptions && (
-            <Options type={type} options={options} questionIdx={questionIdx} />
+            <>
+              <Options type={type} options={options} questionIdx={questionIdx} />
+              {type === 'multiple-choice' && isQuestionActive && (
+                <div className="flex items-center mt-2">
+                  <input
+                    type="text"
+                    className="border border-gray-400 p-1 mr-2"
+                    placeholder="Enter correct answer"
+                    value={correctAnswer || ''}
+                    onChange={handleCorrectAnswerChange}
+                  />
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -94,19 +82,15 @@ function Question({ questionObj, questionIdx }) {
           <div className="flex gap-2">
             <div className="flex items-center p-6 gap-4 ">
               <span className="text-base text-slate-400">Required</span>
-              <Switch
-                questionIdx={questionIdx}
-                startState={required}
-                type={"toggleRequired"}
-              />
+              <Switch questionIdx={questionIdx} startState={required} type="toggleRequired" />
             </div>
 
-            <div className="flex items-center  ">
+            <div className="flex items-center">
               <button
-                className=" p-3.5 rounded-full hover:bg-slate-100 transition-all duration-300 ease-in-out"
+                className="p-3.5 rounded-full hover:bg-slate-100 transition-all duration-300 ease-in-out"
                 onClick={() => dispatch(deleteQuestionObj(questionIdx))}
               >
-                <AiFillDelete fontSize={"1.5rem"} color="rgb(100 116 139)" />
+                <AiFillDelete fontSize="1.5rem" color="rgb(100 116 139)" />
               </button>
             </div>
           </div>
@@ -123,6 +107,7 @@ Question.propTypes = {
     required: PropTypes.bool.isRequired,
     question: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
+    correctAnswer: PropTypes.string, // Optional for multiple-choice questions
   }),
   questionIdx: PropTypes.number.isRequired,
 };
