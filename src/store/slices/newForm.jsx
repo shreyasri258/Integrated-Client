@@ -11,7 +11,9 @@ const initialQuestion = {
   activeOptionIdx: null,
   options: [],
   required: false,
+  correctAnswer: "", // Add correctAnswer property
 };
+
 
 const initialState = {
   id: null,
@@ -55,6 +57,12 @@ const newFormSlice = createSlice({
     updateDuration(state, action) {
       state.duration = action.payload;
     },
+    updateCorrectAnswer(state, action) {
+      const { questionIdx, correctAnswer } = action.payload;
+      state.questions[questionIdx].correctAnswer = correctAnswer;
+    },
+    
+    
     addQuestionObj(state, action) {
       const { newQuestion } = action.payload;
 
@@ -275,6 +283,7 @@ export const {
   updateDescription,
   updateDuration, // Added updateDuration action
   updateTimeDuration,
+  updateCorrectAnswer,
   updateQuestion,
   changeType,
   addOption,
@@ -306,9 +315,12 @@ export const getRefinedForm = (form) => {
     description: form.description,
     timeDuration:form.timeDuration,
     questions: form.questions.map((q) => {
-      const { question, type, options, required } = q;
+      const { question, type, options, required,correctAnswer  } = q;
       if (type === "") {
         return { question, type: "short-ans", options, required };
+      }
+      else if(type==="multiple-choice"){
+        return { question, type, options, required, correctAnswer };
       }
       return { question, type, options, required };
     }),

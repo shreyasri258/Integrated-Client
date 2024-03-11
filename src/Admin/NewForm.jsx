@@ -15,6 +15,7 @@ import {
   updateDescription,
   updateTitle,
   updateDuration,
+  updateCorrectAnswer,
   updateTimeDuration
 } from "../store/slices/newForm";
 import { useNavigate } from "react-router-dom";

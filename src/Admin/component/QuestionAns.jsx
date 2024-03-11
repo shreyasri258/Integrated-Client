@@ -33,14 +33,14 @@ function QuestionAns({ questionObj, answer }) {
         {type === "multiple-choice" && (
           <div className="flex flex-col gap-3">
             {options.map((option, idx) => {
-              console.log('options - map - ',option);
+              // console.log('options - map - ',option);
               return (
                 <RadioButton
                   answer={answer}
                   option={option}
                   idx={idx}
                   key={idx}
-                  disabled={true}
+                  disabled={false}
                   type={"show-ans"}
                 />
               );
@@ -63,7 +63,7 @@ function QuestionAns({ questionObj, answer }) {
             })}
           </div>
         )}
-        {/* {type === "dropdown" && (
+        {type === "dropdown" && (
           <div className="flex">
             <button className="bg-blue-500 text-white p-2 w-52 rounded-md ">
               <span>Select Answer</span>
@@ -73,8 +73,8 @@ function QuestionAns({ questionObj, answer }) {
               {options[answer]}
             </span>
           </div>
-        )} */}
-        {type === "dropdown" && (
+        )}
+        {/* {type === "dropdown" && (
           <div className="flex">
             <button className="bg-blue-700 text-white p-2 w-52 rounded-md ">
               <span>Select Answer</span>
@@ -84,7 +84,7 @@ function QuestionAns({ questionObj, answer }) {
               {options.find((option) => option === answer)}
             </span>
           </div>
-        )}
+        )} */}
 
       </div>
     </div>

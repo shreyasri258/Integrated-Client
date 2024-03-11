@@ -46,7 +46,7 @@ export async function submitForm(answers, formId) {
   const score = 0
   const malpracticeAttempts = 0
   const res = await axios
-    .post(`${BASE_URL}/exams/questionforms/${formID}/attempts`, { formId, answers , score , malpracticeAttempts })
+    .post(`${BASE_URL}/exams/questionforms/${formId}/attempts`, { formId, answers , score , malpracticeAttempts })
     .catch((error) => error.response);
   return res;
 }
@@ -57,6 +57,7 @@ export const { readyAns, setAns, setTriedSubmitting, resetAnsForm } =
 export default ansFormSlice.reducer;
 
 export const getAnswers = (state) => {
+  console.log('ans in getAns - ', state.ansForm.answers);
   return state.ansForm.answers;
 };
 
