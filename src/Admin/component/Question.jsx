@@ -28,21 +28,37 @@ function Question({ questionObj, questionIdx }) {
 
   return (
     <div
-      className={`flex flex-col bg-white rounded-md p-2 mt-3 ${
+
+      className={`flex flex-col  bg-blue rounded-md p-2  mt-3 ${
         isQuestionActive
-          ? 'border-l-8 border-l-blue-500 border-y-2 border-y-blue-700 border-r-2 border-r-blue-700 transition-all duration-400 ease-in-out'
-          : 'border-2 border-blue-700 transition-all duration-300 ease-in-out'
-      }`}
+          ? "border-l-8 border-blue-700 border-y-2 border-y-blue-700 border-r-2 border-r-blue-700 transition-all duration-400 ease-in-out"
+          : "border-2 border-blue-700 transition-all duration-300 ease-in-out"
+      } `}
       key={questionObj.id}
       onClick={() => dispatch(activateQuestion(questionIdx))}
     >
-      <div className="p-4 border-b border-gray-200 flex justify-between">
-        <input
-          className="w-3/4 py-2 bg-gray-100 border-b-2 border-gray-600 text-lg focus:outline-none placeholder-gray-600"
-          value={question}
-          placeholder="Enter Question"
-          onChange={(e) => dispatch(updateQuestion({ questionIdx, question: e.target.value }))}
-        />
+      <div className="p-2 flex flex-row justify-between">
+        {isQuestionActive ? (
+          <input
+            className="h-9 w-3/4 text-base focus:outline-none focus:border-b-2 border-blue-700 "
+            placeholder="Please Enter Question"
+            value={question}
+            onChange={(e) => {
+              dispatch(
+                updateQuestion({ questionIdx, question: e.target.value })
+              );
+            }}
+          />
+        ) : (
+          <p className="text-base border-blue">
+            {question || (
+              <span className="text-slate-400">Please Enter Question</span>
+            )}
+            {question && required && (
+              <span className="text-rose-500 px-1">*</span>
+            )}
+          </p>
+        )}
 
         <div className="">
           {isQuestionActive && (
@@ -58,6 +74,18 @@ function Question({ questionObj, questionIdx }) {
 
       <div className="px-2 pb-3 flex justify-between flex-col">
         <div className="">
+          {type === "short-ans" && (
+            <p className="text-base  underline-offset-2 text-slate-400 decoration-blue-900">
+              Short answer text
+            </p>
+          )}
+
+          {type === "long-ans" && (
+            <p className="text-base  underline-offset-2 text-slate-400 decoration-blue-900">
+              Long answer text
+            </p>
+          )}
+
           {hasOptions && (
             <>
               <Options type={type} options={options} questionIdx={questionIdx} />

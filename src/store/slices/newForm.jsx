@@ -36,7 +36,7 @@ const newFormSlice = createSlice({
       state.active = { title: false, description: true, questionIdx: null ,timeDuration:null};
     },
     activateTime(state, action) {
-      state.active = { title: false, description: true, questionIdx: null ,timeDuration:true};
+      state.active = { title: false, description: null, questionIdx: null ,timeDuration:true};
     },
     activateQuestion(state, action) {
       const questionIdx = action.payload;
@@ -292,6 +292,7 @@ export const {
   activateOption,
   toggleRequired,
   activateTitle,
+  activateTime,
   activateDescription,
   activateQuestion,
   resetForm,

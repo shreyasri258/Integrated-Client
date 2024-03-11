@@ -67,11 +67,11 @@ function SendByEmail() {
   return (
     <div className="flex justify-center items-center w-full  h-full">
       <div className="flex gap-6 w-1/2 flex-col ">
-        <h1 className="text-lg text-indigo-500 font-bold tracking-wide">
+        <h1 className="text-lg text-blue-500 font-bold tracking-wide">
           Send Form Link Via Email
         </h1>
         <input
-          className="p-2 border-2 rounded-xl text-base text-indigo-700 bg-indigo-200 placeholder:text-indigo-400 focus:outline-none focus:border-indigo-400"
+          className="p-2 border-2 rounded-xl text-base text-blue-700 bg-blue-200 placeholder:text-blue-400 focus:outline-none focus:border-blue-400"
           type="text"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
@@ -80,7 +80,7 @@ function SendByEmail() {
 
         <TextArea
           classes={
-            "p-2 border-2 rounded-xl text-base text-indigo-700 bg-indigo-200 placeholder:text-indigo-400 focus:outline-none focus:border-indigo-400"
+            "p-2 border-2 rounded-xl text-base text-blue-700 bg-blue-200 placeholder:text-blue-400 focus:outline-none focus:border-blue-400"
           }
           placeholder={"Enter Email Body"}
           value={body}
@@ -91,7 +91,7 @@ function SendByEmail() {
         <div className="flex justify-end">
           <button
             onClick={handleGenerateContent}
-            className="p-2 bg-indigo-400 text-slate-100 text-base rounded-lg  hover:bg-indigo-500 active:bg-indigo-200 active:text-slate-900"
+            className="p-2 bg-blue-400 text-slate-100 text-base rounded-lg  hover:bg-blue-500 active:bg-blue-200 active:text-slate-900"
           >
             Generate Email Content
           </button>
@@ -100,10 +100,10 @@ function SendByEmail() {
         <div className="flex justify-between items-center">
           <div className="flex flex-col w-1/2">
             <input
-              className={`p-2 border-2  rounded-xl text-base text-indigo-700 bg-indigo-200 placeholder:text-indigo-400 focus:outline-none ${
+              className={`p-2 border-2  rounded-xl text-base text-blue-700 bg-blue-200 placeholder:text-blue-400 focus:outline-none ${
                 hasValidEmail === false
                   ? " border-rose-500"
-                  : "focus:border-indigo-400"
+                  : "focus:border-blue-400"
               }`}
               type="email"
               value={email}
@@ -118,13 +118,13 @@ function SendByEmail() {
           </div>
           <button
             onClick={handleAddEmail}
-            className="p-2 bg-indigo-400 text-slate-100 text-base rounded-lg  hover:bg-indigo-500 active:bg-indigo-200 active:text-slate-900"
+            className="p-2 bg-blue-400 text-slate-100 text-base rounded-lg  hover:bg-blue-500 active:bg-blue-200 active:text-slate-900"
           >
             Add Email
           </button>
         </div>
         {emailsList.length === 0 ? (
-          <span className="ml-3 text-base text-indigo-500 italic">
+          <span className="ml-3 text-base text-blue-500 italic">
             Enter Email IDs
           </span>
         ) : (
@@ -133,7 +133,7 @@ function SendByEmail() {
               return (
                 <div
                   key={idx}
-                  className="flex items-center p-1 m-1 rounded-full text-indigo-700 border"
+                  className="flex items-center p-1 m-1 rounded-full text-blue-700 border"
                   style={{
                     backgroundColor: "rgba(153, 102, 255, 0.2)",
                   }}
@@ -141,7 +141,7 @@ function SendByEmail() {
                   <span className="px-1 text-sm">{email}</span>
                   <span
                     onClick={() => handleDeleteEmail(idx)}
-                    className="cursor-pointer hover:bg-indigo-400 hover:text-slate-100 p-1 rounded-full"
+                    className="cursor-pointer hover:bg-blue-400 hover:text-slate-100 p-1 rounded-full"
                   >
                     <AiOutlineClose />
                   </span>
@@ -154,7 +154,7 @@ function SendByEmail() {
           <button
             onClick={() => handleSendLink()}
             disabled={emailsList.length === 0}
-            className="bg-indigo-400  p-2 font-semibold text-base whitespace-nowrap rounded-full text-slate-100 hover:bg-indigo-500 active:bg-indigo-200 active:text-slate-900 disabled:bg-indigo-200 disabled:text-indigo-400"
+            className="bg-blue-400  p-2 font-semibold text-base whitespace-nowrap rounded-full text-slate-100 hover:bg-blue-500 active:bg-blue-200 active:text-slate-900 disabled:bg-blue-200 disabled:text-blue-400"
           >
             Send Form Link
           </button>
@@ -162,7 +162,7 @@ function SendByEmail() {
 
         {sending && (
           <div className="flex justify-center">
-            <span className="text-xl text-indigo-500 font-bold tracking-widest">
+            <span className="text-xl text-blue-500 font-bold tracking-widest">
               SENDING . . .
             </span>
           </div>
@@ -170,7 +170,7 @@ function SendByEmail() {
 
         {hasSubmitted && !sending && (
           <div className="flex justify-center">
-            <span className="text-xl text-indigo-500">
+            <span className="text-xl text-blue-500">
               Form Links Sent Succesfully !!
             </span>
           </div>

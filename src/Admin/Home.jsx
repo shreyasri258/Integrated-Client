@@ -89,24 +89,24 @@ function Home() {
     setShowCreateExamPopup(false);
   };
   //To set sample Data for testing purposes
-//   const [sampleForm, setSampleForm] = useState({
-//     title: "Sample Form",
-//     created: new Date().toISOString(),
-//     questions: [],
-//     ansForms: [],
-//     accepting: true,
-//     duration:"23",
-//   });
+  const [sampleForm, setSampleForm] = useState({
+    title: "Sample Form",
+    created: new Date().toISOString(),
+    questions: [],
+    ansForms: [],
+    accepting: true,
+    duration:"23",
+  });
 
-//   const [sampleFormAdded, setSampleFormAdded] = useState(false);
+  const [sampleFormAdded, setSampleFormAdded] = useState(false);
 
-// useEffect(() => {
-//   if (!sampleFormAdded) {
-//     setFormsList([sampleForm, ...formsList]); // Add the sample form to the beginning of the formsList
-//     setDisplayForms([sampleForm, ...formsList]); // Update the displayForms as well
-//     setSampleFormAdded(true);
-//   }
-// }, []);
+useEffect(() => {
+  if (!sampleFormAdded) {
+    setFormsList([sampleForm, ...formsList]); // Add the sample form to the beginning of the formsList
+    setDisplayForms([sampleForm, ...formsList]); // Update the displayForms as well
+    setSampleFormAdded(true);
+  }
+}, []);
 
   const handleSubmitCreateExam = async (newExam) => {
     try {

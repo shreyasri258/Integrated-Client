@@ -25,12 +25,12 @@ function RadioButton({ ansIdx, option, idx, disabled = false, type, answer }) {
       }}
     >
       <div
-        className={`h-4 w-4 flex rounded-full justify-center items-center border-2 border-indigo-500 ${
+        className={`h-4 w-4 flex rounded-full justify-center items-center border-2 border-blue-500 ${
           !disabled && "hover:ring-8 cursor-pointer"
-        } ring-indigo-300 transition-all duration-300 ease-in-out`}
+        } ring-blue-300 transition-all duration-300 ease-in-out`}
       >
         {ans === idx && (
-          <div className="h-2 w-2 rounded-full bg-indigo-500 transition-all duration-500 ease-in-out"></div>
+          <div className="h-2 w-2 rounded-full bg-blue-500 transition-all duration-500 ease-in-out"></div>
         )}
       </div>
       {type === "show-ans" && (

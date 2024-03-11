@@ -20,7 +20,7 @@ function PerQuestionStats() {
 
   if (form.ansForms.length === 0) {
     return (
-      <span className="text-lg pr-16 text-indigo-500 w-full h-screen flex justify-center items-center">
+      <span className="text-lg pr-16 text-blue-500 w-full h-screen flex justify-center items-center">
         No Responses Yet
       </span>
     );
@@ -32,7 +32,7 @@ function PerQuestionStats() {
         <div className="relative">
           <button
             onClick={() => setIsSelectOpen(!isSelectOpen)}
-            className="bg-indigo-200 w-3/4 text-indigo-900 p-2 rounded-md mt-5 "
+            className="bg-blue-200 w-3/4 text-blue-900 p-2 rounded-md mt-5 "
           >
             <div className="flex justify-between items-center transition-all duration-300 ease-in-out">
               <span className="text-base">
@@ -45,7 +45,7 @@ function PerQuestionStats() {
           </button>
 
           {isSelectOpen && (
-            <div className="border-2 border-indigo-500 max-h-45 overflow-y-auto fixed">
+            <div className="border-2 border-blue-500 max-h-45 overflow-y-auto fixed">
               {questions.map((questionObj, idx) => {
                 return (
                   <div
@@ -54,7 +54,7 @@ function PerQuestionStats() {
                       setIsSelectOpen(false);
                     }}
                     key={idx}
-                    className="p-2 cursor-pointer bg-indigo-500 text-slate-100 text-base hover:bg-indigo-200 hover:text-indigo-900"
+                    className="p-2 cursor-pointer bg-blue-500 text-slate-100 text-base hover:bg-blue-200 hover:text-blue-900"
                   >
                     {idx + 1}. {questionObj.question}
                   </div>
@@ -110,15 +110,15 @@ function PerQuestionStats() {
         />
       )}
 
-      <div className="flex justify-center items-center gap-4  fixed bottom-8 bg-indigo-300 p-2 rounded-full ">
+      <div className="flex justify-center items-center gap-4  fixed bottom-8 bg-blue-300 p-2 rounded-full ">
         <button
           disabled={questionIdx === 0}
           onClick={() => dispatch(setQuestionIdx(questionIdx - 1))}
           className={`px-2 py-1 text-base font-bold rounded-full ${
             questionIdx === 0
-              ? "text-black bg-indigo-50 "
-              : "text-white  bg-indigo-500 hover:ring-8"
-          }  ring-indigo-300 transition-all duration-300 ease-in-out border-1 border-indigo-500`}
+              ? "text-black bg-blue-50 "
+              : "text-white  bg-blue-500 hover:ring-8"
+          }  ring-blue-300 transition-all duration-300 ease-in-out border-1 border-blue-500`}
         >
           &larr;
         </button>
@@ -130,9 +130,9 @@ function PerQuestionStats() {
           onClick={() => dispatch(setQuestionIdx(questionIdx + 1))}
           className={`px-2 py-1 text-base font-bold rounded-full ${
             questionIdx === questions.length - 1
-              ? "text-black bg-indigo-50 "
-              : "text-white  bg-indigo-500 hover:ring-8"
-          }  ring-indigo-300 transition-all duration-300 ease-in-out border-1 border-indigo-500`}
+              ? "text-black bg-blue-50 "
+              : "text-white  bg-blue-500 hover:ring-8"
+          }  ring-blue-300 transition-all duration-300 ease-in-out border-1 border-blue-500`}
         >
           &rarr;
         </button>

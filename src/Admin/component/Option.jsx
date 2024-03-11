@@ -61,8 +61,9 @@ function Option({ children, type, questionIdx, optionIdx }) {
             </p>
           </div>
         )}
+      
       </li>
-
+     
       {isQuestionActive && isOptionActive && (
         <div className="flex items-center justify-center w-16">
           <button

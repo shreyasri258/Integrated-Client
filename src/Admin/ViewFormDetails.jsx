@@ -115,11 +115,11 @@ console.log('form-details -> ',form);
         <div className="flex p-2">
           <button
             onClick={() => copy(`${`http://localhost:5173`}/ansForm/${form._id}`)}
-            className={`hover:ring-4 active:ring-8 active:ring-indigo-400 hover:ring-indigo-200 rounded-full transition-all hover:duration-300 active:duration-150 ease-in-out`}
+            className={`hover:ring-4 active:ring-8 active:ring-blue-400 hover:ring-blue-200 rounded-full transition-all hover:duration-300 active:duration-150 ease-in-out`}
           >
             <MdContentCopy color="rgb(99 102 241)" fontSize={"1.3rem"} />
           </button>
-          <span className="px-2 text-base text-indigo-600">Form Link</span>
+          <span className="px-2 text-base text-blue-600">Form Link</span>
         </div>
 
         <div className="flex items-center p-2 justify-between ">

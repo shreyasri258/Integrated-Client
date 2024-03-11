@@ -88,7 +88,7 @@ function AnsForm() {
       <div className="flex w-screen justify-center mb-16">
         <div className="w-4/6">
           <div className="flex justify-center pt-3">
-            <span className="ml-12 text-indigo-500  text-3xl transition-colors duration-300 ease-in-out  ">
+            <span className="ml-12 text-blue-500  text-3xl transition-colors duration-300 ease-in-out  ">
               <Link to="/admin-dashboard">
                 <span className="font-pacifico indigo_gradient">ProctorPal</span>
               </Link>
@@ -97,7 +97,7 @@ function AnsForm() {
 
           {hasError ? (
             <div className="flex justify-center items-center mt-16">
-              <p className="text-lg text-indigo-500">{errorMsg} !!</p>
+              <p className="text-lg text-blue-500">{errorMsg} !!</p>
             </div>
           ) : (
             <div className="mt-4">
@@ -124,7 +124,7 @@ function AnsForm() {
               })}
               <div className="flex items-center mt-6">
                 <Button
-                  classes={"self-start hover:ring-8 ring-indigo-200"}
+                  classes={"self-start hover:ring-8 ring-blue-200"}
                   type="submit"
                   onClick={() => handleSubmit()}
                 >

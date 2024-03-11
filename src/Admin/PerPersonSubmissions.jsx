@@ -30,7 +30,7 @@ function PerPersonSubmissions() {
   if (form.ansForms.length === 0) {
     return (
       <span
-        className="text-lg pr-16 text-indigo-500 w-full h-screen
+        className="text-lg pr-16 text-blue-500 w-full h-screen
        flex justify-center items-center"
       >
         No Responses Yet
@@ -70,15 +70,15 @@ function PerPersonSubmissions() {
           );
         })}
       </div>
-      <div className="flex justify-between items-center gap-4  fixed bottom-8 bg-indigo-300 p-2 rounded-full ">
+      <div className="flex justify-between items-center gap-4  fixed bottom-8 bg-blue-300 p-2 rounded-full ">
         <button
           disabled={responseIdx === 0}
           onClick={() => setIdx((idx) => idx - 1)}
           className={`px-2 py-1 text-base font-bold rounded-full ${
             responseIdx === 0
-              ? "text-black bg-indigo-50 "
-              : "text-white  bg-indigo-500 hover:ring-8"
-          }  ring-indigo-300 transition-all duration-300 ease-in-out border-1 border-indigo-500 `}
+              ? "text-black bg-blue-50 "
+              : "text-white  bg-blue-500 hover:ring-8"
+          }  ring-blue-300 transition-all duration-300 ease-in-out border-1 border-blue-500 `}
         >
           &larr;
         </button>
@@ -89,7 +89,7 @@ function PerPersonSubmissions() {
             // defaultValue={responseIdx + 1}
             placeholder={responseIdx + 1}
             value={idx}
-            className="focus:outline-none w-3 bg-indigo-300 rounded-lg text-base text-white font-bold appearance-none placeholder:text-indigo-500"
+            className="focus:outline-none w-3 bg-blue-300 rounded-lg text-base text-white font-bold appearance-none placeholder:text-blue-500"
             style={{
               width: `${idx.toString().length > 0 ? calcWidth(idx) : 15}px`,
             }}
@@ -106,9 +106,9 @@ function PerPersonSubmissions() {
           onClick={() => setIdx((idx) => idx + 1)}
           className={`px-2 py-1 text-base font-bold rounded-full ${
             responseIdx === ansForms.length - 1
-              ? "text-black bg-indigo-50 "
-              : "text-white  bg-indigo-500 hover:ring-8"
-          }  ring-indigo-300 transition-all duration-300 ease-in-out border-1 border-indigo-500 `}
+              ? "text-black bg-blue-50 "
+              : "text-white  bg-blue-500 hover:ring-8"
+          }  ring-blue-300 transition-all duration-300 ease-in-out border-1 border-blue-500 `}
         >
           &rarr;
         </button>
