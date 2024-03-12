@@ -358,13 +358,16 @@ useEffect(() => {
             sx={{
               position: "absolute",
               top: 10,
-              right: 0,
+              right: 20,
               margin: 1,
-              borderRadius: "15px",
+              borderRadius: "100%",
+              width: "60px", // Set a fixed width to maintain circular shape
+    height: "60px", // Set a fixed height to maintain circular shape
+    minWidth: "auto",
               boxShadow: "0  4px  8px rgba(0,  0,  0,  0.2)",
             }}
           >
-            Details
+             {adminDetails && adminDetails.name ? adminDetails.name : 'Details'}
           </Button>
           <Modal
             open={open}

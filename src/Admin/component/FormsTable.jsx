@@ -166,6 +166,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
               </td>
               <td className="p-3 tracking-wide text-center">
                 <button
+                style={{ background: "none",color:"#0a2147"}}
                   onClick={() => copy(`${`http://localhost:5173`}/ansForm/${form._id}`)}
                   className={`hover:ring-8  bg-red-400 rounded-full hover:transition-all duration-500 ease-in-out`}
                 >
@@ -174,6 +175,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
               </td>
               <td className="p-3 tracking-wide text-center">
                 <button
+                style={{ background: "none",color:"#0a2147"}}
                   onClick={() =>
                     navigate(`/formDetails/${form._id}/submissions`)
                   }
