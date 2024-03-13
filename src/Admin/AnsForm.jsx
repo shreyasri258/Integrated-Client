@@ -8,7 +8,8 @@ import {
   readyAns,
   setTriedSubmitting,
   submitForm,
-} from "../store/slices/ansForm";
+  updateAnswer,
+} from "../store/slices/ansForm"; // Assuming there's an updateAnswer action in your slice
 import { useDispatch, useSelector } from "react-redux";
 import Button from "./ui/Button";
 import { BsExclamationCircle } from "react-icons/bs";
@@ -25,32 +26,29 @@ function AnsForm() {
   const triedSubmitting = useSelector(getTriedSubmitting);
   const navigate = useNavigate();
 
-  useEffect(
-    function () {
-      async function FormSetter() {
-        setIsLoading(true);
-        const res = await getQuestionForm(formId);
-        console.log(res);
-        if (res.status === 200) {
-          const form = res.data;
-          console.log('form - ',form);
-          setForm(form);
-          dispatch(readyAns(form.questions.length));
-        }
-
-        if (res.status === 302) {
-          setHasError(true);
-          setErrorMsg(res.data.message);
-        }
-        setIsLoading(false);
+  useEffect(() => {
+    async function fetchForm() {
+      setIsLoading(true);
+      const res = await getQuestionForm(formId);
+      if (res.status === 200) {
+        const form = res.data;
+        setForm(form);
+        dispatch(readyAns(form.questions.length));
+      } else if (res.status === 302) {
+        setHasError(true);
+        setErrorMsg(res.data.message);
       }
+      setIsLoading(false);
+    }
 
-      FormSetter();
-    },
-    [formId, dispatch]
-  );
+    fetchForm();
+  }, [formId, dispatch]);
 
-  async function handleSubmit() {
+  const handleAnswerChange = (questionIdx, value) => {
+    dispatch(updateAnswer({ questionIdx, value }));
+  };
+
+  const handleSubmit = async () => {
     let canSubmit = true;
     for (let i = 0; i < answers.length; i++) {
       if (questions[i].required === true && answers[i] === undefined) {
@@ -61,27 +59,24 @@ function AnsForm() {
     }
 
     if (canSubmit) {
-      console.log("submitting form");
       const res = await submitForm(answers, formId);
-      console.log(res);
       if (res.status === 201) {
         dispatch(setTriedSubmitting(false));
-        console.log("submitted");
         navigate("/ansform/submitted");
-      }
-      if (res.status === 302) {
+      } else if (res.status === 302) {
         dispatch(setTriedSubmitting(true));
         setErrorMsg(res.data.message);
       }
     }
-  }
+  };
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="flex min-h-screen justify-center items-center">
         <LoadingSpinner />
       </div>
     );
+  }
 
   return (
     <div>
@@ -101,37 +96,38 @@ function AnsForm() {
             </div>
           ) : (
             <div className="mt-4">
-              <p
-                className="h-10  text-lg  font-semibold"
-                style={{ border: "2px solid transparent" }}
-              >
-                {title}
-              </p>
-              {description && (
-                <p
-                  className="h-8 text-base mb-3"
-                  style={{ border: "2px solid transparent" }}
-                >
-                  {description}
-                </p>
-              )}
+              <p className="h-10  text-lg  font-semibold">{title}</p>
+              {description && <p className="h-8 text-base mb-3">{description}</p>}
 
+              {questions.map((q, idx) => (
+  <QuestionAns
+    questionIdx={idx}
+    questionObj={q}
+    answer={answers[idx]}
+    setAnswer={(value) => handleAnswerChange(idx, value)} // Pass setAnswer as a prop
+    key={idx}
+  />
+))}
+
+{/* <<<<<<< HEAD
               {questions.map((q, idx) => {
                 console.log('ques - ',q);
                 return (
                   <QuestionAns questionIdx={idx} questionObj={q} key={idx} answer={''}  />
                 );
               })}
+=======
+>>>>>>> aa590be28550e66b3bc8f04bb3711611e63c5028 */}
               <div className="flex items-center mt-6">
                 <Button
                   classes={"self-start hover:ring-8 ring-blue-200"}
                   type="submit"
-                  onClick={() => handleSubmit()}
+                  onClick={handleSubmit}
                 >
                   Submit
                 </Button>
                 {triedSubmitting && (
-                  <div className="flex items-center text-rose-500 ml-6 ">
+                  <div className="flex items-center text-rose-500 ml-6">
                     <span className="text-lg">
                       <BsExclamationCircle />
                     </span>

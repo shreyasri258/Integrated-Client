@@ -1,28 +1,29 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 
 function CheckBox({
   option,
   idx,
-  selected,
+  selected=[],
   setSelected,
   disabled,
   type,
   answers,
 }) {
-  let isSelected;
-  if (disabled) {
-    isSelected = answers?.includes(idx);
-  } else {
-    isSelected = selected?.includes(idx);
-  }
+  const [isChecked, setIsChecked] = useState(selected.includes(idx));
+
+  useEffect(() => {
+    setIsChecked(selected.includes(idx));
+  }, [selected, idx]);
 
   function handleClick() {
-    if (selected.includes(idx)) {
-      setSelected((selected) => selected.filter((s) => s !== idx));
+    if (!isChecked) {
+      setSelected([...selected, idx]);
     } else {
-      setSelected((selected) => [...selected, idx]);
+      setSelected(selected.filter((item) => item !== idx));
     }
   }
+
   return (
     <div
       className="flex items-center"
@@ -33,13 +34,13 @@ function CheckBox({
       }}
     >
       <div
-        className={`h-4 w-4  ${
-          isSelected && "bg-blue-400"
-        } flex border-2 border-blue-500 rounded-md justify-center items-center ${
+        className={`h-4 w-4 flex rounded-md justify-center items-center border-2 border-blue-500 ${
+          isChecked && "bg-blue-400"
+        } ${
           !disabled && "hover:ring-8 cursor-pointer"
         } ring-blue-300 transition-all duration-300 ease-in-out`}
       >
-        {isSelected && (
+        {isChecked && (
           <span className="text-xs text-white font-semibold ">&#10003;</span>
         )}
       </div>
@@ -53,6 +54,9 @@ function CheckBox({
     </div>
   );
 }
+
+//export default CheckBox;
+
 
 CheckBox.propTypes = {
   option: PropTypes.string.isRequired,
