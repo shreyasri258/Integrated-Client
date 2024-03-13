@@ -119,7 +119,7 @@ function AnsForm() {
               {questions.map((q, idx) => {
                 console.log('ques - ',q);
                 return (
-                  <QuestionAns questionIdx={idx} questionObj={q} key={idx} />
+                  <QuestionAns questionIdx={idx} questionObj={q} key={idx} answer={''}  />
                 );
               })}
               <div className="flex items-center mt-6">

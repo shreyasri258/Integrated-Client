@@ -5,6 +5,7 @@ import CheckBox from "../ui/CheckBox";
 function QuestionAns({ questionObj, answer }) {
   const { question, type, options, required } = questionObj;
   console.log('in  QuestionAns', questionObj);
+  console.log('in QuestionAns - answer - ',answer);
   return (
     <div className={`flex flex-col mt-3 p-2 shadow rounded-md bg-white`}>
       <p className="text-base border-0 m-3">
