@@ -1,6 +1,7 @@
 import Question from "./component/Question";
 import Swal from 'sweetalert2';
 import Icon from "../images/Icon.png";
+import UniversalNavbar from "./universalNavbar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   activateDescription,
@@ -65,18 +66,15 @@ function NewForm() {
   return (
     
     <div className="flex items-center justify-center w-screen mb-8 mt-4">
-       <div className="bg-transparent fixed top-10 left-10 mt-2 ml-2">
-           
-            <img className="bg-transparent" src={Icon} alt="Icon" />
-          </div>
+    <UniversalNavbar></UniversalNavbar>
 
           <div className="fixed bottom-10 right-10 z-50">
-    <button
+    {/* <button
       className="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-full shadow-md"
       onClick={() => navigate("/admin-dashboard")}
     >
       Back to Dashboard
-    </button>
+    </button> */}
   </div>
 
       <div className="w-full max-w-3xl px-4">

@@ -85,7 +85,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
 
   return (
     <table className="w-full max-w-full " style={{ width: '1250px' }}>
-      <thead className="p-6  border border-blue-600 ">
+      <thead className="p-6 bg-blue-500 border border-blue-600 ">
         <tr className="text-black-200 ">
           <th className="p-3 font-semibold tracking-wide text-center">
             <span>No.</span>
@@ -166,6 +166,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
               </td>
               <td className="p-3 tracking-wide text-center">
                 <button
+                style={{ background: "none",color:"#0a2147"}}
                   onClick={() => copy(`${`http://localhost:5173`}/ansForm/${form._id}`)}
                   className={`hover:ring-8  bg-red-400 rounded-full hover:transition-all duration-500 ease-in-out`}
                 >
@@ -174,6 +175,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
               </td>
               <td className="p-3 tracking-wide text-center">
                 <button
+                style={{ background: "none",color:"#0a2147"}}
                   onClick={() =>
                     navigate(`/formDetails/${form._id}/submissions`)
                   }
