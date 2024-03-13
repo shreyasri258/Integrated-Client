@@ -12,11 +12,26 @@ import ShowCharts from "./component/ShowCharts";
 function PerQuestionStats() {
   const form = useSelector(getForm);
   const { questions, ansForms } = form;
+  //const { questions } = form;
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const questionIdx = useSelector(getQuestionIdx);
   const freq = useSelector(getOptionsFreq(questionIdx));
   const currentQuestion = questions[questionIdx];
   const dispatch = useDispatch();
+
+  // const ansForms = [
+  //   {
+  //     0: "Sample answer to question 1",
+  //     1: "Sample answer to question 2",
+  //     2: ["Option 1", "Option 3"],
+  //   },
+  //   {
+  //     0: "Another sample answer to question 1",
+  //     1: "Another sample answer to question 2",
+  //     2: ["Option 2", "Option 4"],
+  //   },
+  // ];
+
 
   if (form.ansForms.length === 0) {
     return (
@@ -32,10 +47,10 @@ function PerQuestionStats() {
         <div className="relative">
           <button
             onClick={() => setIsSelectOpen(!isSelectOpen)}
-            className="bg-blue-200 w-3/4 text-blue-900 p-2 rounded-md mt-5 "
+            className="bg-blue-700 w-3/4 text rounded-md mt-20 hover:bg-blue-00"
           >
             <div className="flex justify-between items-center transition-all duration-300 ease-in-out">
-              <span className="text-base">
+              <span className="text-base" style={{width:"900px"}}>
                 {questionIdx + 1}. {currentQuestion.question}
               </span>
               <span className="text-lg ">
@@ -45,7 +60,12 @@ function PerQuestionStats() {
           </button>
 
           {isSelectOpen && (
-            <div className="border-2 border-blue-500 max-h-45 overflow-y-auto fixed">
+            <div className="border-2 border-blue-900 max-h-45 rounded-md overflow-y-auto fixed"
+            style={{
+              left: "50%",
+              marginRight:"60px",
+              marginTop:"0px"
+            }}>
               {questions.map((questionObj, idx) => {
                 return (
                   <div
@@ -54,7 +74,7 @@ function PerQuestionStats() {
                       setIsSelectOpen(false);
                     }}
                     key={idx}
-                    className="p-2 cursor-pointer bg-blue-500 text-slate-100 text-base hover:bg-blue-200 hover:text-blue-900"
+                    className="p-2 cursor-pointer bg-blue-200 text-slate-100 text-base hover:bg-blue-300 "
                   >
                     {idx + 1}. {questionObj.question}
                   </div>

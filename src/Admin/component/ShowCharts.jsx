@@ -1,6 +1,6 @@
 import { useState } from "react";
-import BarChart from "../component/Charts/BarChart";
-import PieChart from "../component/Charts/PieChart";
+import BarChart from "./Charts/BarChart"
+import PieChart from "./Charts/PieChart"
 
 function ShowCharts({ labels, answersFreq, chartLabel }) {
   const [selectedChart, setSelectedChart] = useState("bar");
@@ -10,7 +10,7 @@ function ShowCharts({ labels, answersFreq, chartLabel }) {
         <div
           className={`flex justify-center flex-1 p-1 rounded-l-full cursor-pointer ${
             selectedChart === "bar"
-              ? "bg-blue-400 text-white "
+              ? "bg-blue-700 text-white "
               : " hover:bg-blue-300"
           } `}
           onClick={() => setSelectedChart("bar")}
@@ -22,7 +22,7 @@ function ShowCharts({ labels, answersFreq, chartLabel }) {
         <div
           className={`flex justify-center flex-1 p-1 rounded-r-full cursor-pointer ${
             selectedChart === "pie"
-              ? "bg-blue-400 text-white "
+              ? "bg-blue-700 text-white "
               : " hover:bg-blue-300"
           } `}
           onClick={() => setSelectedChart("pie")}
@@ -43,7 +43,7 @@ function ShowCharts({ labels, answersFreq, chartLabel }) {
       )}
 
       {selectedChart === "pie" && (
-        <div className=" flex w-[60%] h-[60%] justify-center">
+        <div className="flex justify-center w-full h-96">
           <PieChart
             labels={labels}
             answersFreq={answersFreq}
