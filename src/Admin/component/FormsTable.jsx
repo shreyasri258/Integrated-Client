@@ -85,7 +85,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
 
   return (
     <table className="w-full max-w-full " style={{ width: '1250px' }}>
-      <thead className="p-6  border border-blue-600 ">
+      <thead className="p-6 bg-blue-500 border border-blue-600 ">
         <tr className="text-black-200 ">
           <th className="p-3 font-semibold tracking-wide text-center">
             <span>No.</span>

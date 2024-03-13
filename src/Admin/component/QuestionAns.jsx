@@ -2,32 +2,38 @@ import PropTypes from "prop-types";
 import RadioButton from "../ui/RadioButton";
 import CheckBox from "../ui/CheckBox";
 
-function QuestionAns({ questionObj, answer }) {
+
+
+function QuestionAns({ questionObj, answer, setAnswer }) { // Receive setAnswer prop
   const { question, type, options, required } = questionObj;
-  console.log('in  QuestionAns', questionObj);
+
+  const handleAnswerChange = (e) => {
+    setAnswer(e.target.value); // Use setAnswer to update the answer
+  };
+
+
   return (
     <div className={`flex flex-col mt-3 p-2 shadow rounded-md bg-white`}>
       <p className="text-base border-0 m-3">
         {question} {required && <span className="text-rose-500 px-1">*</span>}
       </p>
 
-      {type === "short-ans" &&
-        (answer ? (
-          <p className="w-1/2 mx-3 border-b-2 text-base">{answer}</p>
-        ) : (
-          <p className="w-1/2 mx-3 text-gray-500 text-base border-b-2 italic">
-            Question left blank
-          </p>
-        ))}
+      {type === "short-ans" && (
+        <input
+          type="text"
+          value={answer}
+          onChange={handleAnswerChange}
+          className="w-1/2 mx-3 border-b-2 text-base"
+        />
+      )}
 
-      {type === "long-ans" &&
-        (answer ? (
-          <p className="w-3/4 m-3 border-b-2 text-base">{answer}</p>
-        ) : (
-          <p className="w-3/4 m-3 text-gray-500 text-base border-b-2 italic">
-            Question left blank
-          </p>
-        ))}
+      {type === "long-ans" && (
+        <textarea
+          value={answer}
+          onChange={handleAnswerChange}
+          className="w-3/4 m-3 border-b-2 text-base"
+        />
+      )}
 
       <div className="m-3">
         {type === "multiple-choice" && (
@@ -103,7 +109,9 @@ QuestionAns.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.number,
   ]),
+  setAnswer: PropTypes.func.isRequired, // Add setAnswer to propTypes
 };
+
 
 export default QuestionAns;
 

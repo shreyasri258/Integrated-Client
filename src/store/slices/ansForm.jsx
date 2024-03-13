@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
-
+import produce from 'immer';
 const initialState = {
   isLoading: false,
   triedSubmitting: false,
@@ -31,7 +31,12 @@ const ansFormSlice = createSlice({
     },
     setAns(state, action) {
       const { ansIdx, ans } = action.payload;
-      state.answers[ansIdx] = ans;
+      return {
+        ...state,
+        answers: state.answers.map((item, index) =>
+          index === ansIdx ? ans : item
+        ),
+      };
     },
     setTriedSubmitting(state, action) {
       state.triedSubmitting = action.payload;
@@ -39,6 +44,16 @@ const ansFormSlice = createSlice({
     resetAnsForm(state, action) {
       return initialState;
     },
+    updateAnswer(state, action) {
+      const { ansIdx, ans } = action.payload;
+      return {
+        ...state,
+        answers: state.answers.map((item, index) =>
+          index === ansIdx ? ans : item
+        ),
+      };
+    },
+    
   },
 });
 
@@ -51,7 +66,7 @@ export async function submitForm(answers, formId) {
   return res;
 }
 
-export const { readyAns, setAns, setTriedSubmitting, resetAnsForm } =
+export const { readyAns, setAns, setTriedSubmitting, resetAnsForm, updateAnswer } =
   ansFormSlice.actions;
 
 export default ansFormSlice.reducer;
