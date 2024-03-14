@@ -4,6 +4,7 @@ import { deleteForm, getFormFromServer } from "../store/slices/newForm";
 import Badge from "./ui/Badge";
 import copy from "clipboard-copy";
  import { MdContentCopy } from "react-icons/md";
+ import { PiExamLight } from "react-icons/pi";
 import LoadingSpinner from "./LoadingSpinner";
 import Switch from "./ui/Switch";
 import Sidebar from "./component/Sidebar/Sidebar";
@@ -111,6 +112,17 @@ console.log('form-details -> ',form);
           }
           label={"Email"}
           to={`/formDetails/${formId}/sendbymail`}
+        />
+        <SidebarItem
+          type={"link"}
+          unselectedIcon={
+            <PiExamLight  style={{color:"#0a2147"}} fontSize={"1.3rem"} />
+          }
+          selectedIcon={
+            <PiExamLight style={{color:"#0a2147"}} fontSize={"1.3rem"} />
+          }
+          label={"Exam Report"}
+          to={`/formDetails/${formId}/examreport`}
         />
 
         <hr className="my-3" />

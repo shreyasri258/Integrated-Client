@@ -21,6 +21,7 @@ import PerQuestionStats from './Admin/PerQuestionStats';
 import AnsForm from './Admin/AnsForm';
 import Submitted from './Admin/Submitted';
 import SendByEmail from './Admin/SendByMail';
+import ExamReport from "./Admin/ExamReport";
 
 
 const App = () => {
@@ -49,6 +50,8 @@ const App = () => {
             <Route path="submissions" element={<PerPersonSubmissions />} />
             <Route path="stats" element={<PerQuestionStats />} />
             <Route path="sendbymail" element={<SendByEmail />} />
+            <Route path="examreport" element={<ExamReport />} />
+
           </Route>
           <Route path="/exam/:title/:duration/:url" element={<Exam />} />
 
