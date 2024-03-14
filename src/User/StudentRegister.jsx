@@ -91,28 +91,28 @@ const StudentRegister = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.target); // Pass the event target directly to FormData constructor
     const data = {};
     formData.forEach((value, key) => {
       data[key] = value;
     });
-    try{
-      await axios.post("http://localhost:8800/Server/user/register",data);
-      console.log(JSON.stringify(response));
-    } catch(error){
+    try {
+      await axios.post("http://localhost:8800/Server/user/register", data);
+      console.log('Registration Successful!');
+      setShowModal(true);
+    } catch (error) {
       console.log('Registration Failed!', error.message);
     }
     console.log('Registration values:', inputValues);
-    setShowModal(true);
   };
-
+  
   const handleInputChange = (fieldName, value) => {
     setInputValues(prevValues => ({
       ...prevValues,
-      [fieldName]: value.target.value,
+      [fieldName]: value,
     }));
   };
-
+  
   const allFieldsFilled = Object.values(inputValues).every(value => value.trim() !== '');
 
   return (
@@ -124,13 +124,14 @@ const StudentRegister = () => {
         <h1 className="title-heading" style={{ textAlign: 'center', marginBottom: '20px' }}>Examinee Register</h1>
         <form onSubmit={handleRegister}>
         <div className="input-fields" style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
-            <input type="text" name="adminname" placeholder="Admin Name" />
-            <input type="text" name="institutionName" placeholder="Institution Name" />
-            <input type="email" name="email" placeholder="Email" />
-            <input type="password" name="password" placeholder="Password" />
+            <input type="text" name="username" placeholder="User Name" onChange={(e) => handleInputChange('username', e.target.value)} />
+            <input type="text" name="institutionName" placeholder="Institution Name" onChange={(e) => handleInputChange('institutionName', e.target.value)} />
+            <input type="email" name="email" placeholder="Email" onChange={(e) => handleInputChange('email', e.target.value)} />
+            <input type="password" name="password" placeholder="Password" onChange={(e) => handleInputChange('password', e.target.value)} />
+
           </div>
-          <button type="submit">Register</button>
-        </form>
+          {/* <button type="submit">Register</button> */}
+        
   
         
         {capturedImage && <img src={capturedImage} alt="captured" />}
@@ -138,11 +139,13 @@ const StudentRegister = () => {
         <canvas ref={canvasRef} style={{ display: 'none' }} />
         <button onClick={startCamera}>Start Camera</button>
         <button onClick={handleCapture}>Capture Image</button>
-        <button onClick={handleRegister} disabled={numPeopleDetected !== 1}>
+        <button type="submit"  disabled={numPeopleDetected !== 1}>
           Register
         </button>
+        </form>
         {numPeopleDetected !== 1 && <p>Please ensure only one face is visible</p>}
       </div>
+     
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-card">
