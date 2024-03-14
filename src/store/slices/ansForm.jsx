@@ -31,12 +31,7 @@ const ansFormSlice = createSlice({
     },
     setAns(state, action) {
       const { ansIdx, ans } = action.payload;
-      return {
-        ...state,
-        answers: state.answers.map((item, index) =>
-          index === ansIdx ? ans : item
-        ),
-      };
+      state.answers[ansIdx] = ans;
     },
     setTriedSubmitting(state, action) {
       state.triedSubmitting = action.payload;
@@ -44,15 +39,16 @@ const ansFormSlice = createSlice({
     resetAnsForm(state, action) {
       return initialState;
     },
-    updateAnswer(state, action) {
-      const { ansIdx, ans } = action.payload;
-      return {
-        ...state,
-        answers: state.answers.map((item, index) =>
-          index === ansIdx ? ans : item
-        ),
-      };
-    },
+    // updateAnswer(state, action) {
+    //   const { ansIdx, ans } = action.payload;
+    //   console.log('state - ',state, 'action - ',action.payload);
+    //   return {
+    //     ...state,
+    //     answers: state.answers.map((item, index) =>
+    //       index === ansIdx ? ans : item
+    //     ),
+    //   };
+    // },
     
   },
 });
@@ -60,19 +56,28 @@ const ansFormSlice = createSlice({
 export async function submitForm(answers, formId) {
   const score = 0
   const malpracticeAttempts = 0
+  const userLocalStorageString = localStorage.getItem('user');
+    const userLocalStorageObject = JSON.parse(userLocalStorageString);
+    const token = userLocalStorageObject.token;
+    console.log('admin - token - ', token);
   const res = await axios
-    .post(`${BASE_URL}/exams/questionforms/${formId}/attempts`, { formId, answers , score , malpracticeAttempts })
+    .post(`${BASE_URL}/exams/questionforms/${formId}/attempts`, { formId, answers , score , malpracticeAttempts }, {
+      headers: {
+        'x-auth-token': `${token}`,
+      },
+    })
     .catch((error) => error.response);
+    console.log('form submitted - ', res.data);
   return res;
 }
 
-export const { readyAns, setAns, setTriedSubmitting, resetAnsForm, updateAnswer } =
+export const { readyAns, setAns, setTriedSubmitting, resetAnsForm } =
   ansFormSlice.actions;
 
 export default ansFormSlice.reducer;
 
 export const getAnswers = (state) => {
-  console.log('ans in getAns - ', state.ansForm.answers);
+  console.log('ans in getAns - ', state.ansForm);
   return state.ansForm.answers;
 };
 
