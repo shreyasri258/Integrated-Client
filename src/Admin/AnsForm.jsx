@@ -15,6 +15,36 @@ import Button from "./ui/Button";
 import { BsExclamationCircle } from "react-icons/bs";
 import LoadingSpinner from "./LoadingSpinner";
 
+function disableHighlightAndPaste() {
+  // Disable text selection
+  document.body.style.userSelect = 'none';
+
+  // Disable pasting content
+  document.addEventListener('paste', (event) => {
+    event.preventDefault();
+  });
+
+  // Disable context menu (right-click menu)
+  document.addEventListener('contextmenu', (event) => {
+    event.preventDefault();
+  });
+}
+
+function enableHighlightAndPaste() {
+  // Enable text selection
+  document.body.style.userSelect = '';
+
+  // Remove paste event listener
+  document.removeEventListener('paste', (event) => {
+    event.preventDefault();
+  });
+
+  // Remove context menu event listener
+  document.removeEventListener('contextmenu', (event) => {
+    event.preventDefault();
+  });
+}
+
 // function AnsForm() {
 //   const { formId } = useParams();
 //   const [{ title, description, questions }, setForm] = useState({});
@@ -187,6 +217,32 @@ function AnsForm() {
     },
     [formId, dispatch]
   );
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.ctrlKey && event.key === 'c') {
+        event.preventDefault(); // Disable copying (Ctrl+C)
+      }
+  
+      if (event.ctrlKey && event.shiftKey && event.key === 'I') {
+        event.preventDefault(); // Disable opening the dialog box
+      }
+    };
+  
+    document.addEventListener('keydown', handleKeyDown);
+  
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    disableHighlightAndPaste();
+
+    return () => {
+      enableHighlightAndPaste();
+    };
+  }, []);
+
 
   async function handleSubmit() {
     let canSubmit = true;
@@ -220,6 +276,7 @@ function AnsForm() {
         <LoadingSpinner />
       </div>
     );
+    
 
   return (
     <div>

@@ -424,10 +424,13 @@ useEffect(() => {
           <div 
           className="forms-table" 
           style={{ marginTop: "10%" }}>
-            <FormsTable
+             <div className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 150px)', overflowY: 'auto', scrollbarWidth: 'thin', scrollbarColor: 'blue', scrollbarTrackRounded: 'full' }}>
+     
+                  <FormsTable
               displayForms={displayForms}
               setDisplayForms={setDisplayForms}
             />
+          </div>
           </div>
         )}
       </div>
