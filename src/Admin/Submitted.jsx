@@ -3,30 +3,47 @@ import Button from "./ui/Button";
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import {
+  getAnswers,
+  getQuestionForm,
+  getTriedSubmitting,
+  readyAns,
+  setTriedSubmitting,
+  getSubmit,
+  setSubmit,
+  submitForm,
+  // updateAnswer,
+} from "../store/slices/ansForm";
+import { useDispatch, useSelector } from "react-redux";
 
 
 
 function Submitted() {
   const history = useNavigate();
+  const dispatch = useDispatch();
+  const isSubmitted = useSelector(getSubmit);
 
   const handleClick = () => {
     // Open the student-dashboard URL in a new tab
-    const newWindow = window.open('/student-dashboard', '_blank');
+    // const newWindow = window.open('/student-dashboard', '_blank');
+    if(isSubmitted){
+      window.close();
+    }
   
     // Display a SweetAlert confirmation dialog to close the current window manually
-    if (newWindow) {
-      newWindow.focus(); // Ensure the new window is focused
-      Swal.fire({
-        title: 'Close Window',
-        text: 'Please close this window manually after confirming the action.',
-        icon: 'info',
-        confirmButtonText: 'OK',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.close(); // Close the current window
-        }
-      });
-    }
+    // if (newWindow) {
+    //   newWindow.focus(); // Ensure the new window is focused
+    //   Swal.fire({
+    //     title: 'Close Window',
+    //     text: 'Please close this window manually after confirming the action.',
+    //     icon: 'info',
+    //     confirmButtonText: 'OK',
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       window.close(); // Close the current window
+    //     }
+    //   });
+    //}
   };
   
   return (

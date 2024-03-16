@@ -6,8 +6,20 @@ import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2'; // Import SweetAlert as Swal
 import { StudentContext } from "../contextCalls/studentContext/StudentContext"; // Import StudentContext
 import TimerComponent from '../ExamChecks/TimerComp.jsx';
+import { useDispatch, useSelector } from "react-redux";
 import LeftColumn from '../ExamChecks/LeftCol.jsx';
 import EmbeddedForm from '../ExamChecks/FormComp.jsx';
+import {
+    getAnswers,
+    getQuestionForm,
+    getTriedSubmitting,
+    readyAns,
+    setTriedSubmitting,
+    getSubmit,
+    setSubmit,
+    submitForm,
+    // updateAnswer,
+  } from "../store/slices/ansForm";
 // import Sound from './Sound.wav'
 import Warning from '../ExamChecks/Warning.wav'
 import Watermark from '../ExamChecks/Watermark.jsx';
@@ -23,6 +35,8 @@ const Exam = () => {
     console.log('exam params -> ', examTitle, duration)
     const studentName = user.user.user.name; // Assuming this is a static value
     const studentEmail = user.user.user.email;
+    const isSubmitted = useSelector(getSubmit);
+    const dispatch = useDispatch();
 
     const fullscreenRef = useRef(null);
     const countdownRef = useRef(null);
@@ -220,7 +234,10 @@ const Exam = () => {
         // Start the countdown timer when the component mounts
         countdownRef.current = setTimeout(() => {
             setTimerExpired(true);
-            window.close(); // Close the window when the timer expires
+            // Close the window when the timer expires
+            if(timerExpired || isSubmitted){
+                window.close(); 
+            }
         }, duration * 60 * 1000); // Convert duration to milliseconds
 
         // Cleanup function to clear the timeout when the component unmounts
@@ -369,6 +386,7 @@ const Exam = () => {
     function enableForm() {
         // Implement enable form logic here
     }
+    
 
     
     

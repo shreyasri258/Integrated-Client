@@ -10,5 +10,7 @@ export default {
       croissant: ["Croissant One", "cursive"],},
     },
   },
-  plugins: [],
+  plugins: [
+    
+  ],
 }
