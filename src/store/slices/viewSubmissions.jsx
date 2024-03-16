@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = 'http://localhost:8081';
+const BASE_URL = 'http://localhost:8800';
 
 const initialState = {
   responseIdx: 0,
@@ -26,7 +26,24 @@ const submissionsSlice = createSlice({
     },
   },
 });
+export async function getStudentData(formId){
+  try{
+    console.log('exam std data invoked');
+    const adminLocalStorageString = localStorage.getItem('admin');
+    const adminLocalStorageObject = JSON.parse(adminLocalStorageString);
+    const token = adminLocalStorageObject.token;
+    console.log('admin - token - ', token); 
+    const res = await axios.get(`${`http://localhost:8800/exams/admin/attempts`}/${formId}`, {
+    headers: {
+      'x-auth-token': token,
+    },
+  });
+  console.log('view-form-data - ',res.data);
+  return res.data;
+  }catch(error){
 
+  }
+}
 export async function sendFormLink(link, emails, subject, body) {
   try {
     const token = localStorage.getItem("token");
@@ -47,7 +64,7 @@ export async function sendFormLink(link, emails, subject, body) {
   }
 }
 
-export const { setForm, setResponseIdx, setQuestionIdx } =
+export const { setForm, setResponseIdx, setQuestionIdx  } =
   submissionsSlice.actions;
 
 export default submissionsSlice.reducer;

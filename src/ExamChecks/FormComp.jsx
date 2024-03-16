@@ -1,4 +1,5 @@
 import React from 'react';
+import AnsForm from '../Admin/AnsForm';
 
 const EmbeddedForm = ({ embeddedFormLink, examTitle }) => (
     <div className="embedded-form">
@@ -7,6 +8,7 @@ const EmbeddedForm = ({ embeddedFormLink, examTitle }) => (
             <iframe title={examTitle} className="form-link" src={embeddedFormLink + '?embedded=true'}>
                 Form
             </iframe>
+            {/* <AnsForm /> */}
             <div className="responsive-message">
                 <h1>Please join via a Laptop/PC for the best performance</h1>
             </div>
