@@ -147,7 +147,7 @@ console.log('form-details -> ',form);
           <Switch
             type={"toggleFormStatus"}
             formId={form._id}
-            startState={acceptingStatus}
+            startState={acceptingStatus.toString()}
             setStatus={setAcceptingStatus}
           />
         </div>
