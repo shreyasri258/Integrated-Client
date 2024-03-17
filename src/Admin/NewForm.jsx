@@ -182,7 +182,7 @@ function NewForm() {
                   Swal.fire({
                     icon: 'error',
                     title: 'Error Creating Exam',
-                    text: 'Please fill in the Exam title and duration !',
+                    text: 'Please fill in the Exam title,duration and add atleast one question !',
                   });
                 } else {
                   handleCreatingForm(form);

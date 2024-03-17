@@ -24,8 +24,10 @@ function FormsTable({ displayForms, setDisplayForms }) {
         form._id === formId ? { ...form, posted: !form.posted } : form
       );
       setDisplayForms(updatedForms);
+      window.location.reload(); // Reload the page
     }
   };
+  
 
   function sortByTitles() {
     if (order === "ASC") {
@@ -84,7 +86,8 @@ function FormsTable({ displayForms, setDisplayForms }) {
   }
 
   return (
-    <table className="w-full max-w-full " style={{ width: '1250px' }}>
+    <table className="w-full max-w-full" style={{ width: '1250px', borderRadius: '8px' }}>
+
       <thead className="p-6 bg-blue-500 border border-blue-600 ">
         <tr className="text-black-200 ">
           <th className="p-3 font-semibold tracking-wide text-center">

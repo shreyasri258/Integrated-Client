@@ -151,34 +151,37 @@ function AnsForm({ embeddedFormLink, examTitle }) {
     <div>
       <div className="flex w-screen justify-center mb-16">
         <div className="w-4/6">
-          <div className="flex justify-center pt-3">
-            <span className="ml-12 text-indigo-500  text-3xl transition-colors duration-300 ease-in-out  ">
-              <Link to="/app">
-                <span className="font-pacifico indigo_gradient">Formaker</span>
-              </Link>
-            </span>
-          </div>
-
+         
           {hasError ? (
             <div className="flex justify-center items-center mt-16">
               <p className="text-lg text-indigo-500">{errorMsg} !!</p>
             </div>
           ) : (
             <div className="mt-4">
-              <p
+              {/* <p
                 className="h-10  text-lg  font-semibold"
                 style={{ border: "2px solid transparent" }}
               >
                 {title}
-              </p>
+              </p> */}
               {description && (
-                <p
-                  className="h-8 text-base mb-3"
-                  style={{ border: "2px solid transparent" }}
-                >
-                  {description}
-                </p>
-              )}
+  <p
+    className="h-8 text-base mb-3"
+    style={{
+      width: "500px", // Set a specific width for the description
+      border: "2px solid transparent",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis"
+    }}
+    title={description} // Show full description on hover
+  >
+    {description}
+  </p>
+)}
+
+
+
 
               {questions.map((q, idx) => {
                 return (
