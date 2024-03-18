@@ -4,6 +4,7 @@ import produce from 'immer';
 const initialState = {
   isLoading: false,
   triedSubmitting: false,
+  
   answers: [],
 };
 
