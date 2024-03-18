@@ -25,8 +25,19 @@ function ViewFormDetails() {
   const [acceptingStatus, setAcceptingStatus] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isHovered, setIsHovered] = useState(false);
+
 
   const CLIENT_URL = 'http://localhost:8081';
+
+ 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   useEffect(() => {
     async function setFormObj() {
@@ -56,22 +67,43 @@ function ViewFormDetails() {
     );
   }
 console.log('form-details -> ',form);
-  return (
-    <>
-    <UniversalNavbar></UniversalNavbar>
+return (
+  <>
+    <UniversalNavbar />
     <div className="relative ml-64">
-    <Sidebar className="bg-blue-500">
-        <SidebarItem type={"title"} content={form.title} />
+      <Sidebar className="bg-blue-500">
+        <SidebarItem
+          type={"title"}
+          content={
+            form.title.length > 100
+              ? (
+                <span
+                  style={{
+                    display: "inline-block",
+                    maxWidth: "100%",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                  title={form.title}
+                >
+                  {`${form.title.slice(0, 100)}...`}
+                </span>
+              )
+              : form.title
+          }
+        />
+
         <SidebarItem
           type={"info"}
-          icon={<FaWpforms style={{color:"#0a2147"}} fontSize={"1.3rem"} />}
+          icon={<FaWpforms style={{ color: "#0a2147" }} fontSize={"1.3rem"} />}
           label={"Questions"}
           info={form.questions.length}
         />
 
         <SidebarItem
           type={"info"}
-          icon={<PiNotepad style={{color:"#0a2147"}} fontSize={"1.3rem"} />}
+          icon={<PiNotepad style={{ color: "#0a2147" }} fontSize={"1.3rem"} />}
           label={"Responses"}
           info={form.ansForms.length}
         />
@@ -81,10 +113,10 @@ console.log('form-details -> ',form);
         <SidebarItem
           type={"link"}
           selectedIcon={
-            <HiViewBoards style={{color:"#0a2147"}} fontSize={"1.3rem"} />
+            <HiViewBoards style={{ color: "#0a2147" }} fontSize={"1.3rem"} />
           }
           unselectedIcon={
-            <HiViewBoards style={{color:"#0a2147"}} fontSize={"1.3rem"} />
+            <HiViewBoards style={{ color: "#0a2147" }} fontSize={"1.3rem"} />
           }
           label={"View"}
           to={`/formDetails/${formId}/submissions`}
@@ -93,10 +125,10 @@ console.log('form-details -> ',form);
         <SidebarItem
           type={"link"}
           unselectedIcon={
-            <VscGraph style={{color:"#0a2147"}} fontSize={"1.3rem"} />
+            <VscGraph style={{ color: "#0a2147" }} fontSize={"1.3rem"} />
           }
           selectedIcon={
-            <VscGraph style={{color:"#0a2147"}} fontSize={"1.3rem"} />
+            <VscGraph style={{ color: "#0a2147" }} fontSize={"1.3rem"} />
           }
           label={"Stats"}
           to={`/formDetails/${formId}/stats`}
@@ -105,10 +137,10 @@ console.log('form-details -> ',form);
         <SidebarItem
           type={"link"}
           unselectedIcon={
-            <AiOutlineMail style={{color:"#0a2147"}} fontSize={"1.3rem"} />
+            <AiOutlineMail style={{ color: "#0a2147" }} fontSize={"1.3rem"} />
           }
           selectedIcon={
-            <AiOutlineMail style={{color:"#0a2147"}} fontSize={"1.3rem"} />
+            <AiOutlineMail style={{ color: "#0a2147" }} fontSize={"1.3rem"} />
           }
           label={"Email"}
           to={`/formDetails/${formId}/sendbymail`}
@@ -116,10 +148,10 @@ console.log('form-details -> ',form);
         <SidebarItem
           type={"link"}
           unselectedIcon={
-            <PiExamLight  style={{color:"#0a2147"}} fontSize={"1.3rem"} />
+            <PiExamLight style={{ color: "#0a2147" }} fontSize={"1.3rem"} />
           }
           selectedIcon={
-            <PiExamLight style={{color:"#0a2147"}} fontSize={"1.3rem"} />
+            <PiExamLight style={{ color: "#0a2147" }} fontSize={"1.3rem"} />
           }
           label={"Exam Report"}
           to={`/formDetails/${formId}/examreport`}
@@ -128,15 +160,14 @@ console.log('form-details -> ',form);
         <hr className="my-3" />
 
         <div className="flex items-center">
-  <button
-    style={{ background: "none", color: "#0a2147", fontSize: "1.2rem", padding: "0", margin: "0" }}
-    onClick={() => copy(`${`http://localhost:5173`}/ansForm/${form._id}`)}
-  >
-    <MdContentCopy />
-  </button>
-  <span className="text-blue-600" style={{ margin: "0", marginLeft: "4px" }}>Copy Form Link</span>
-</div>
-
+          <button
+            style={{ background: "none", color: "#0a2147", fontSize: "1.2rem", padding: "0", margin: "0" }}
+            onClick={() => copy(`${`http://localhost:5173`}/ansForm/${form._id}`)}
+          >
+            <MdContentCopy />
+          </button>
+          <span className="text-blue-600" style={{ margin: "0", marginLeft: "4px" }}>Copy Form Link</span>
+        </div>
 
         <div className="flex items-center p-2 justify-between ">
           {acceptingStatus ? (
@@ -153,7 +184,7 @@ console.log('form-details -> ',form);
         </div>
 
         <div className=" flex p-2 justify-center">
-          <button 
+          <button
             onClick={() => handleDelete(formId)}
             className="uppercase p-1.5 font-bold bg-rose-200 rounded-md tracking-wide text-base text-rose-500  hover:bg-rose-500 hover:text-white transition-all duration-300 ease-in-out"
           >
@@ -165,8 +196,8 @@ console.log('form-details -> ',form);
         <Outlet context={form} />
       </div>
     </div>
-    </>
-  );
+  </>
+);
 
 }
 

@@ -4,6 +4,7 @@ import produce from 'immer';
 const initialState = {
   isLoading: false,
   triedSubmitting: false,
+  isSubmitted:false,
   answers: [],
 };
 
@@ -35,6 +36,9 @@ const ansFormSlice = createSlice({
     },
     setTriedSubmitting(state, action) {
       state.triedSubmitting = action.payload;
+    },
+    setSubmit(state,action){
+      state.isSubmitted=action.payload;
     },
     resetAnsForm(state, action) {
       return initialState;
@@ -71,7 +75,7 @@ export async function submitForm(answers, formId) {
   return res;
 }
 
-export const { readyAns, setAns, setTriedSubmitting, resetAnsForm } =
+export const { readyAns, setAns,setSubmit, setTriedSubmitting, resetAnsForm } =
   ansFormSlice.actions;
 
 export default ansFormSlice.reducer;
@@ -85,4 +89,7 @@ export const getAns = (ansIdx) => (state) => state.ansForm.answers[ansIdx];
 
 export const getTriedSubmitting = (state) => {
   return state.ansForm.triedSubmitting;
+};
+export const getSubmit = (state) => {
+  return state.ansForm.isSubmitted;
 };

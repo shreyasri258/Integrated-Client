@@ -14,6 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import StudentResults from "./StudentResults"; // Import the ResultsTab component
 import "../css/userDashboard.css"; // Import the stylesheet
 import { StudentContext } from "../contextCalls/studentContext/StudentContext";
+import swal from "sweetalert"; 
 
 const UserDashboard = () => {
   const [value, setValue] = useState(0);
@@ -66,13 +67,28 @@ const UserDashboard = () => {
   };
 
   const handleStartExam = (exam) => {
-    window.location.href = `/instructions?title=${encodeURIComponent(
-      exam.title
-    )}&duration=${encodeURIComponent(
-      exam.timeDuration
-    )}&url=${encodeURIComponent(exam.googleFormLink)}`;
-    //window.Location.href = `/systemcheck?title=${encodeURIComponent(exam.examTitle)}`
+    // Display SweetAlert confirmation dialog
+    swal({
+      title: "Do you really want to begin the exam?",
+      icon: "warning",
+      buttons: ["No", "Yes"],
+      dangerMode: true,
+    }).then((willStart) => {
+      if (willStart) {
+        // Proceed to instructions page
+        window.open(`/instructions?title=${encodeURIComponent(
+        exam.title
+      )}&duration=${encodeURIComponent(
+        exam.timeDuration
+      )}&url=${encodeURIComponent(exam.googleFormLink)}`, "_blank", "noopener noreferrer");
+     
+        // Remove the exam card from the dashboard
+        setExamData((prevData) => prevData.filter((e) => e !== exam));
+        
+      }
+    });
   };
+  
 
   const style = {
     position: "absolute",
