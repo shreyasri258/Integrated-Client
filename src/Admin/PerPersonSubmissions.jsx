@@ -70,7 +70,7 @@ function PerPersonSubmissions() {
           );
         })}
       </div>
-      <div className="flex justify-between items-center gap-4  fixed bottom-8 bg-blue-300 p-2 rounded-full ">
+      {/* <div className="flex justify-between items-center gap-4  fixed bottom-8 bg-blue-300 p-2 rounded-full ">
         <button
           disabled={responseIdx === 0}
           onClick={() => setIdx((idx) => idx - 1)}
@@ -86,7 +86,7 @@ function PerPersonSubmissions() {
         <div className=" font-bold w-full flex text-white justify-between items-center text-base">
           <input
             type="number"
-            // defaultValue={responseIdx + 1}
+            defaultValue={responseIdx + 1}
             placeholder={responseIdx + 1}
             value={idx}
             className="focus:outline-none w-3 bg-blue-300 rounded-lg text-base text-white font-bold appearance-none placeholder:text-blue-500"
@@ -101,7 +101,7 @@ function PerPersonSubmissions() {
           <span className="text-base">{ansForms.length}</span>
         </div>
 
-        <button
+         <button
           disabled={responseIdx === ansForms.length - 1}
           onClick={() => setIdx((idx) => idx + 1)}
           className={`px-2 py-1 text-base font-bold rounded-full ${
@@ -111,8 +111,8 @@ function PerPersonSubmissions() {
           }  ring-blue-300 transition-all duration-300 ease-in-out border-1 border-blue-500 `}
         >
           &rarr;
-        </button>
-      </div>
+        </button> 
+      </div> */}
     </div>
   );
 }
