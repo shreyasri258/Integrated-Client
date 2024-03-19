@@ -7,21 +7,21 @@ import { useState } from "react";
 import Badge from "../ui/Badge";
 import { useNavigate } from "react-router-dom";
 import { getDate } from "../utils/index";
-import axios from 'axios'
-import {postToStudents} from "../../store/slices/newForm"
+import axios from "axios";
+import { postToStudents } from "../../store/slices/newForm";
 
 function FormsTable({ displayForms, setDisplayForms }) {
   const [order, setOrder] = useState("ASC");
-  const [copied, setCopied] = useState({ show: false, posX: 0, posY: 0 }); // State to track if copied box should be shown and its position
-  
+  const [copied, setCopied] = useState({ show: false }); // State to track if copied box should be shown and its position
+
   const navigate = useNavigate();
-  
+
   //const CLIENT_URL = `http://localhst:8800`//'http://localhost:8081';
-  const BASE_URL = 'http://localhost:8800'; // 8081
+  const BASE_URL = "http://localhost:8800"; // 8081
   const handlePost = async (formId) => {
     const res = await postToStudents(formId);
     if (res) {
-      console.log('form updated');
+      console.log("form updated");
       const updatedForms = displayForms.map((form) =>
         form._id === formId ? { ...form, posted: !form.posted } : form
       );
@@ -29,15 +29,13 @@ function FormsTable({ displayForms, setDisplayForms }) {
       window.location.reload(); // Reload the page
     }
   };
-  
-  
 
-  const handleCopy = (formId, posX, posY) => {
+  const handleCopy = (formId) => {
     copy(`${`http://localhost:5173`}/ansForm/${formId}`);
-    setCopied({ show: true, posX, posY }); // Show the copied box
+    setCopied({ show: true }); // Show the copied box
     setTimeout(() => {
-      setCopied({ show: false, posX: 0, posY: 0 }); // Hide the copied box after 3 seconds
-    }, 3000);
+      setCopied({ show: false }); // Hide the copied box after 2 seconds
+    }, 2000);
   };
   function sortByTitles() {
     if (order === "ASC") {
@@ -68,28 +66,35 @@ function FormsTable({ displayForms, setDisplayForms }) {
   }
   function sortByQuestions() {
     if (order === "ASC") {
-      const sortedForms = displayForms.sort((a, b) => a.questions.length - b.questions.length);
+      const sortedForms = displayForms.sort(
+        (a, b) => a.questions.length - b.questions.length
+      );
       setDisplayForms([...sortedForms]);
       setOrder("DSC");
     } else {
-      const sortedForms = displayForms.sort((a, b) => b.questions.length - a.questions.length);
+      const sortedForms = displayForms.sort(
+        (a, b) => b.questions.length - a.questions.length
+      );
       setDisplayForms([...sortedForms]);
       setOrder("ASC");
     }
   }
-  
+
   function sortByResponses() {
     if (order === "ASC") {
-      const sortedForms = displayForms.sort((a, b) => a.ansForms.length - b.ansForms.length);
+      const sortedForms = displayForms.sort(
+        (a, b) => a.ansForms.length - b.ansForms.length
+      );
       setDisplayForms([...sortedForms]);
       setOrder("DSC");
     } else {
-      const sortedForms = displayForms.sort((a, b) => b.ansForms.length - a.ansForms.length);
+      const sortedForms = displayForms.sort(
+        (a, b) => b.ansForms.length - a.ansForms.length
+      );
       setDisplayForms([...sortedForms]);
       setOrder("ASC");
     }
   }
-  
 
   function sortByDate() {
     if (order === "ASC") {
@@ -120,16 +125,20 @@ function FormsTable({ displayForms, setDisplayForms }) {
   }
   function sortByDuration() {
     if (order === "ASC") {
-      const sortedForms = displayForms.sort((a, b) => a.timeDuration - b.timeDuration);
+      const sortedForms = displayForms.sort(
+        (a, b) => a.timeDuration - b.timeDuration
+      );
       setDisplayForms([...sortedForms]);
       setOrder("DSC");
     } else {
-      const sortedForms = displayForms.sort((a, b) => b.timeDuration - a.timeDuration);
+      const sortedForms = displayForms.sort(
+        (a, b) => b.timeDuration - a.timeDuration
+      );
       setDisplayForms([...sortedForms]);
       setOrder("ASC");
     }
   }
-  
+
   function sortByStatus() {
     if (order === "ASC") {
       const sortedForms = displayForms.sort((a, b) => {
@@ -149,7 +158,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
       setOrder("ASC");
     }
   }
-  
+
   function sortByPosted() {
     if (order === "ASC") {
       const sortedForms = displayForms.sort((a, b) => {
@@ -169,16 +178,18 @@ function FormsTable({ displayForms, setDisplayForms }) {
       setOrder("ASC");
     }
   }
-  
 
   return (
     <div>
       {copied.show && (
-        <div className="copied-box" style={{ top: copied.posY, left: copied.posX }}>
-          Copied!
+        <div className="p-3 text-xl tracking-wide text-center text-blue-700 font-bold">
+          Copied
         </div>
       )}
-      <table className="w-full max-w-full" style={{ width: '1250px', borderRadius: '8px' }}>
+      <table
+        className="w-full max-w-full"
+        style={{ width: "1250px", borderRadius: "8px" }}
+      >
         {/* Table header */}
         <thead className="p-6 bg-blue-500 border border-blue-600 ">
           <tr className="text-black-200 ">
@@ -247,23 +258,55 @@ function FormsTable({ displayForms, setDisplayForms }) {
               <span>View</span>
             </th>
             <th className="p-3 font-semibold tracking-wide text-center">
-              <span>Status</span>
+              <div
+                onClick={sortByStatus}
+                className="flex justify-center items-center cursor-pointer hover:underline underline-offset-4 transition-all duration-300 ease-in-out"
+              >
+                <span>Status</span>
+                <span>
+                  <BiSort fontSize={"1.4rem"} />
+                </span>
+              </div>
             </th>
             <th className="p-3 font-semibold tracking-wide text-center">
-              <span>Posted</span>
+              <div
+                onClick={sortByPosted}
+                className="flex justify-center items-center cursor-pointer hover:underline underline-offset-4 transition-all duration-300 ease-in-out"
+              >
+                <span>Posted</span>
+                <span>
+                  <BiSort fontSize={"1.4rem"} />
+                </span>
+              </div>
             </th>
           </tr>
         </thead>
         <tbody>
           {displayForms.map((form, idx) => (
-            <tr key={idx} className={`${idx % 2 === 0 ? "bg--200" : ""} border-x-2 border border-blue-600`}>
+            <tr
+              key={idx}
+              className={`${
+                idx % 2 === 0 ? "bg--200" : ""
+              } border-x-2 border border-blue-600`}
+            >
               <td className="p-3 tracking-wide text-center">{idx + 1}</td>
               <td className="p-3 tracking-wide text-center">{form.title}</td>
-              <td className="p-3 tracking-wide text-center">{form.timeDuration} min</td>
-              <td className="p-3 tracking-wide text-center">{getDate(form.created)}</td>
-              <td className="p-3 tracking-wide text-center">{form.questions.length}</td>
-              <td className="p-3 tracking-wide text-center">{form.ansForms.length}</td>
-              <td className="p-3 tracking-wide text-center" style={{ position: 'relative' }}>
+              <td className="p-3 tracking-wide text-center">
+                {form.timeDuration} min
+              </td>
+              <td className="p-3 tracking-wide text-center">
+                {getDate(form.created)}
+              </td>
+              <td className="p-3 tracking-wide text-center">
+                {form.questions.length}
+              </td>
+              <td className="p-3 tracking-wide text-center">
+                {form.ansForms.length}
+              </td>
+              <td
+                className="p-3 tracking-wide text-center"
+                style={{ position: "relative" }}
+              >
                 <button
                   style={{ background: "none", color: "#0a2147" }}
                   onClick={(e) => handleCopy(form._id, e.clientX, e.clientY)}
@@ -275,7 +318,9 @@ function FormsTable({ displayForms, setDisplayForms }) {
               <td className="p-3 tracking-wide text-center">
                 <button
                   style={{ background: "none", color: "#0a2147" }}
-                  onClick={() => navigate(`/formDetails/${form._id}/submissions`)}
+                  onClick={() =>
+                    navigate(`/formDetails/${form._id}/submissions`)
+                  }
                   className={`hover:ring-8 bg-red-400 rounded-full hover:transition-all duration-500 ease-in-out`}
                 >
                   <BsEyeFill fontSize={"1.5rem"} />
@@ -290,7 +335,9 @@ function FormsTable({ displayForms, setDisplayForms }) {
               </td>
               <td className="p-3 tracking-wide text-center">
                 {form.postedForStudents ? (
-                  <Badge type={"accept"} onClick={() => handlePost(form._id)}>Posted</Badge>
+                  <Badge type={"accept"} onClick={() => handlePost(form._id)}>
+                    Posted
+                  </Badge>
                 ) : (
                   <button
                     onClick={() => handlePost(form._id)}
