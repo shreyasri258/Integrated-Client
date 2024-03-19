@@ -21,14 +21,15 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
-    "react-redux": "^8.1.2"
+    "react-redux": "^8.1.2",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
-    "@emotion/react": "^11.11.3",
+    "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.7",
-    "@mui/material": "^5.15.6",
+    "@mui/material": "^5.15.14",
     "@tensorflow-models/coco-ssd": "^2.2.3",
     "@tensorflow/tfjs": "^4.17.0",
     "@testing-library/jest-dom": "^5.17.0",

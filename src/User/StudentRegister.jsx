@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import Icon from "../images/Icon.png";
 import socketIOClient from 'socket.io-client';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const inputField = ['email', 'username', 'password', 'institutionName'];
 
 const StudentRegister = () => {
@@ -97,11 +99,23 @@ const StudentRegister = () => {
       data[key] = value;
     });
     try {
-      await axios.post("http://localhost:8800/Server/user/register", data);
-      console.log('Registration Successful!');
-      setShowModal(true);
+      let res=await axios.post("http://localhost:8800/Server/user/register", data);
+      
+      if (res.status === 201) {
+        toast.success("Admin registered successfully", { position: "top-right" });
+        setShowModal(true);}
     } catch (error) {
-      console.log('Registration Failed!', error.message);
+      if (error.response.status === 400) {
+        toast.error("Admin is already registered");
+      } 
+     else if (error.response.status === 403) {
+        toast.error("Socket Error");
+      } 
+      
+      else {
+        toast.error("An error occurred. Please try again later.");
+      }
+      console.error('Registration error:', error);
     }
     console.log('Registration values:', inputValues);
   };
