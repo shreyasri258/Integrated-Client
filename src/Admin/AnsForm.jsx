@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams , useLocation } from "react-router-dom";
 import QuestionAns from "./component/QuestionAns";
 import {
   getAnswers,
@@ -12,10 +12,12 @@ import {
   submitForm,
   // updateAnswer,
 } from "../store/slices/ansForm"; // Assuming there's an updateAnswer action in your slice
+import { setTimeExpired, getTimeExpired } from "../store/slices/examTimer";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "./ui/Button";
 import { BsExclamationCircle } from "react-icons/bs";
 import LoadingSpinner from "./LoadingSpinner";
+
 
 function disableHighlightAndPaste() {
   // Disable text selection
@@ -48,10 +50,9 @@ function enableHighlightAndPaste() {
 }
 
 
-
 function AnsForm({ embeddedFormLink, examTitle }) {
   const { formId } = useParams();
-  const [{title, description, questions }, setForm] = useState({});
+  const [{ title, description, questions }, setForm] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -60,41 +61,63 @@ function AnsForm({ embeddedFormLink, examTitle }) {
   const triedSubmitting = useSelector(getTriedSubmitting);
   const isSubmitted = useSelector(getSubmit);
   const navigate = useNavigate();
+  const isTimeExpired = useSelector(getTimeExpired);
+  console.log(`isTimeExpired in ans - ${isTimeExpired}`)
+  const location = useLocation(); // Use useLocation hook to get location object
+    const params = new URLSearchParams(location.search);
+    const durationParam = params.get("duration");
+  const duration = durationParam ? parseInt(durationParam) : null; // Parse duration
+ const [timeDuration, setTimeDuration] = useState(null);
+  console.log(`duration - ${duration}`);
+  // alert(`duration - ${duration} - `, duration)
 
-  useEffect(
-    function () {
-      async function FormSetter() {
-        setIsLoading(true);
-        const res = await getQuestionForm(formId);
-        console.log('question form - ',res);
-        if (res.status === 200) {
-            const form = res.data;
-            setForm(form);
-            dispatch(readyAns(form.questions.length));
-          } else if (res.status === 302) {
-            setHasError(true);
-            setErrorMsg(res.data.message);
-          }
-        setIsLoading(false);
+  useEffect(() => {
+    console.log("isTimeExpired updated:", isTimeExpired);
+  }, [isTimeExpired]);
+
+  // if(timeDuration !== null){
+    useEffect(() => {
+      if (timeDuration !== null && !isNaN(timeDuration)) { // Check if timeDuration is not null and a valid number
+        const interval = setInterval(() => {
+          console.log(`timeDuration - ${timeDuration}`)
+          dispatch(setTimeExpired(true));
+        }, timeDuration * 60 * 1000);
+        return () => clearInterval(interval);
       }
+    }, [timeDuration, dispatch]);
+  // }
+  
+  
 
-      FormSetter();
-    },
-    [formId, dispatch]
-  );
+
+
+  useEffect(() => {
+    async function FormSetter() {
+      console.log("FormSetter triggered");
+      setIsLoading(true);
+      const res = await getQuestionForm(formId);
+      console.log('question form in ansForm comp - ', res);
+      if (res.status === 200) {
+        const form = res.data;
+        setTimeDuration(parseInt(form.timeDuration));
+        setForm(form);
+        dispatch(readyAns(form.questions.length));
+      } else if (res.status === 302) {
+        setHasError(true);
+        setErrorMsg(res.data.message);
+      }
+      setIsLoading(false);
+    }
+    FormSetter();
+  }, [formId, dispatch]);
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.ctrlKey && event.key === 'c') {
         event.preventDefault(); // Disable copying (Ctrl+C)
       }
-  
-      if (event.ctrlKey && event.shiftKey && event.key === 'I') {
-        event.preventDefault(); // Disable opening the dialog box
-      }
     };
-  
     document.addEventListener('keydown', handleKeyDown);
-  
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
@@ -102,14 +125,22 @@ function AnsForm({ embeddedFormLink, examTitle }) {
 
   useEffect(() => {
     disableHighlightAndPaste();
-
     return () => {
       enableHighlightAndPaste();
     };
   }, []);
 
+  useEffect(() => {
+    if (isTimeExpired && !isSubmitted) {
+      console.log(`useEffect ins ansForm - ${isTimeExpired} , ${isSubmitted}`)
+      handleAutoSubmit();
+    }
+  }, [isTimeExpired, isSubmitted]);
+
+
 
   async function handleSubmit() {
+    console.log("handleSubmit called");
     let canSubmit = true;
     for (let i = 0; i < answers.length; i++) {
       if (questions[i].required === true && answers[i] === undefined) {
@@ -118,12 +149,11 @@ function AnsForm({ embeddedFormLink, examTitle }) {
         canSubmit = false;
       }
     }
-  
     if (canSubmit) {
       console.log("submitting form");
       const res = await submitForm(answers, formId);
       console.log(res);
-      dispatch(setSubmit(true))
+      dispatch(setSubmit(true));
       if (res.status === 201) {
         dispatch(setTriedSubmitting(false));
         console.log("submitted");
@@ -138,13 +168,26 @@ function AnsForm({ embeddedFormLink, examTitle }) {
       }
     }
   }
+
+  async function handleAutoSubmit() {
+    console.log(`handleAutoSubmit called - ${isTimeExpired} , ${isSubmitted}`);
+    if (!isSubmitted && isTimeExpired) {
+      await handleSubmit();
+      console.log("Form autosubmitted");
+      window.parent.close();
+    }
+  }
+
   
-  if (isLoading)
+
+
+  if (isLoading) {
     return (
       <div className="flex min-h-screen justify-center items-center">
         <LoadingSpinner />
       </div>
     );
+  };
     
 
   return (

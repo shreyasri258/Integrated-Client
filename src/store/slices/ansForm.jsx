@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   triedSubmitting: false,
   isSubmitted:false,
+  // isTimeExpired:false,
   answers: [],
 };
 
@@ -32,16 +33,27 @@ const ansFormSlice = createSlice({
     },
     setAns(state, action) {
       const { ansIdx, ans } = action.payload;
+      console.log('action in setAns - ',action);
       state.answers[ansIdx] = ans;
+      // state.answers = state.answers.map((item, index) => index === ansIdx ? ans : item);
+
     },
     setTriedSubmitting(state, action) {
       state.triedSubmitting = action.payload;
     },
     setSubmit(state,action){
-      state.isSubmitted=action.payload;
+      state.isSubmitted = action.payload;
     },
+    // setTimeExpired(state,action){
+    //   console.log('action in setTimeExp - ', action)
+    //   state.isTimeExpired = action.payload;
+    // },
     resetAnsForm(state, action) {
-      return initialState;
+      return {
+        ...initialState,
+        answers: state.answers, // Preserve the answers array
+      };
+    
     },
     // updateAnswer(state, action) {
     //   const { ansIdx, ans } = action.payload;
@@ -75,7 +87,7 @@ export async function submitForm(answers, formId) {
   return res;
 }
 
-export const { readyAns, setAns,setSubmit, setTriedSubmitting, resetAnsForm } =
+export const { readyAns, setAns,setSubmit, setTimeExpired, setTriedSubmitting, resetAnsForm } =
   ansFormSlice.actions;
 
 export default ansFormSlice.reducer;
@@ -93,3 +105,7 @@ export const getTriedSubmitting = (state) => {
 export const getSubmit = (state) => {
   return state.ansForm.isSubmitted;
 };
+// export const getTimeExpired = (state) => {
+//   
+//   return state.ansForm.isTimeExpired;
+// }

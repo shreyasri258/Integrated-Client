@@ -2,27 +2,31 @@ import React, { useState, useEffect, useRef , useContext, useCallback } from 're
 // import Timer from "../src/timer/Timer.jsx";
 // import WebLiveCapture from '../src/weblivecapture/WebLiveCapture.jsx';
 import '../css/Exam.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation , useParams} from 'react-router-dom';
 import Swal from 'sweetalert2'; // Import SweetAlert as Swal
 import { StudentContext } from "../contextCalls/studentContext/StudentContext"; // Import StudentContext
 import TimerComponent from '../ExamChecks/TimerComp.jsx';
 import { useDispatch, useSelector } from "react-redux";
 import LeftColumn from '../ExamChecks/LeftCol.jsx';
 import EmbeddedForm from '../ExamChecks/FormComp.jsx';
-import {
-    getAnswers,
-    getQuestionForm,
-    getTriedSubmitting,
-    readyAns,
-    setTriedSubmitting,
-    getSubmit,
-    setSubmit,
-    submitForm,
-    // updateAnswer,
-  } from "../store/slices/ansForm";
+// import {
+//     getAnswers,
+//     getQuestionForm,
+//     getTriedSubmitting,
+//     readyAns,
+//     setTriedSubmitting,
+//     getSubmit,
+//     setSubmit,
+//     submitForm,
+//     setTimeExpired,
+//     getTimeExpired
+//     // updateAnswer,
+//   } from "../store/slices/ansForm";
 // import Sound from './Sound.wav'
+import { setTimeExpired, getTimeExpired,setTime, getTime } from '../store/slices/examTimer.jsx';
 import Warning from '../ExamChecks/Warning.wav'
 import Watermark from '../ExamChecks/Watermark.jsx';
+import { AlternateEmail } from '@mui/icons-material';
 
 const Exam = () => {
     const { user } = useContext(StudentContext);
@@ -35,8 +39,19 @@ const Exam = () => {
     console.log('exam params -> ', examTitle, duration)
     const studentName = user.user.user.name; // Assuming this is a static value
     const studentEmail = user.user.user.email;
-    const isSubmitted = useSelector(getSubmit);
+    // const isSubmitted = useSelector(getSubmit);
     const dispatch = useDispatch();
+    // const answers = useSelector(getAnswers);
+    const formId = params.get("url").split("/").pop(); // Extract formId from the URL
+    // const [{title, description, questions }, setForm] = useState({});
+
+
+  // Now you have access to the formId
+  console.log(formId);
+
+    // console.log(`formId - ${formId}`)
+    const isTimeExpired = useSelector(getTimeExpired);
+    // console.log(`import ${isTimeExpired}, ${isSubmitted} ,  ${getTimeExpired}`)
 
     const fullscreenRef = useRef(null);
     const countdownRef = useRef(null);
@@ -44,7 +59,6 @@ const Exam = () => {
     const [warningCnt, setWarningCnt] = useState(0);
     const [isDevToolsOpen, setIsDevToolsOpen] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
-    const [timerExpired, setTimerExpired] = useState(false); // State to track timer expiration
     const [fullscreenAlertShown, setFullscreenAlertShown] = useState(false); // State to track if fullscreen alert has been shown
 
     const handleFullscreen = useCallback(() => {
@@ -64,8 +78,8 @@ const Exam = () => {
     }, []);
 
     const terminateExam = useCallback(() => {
-        
-        if (warningCnt >= 3) {
+        //temp
+        if (warningCnt >= 12) {
             disableForm();
             Swal.fire({
                 icon: 'error',
@@ -228,21 +242,79 @@ const Exam = () => {
         }
     }, [isFullScreen, fullscreenAlertShown, handleFullscreen]);
 
-  
+    // async function handleSubmit() {
+    //     let canSubmit = true;
+    //     // for (let i = 0; i < answers.length; i++) {
+    //     //   if (questions[i].required === true && answers[i] === undefined) {
+    //     //     dispatch(setTriedSubmitting(true));
+    //     //     setErrorMsg("Answer all the required questions before submitting");
+    //     //     canSubmit = false;
+    //     //   }
+    //     // }
+      
+    //     if (canSubmit) {
+    //       console.log("submitting form");
+    //       const res = await submitForm(answers, formId);
+    //       console.log(res);
+    //       dispatch(setSubmit(true))
+    //       if (res.status === 201) {
+    //         dispatch(setTriedSubmitting(false));
+    //         console.log("submitted");
+    //         if (isSubmitted) {
+    //           // Close the parent window
+    //           console.log(`form is submitted`)
+    //         //   window.parent.close();
+    //         }
+    //       }
+    //       if (res.status === 302) {
+    //         dispatch(setTriedSubmitting(true));
+    //         setErrorMsg(res.data.message);
+    //       }
+    //     }
+    //   }
 
     useEffect(() => {
-        // Start the countdown timer when the component mounts
-        countdownRef.current = setTimeout(() => {
-            setTimerExpired(true);
-            // Close the window when the timer expires
-            if(timerExpired || isSubmitted){
-                window.close(); 
-            }
+        countdownRef.current = setTimeout(async () => {
+            // dispatch(setTimeExpired(true));
+            // Auto-submit the form when the timer expires
+            // dispatch(setTimeExpired(true))
+            dispatch(setTimeExpired(true))
+            console.log(`after useEffect - ${isTimeExpired}`)
+            // if (isTimeExpired && !isSubmitted) {
+                
+            //      handleSubmit();
+            //     console.log(`form by timer, ${isTimeExpired}, ${isSubmitted}`);
+            //     // window.close(); // Optionally close the window after submission
+            // } else if (isTimeExpired && isSubmitted) {
+            //     console.log("timer expired, not submitted")
+            //     // window.close(); // Optionally close the window if the form is already submitted
+            // } else if(!isTimeExpired && isSubmitted){
+            //     window.close(); // Optionally close the window if the form is already submitted
+            // }
         }, duration * 60 * 1000); // Convert duration to milliseconds
-
+        console.log('the countdownRef - ',countdownRef)
         // Cleanup function to clear the timeout when the component unmounts
         return () => clearTimeout(countdownRef.current);
-    }, [duration]);
+    }, [duration, isTimeExpired, dispatch]);
+        
+
+  
+
+    // useEffect(() => {
+    //     // Start the countdown timer when the component mounts
+    //     countdownRef.current = setTimeout(() => {
+    //         setTimerExpired(true);
+    //         // Close the window when the timer expires
+    //         if(timerExpired){
+    //             window.close(); 
+    //         } else if(isSubmitted){
+    //             window.close();
+    //         }
+    //     }, duration * 60 * 1000); // Convert duration to milliseconds
+
+    //     // Cleanup function to clear the timeout when the component unmounts
+    //     return () => clearTimeout(countdownRef.current);
+    // }, [duration]);
 
     useEffect(() => {
         const devToolsChangeHandler = (event) => {
@@ -403,7 +475,7 @@ const Exam = () => {
             <div className="exam-container">
                 <LeftColumn studentName={studentName} studentEmail={studentEmail} />
                 <EmbeddedForm embeddedFormLink={embeddedFormLink} examTitle={examTitle} />
-                <TimerComponent duration={duration} setTimerExpired={setTimerExpired} />
+                <TimerComponent duration={duration} />
             </div>
         </div>
         
