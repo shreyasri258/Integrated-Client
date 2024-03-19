@@ -75,7 +75,7 @@ function AnsForm({ embeddedFormLink, examTitle }) {
     console.log("isTimeExpired updated:", isTimeExpired);
   }, [isTimeExpired]);
 
-  // if(timeDuration !== null){
+  
     useEffect(() => {
       if (timeDuration !== null && !isNaN(timeDuration)) { // Check if timeDuration is not null and a valid number
         const interval = setInterval(() => {
@@ -85,12 +85,8 @@ function AnsForm({ embeddedFormLink, examTitle }) {
         return () => clearInterval(interval);
       }
     }, [timeDuration, dispatch]);
-  // }
   
   
-
-
-
   useEffect(() => {
     async function FormSetter() {
       console.log("FormSetter triggered");
