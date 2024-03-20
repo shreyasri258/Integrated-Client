@@ -20,6 +20,7 @@ const AdminRegister = () => {
       data[key] = value;
     });
     try {
+
       let res= await axios.post("http://localhost:8800/Server/admin/register", data);
      
       if (res.status === 201) {

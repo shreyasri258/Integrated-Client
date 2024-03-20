@@ -65,7 +65,7 @@ CheckBox.propTypes = {
   setSelected: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
-  answers: PropTypes.arrayOf(PropTypes.number).isRequired,
+  // answers: PropTypes.arrayOf(PropTypes.number),
 };
 
 export default CheckBox;
