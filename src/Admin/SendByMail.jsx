@@ -6,7 +6,10 @@ import TextArea from "./ui/TextArea";
 import { useAuth } from "../store/UserAuth";
 import { getForm, sendFormLink } from "../store/slices/viewSubmissions";
 import { isValidEmail } from "./utils";
-import UniversalNavbar from "./universalNavbar";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function SendByEmail() {
   const form = useSelector(getForm);
@@ -25,6 +28,7 @@ function SendByEmail() {
       setEmailsList((emailsList) => [...emailsList, email]);
       setEmail("");
     } else {
+      toast.error("Enter valid Email ID");
       setHasValidEmail(false);
     }
   }
@@ -61,16 +65,18 @@ function SendByEmail() {
         setBody("");
         setEmail("");
         setEmailsList([]);
+        toast.success("Email sent successfully", { position: "top-right" });
       } else if (res.status === 401) {
         await authUser();
       }
     }
   }
+  
 
   return (
     <>
       
-
+      <ToastContainer />
       <div className="flex justify-center items-center w-full  h-full">
         <div className="flex gap-6 flex-col ">
           <h1
@@ -125,11 +131,11 @@ function SendByEmail() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter Email ID"
               />
-              {hasValidEmail === false && (
+              {/* {hasValidEmail === false && (
                 <span className="text-base text-rose-500 px-3 py-2 ">
                   Enter valid Email ID
                 </span>
-              )}
+              )} */}
             </div>
             <button
               onClick={handleAddEmail}
@@ -181,13 +187,13 @@ function SendByEmail() {
             </div>
           )}
 
-          {hasSubmitted && !sending && (
+          {/* {hasSubmitted && !sending && (
             <div className="flex justify-center">
               <span className="text-xl text-blue-700">
                 Form Links Sent Succesfully !!
               </span>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </>
