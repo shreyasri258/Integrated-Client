@@ -17,6 +17,8 @@ import { AiOutlineMail } from "react-icons/ai";
 import { getForm, setForm } from "../store/slices/viewSubmissions";
 import UniversalNavbar from "./universalNavbar";
 import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ViewFormDetails() {
   const { formId } = useParams();
@@ -66,9 +68,17 @@ function ViewFormDetails() {
       </div>
     );
   }
+
+  const handleCopy = () => {
+    const link = `${`http://localhost:5173`}/ansForm/${form._id}`;
+    copy(link);
+    toast.success("Copied");
+  };
+
 console.log('form-details -> ',form);
 return (
   <>
+  <ToastContainer />
     <UniversalNavbar />
     <div className="relative ml-64">
       <Sidebar className="bg-blue-500">
@@ -108,7 +118,7 @@ return (
           info={form.ansForms.length}
         />
 
-        <hr className="my-3 " />
+        <hr className="my-2 " />
 
         <SidebarItem
           type={"link"}
@@ -157,17 +167,18 @@ return (
           to={`/formDetails/${formId}/examreport`}
         />
 
-        <hr className="my-3" />
+        <hr className="my-2" />
 
-        <div className="flex items-center">
-          <button
-            style={{ background: "none", color: "#0a2147", fontSize: "1.2rem", padding: "0", margin: "0" }}
-            onClick={() => copy(`${`http://localhost:5173`}/ansForm/${form._id}`)}
-          >
-            <MdContentCopy />
-          </button>
-          <span className="text-blue-600" style={{ margin: "0", marginLeft: "4px" }}>Copy Form Link</span>
-        </div>
+        <div className="justify-start -ml-3">
+  <button
+    className="flex items-center bg-transparent hover:bg-blue-300 justify-start w-full rounded-md"
+    onClick={handleCopy}
+  >
+    <MdContentCopy className="text-blue-900" />
+    <span className="text-md ml-1 text-blue-700">Copy Form Link</span>
+  </button>
+</div>
+
 
         <div className="flex items-center p-2 justify-between ">
           {acceptingStatus ? (

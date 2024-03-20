@@ -10,8 +10,8 @@ function BarChart({ answersFreq, labels, chartLabel }) {
       {
         label: chartLabel,
         data: answersFreq,
-        backgroundColor: ["rgba(153, 102, 255, 0.2)"],
-        borderColor: "rgb(153, 102, 255)",
+        backgroundColor: ["rgb(163, 204, 250)"],
+        borderColor: "rgb(13, 71, 161)",
         borderWidth: 2,
         weight: 1,
       },
@@ -30,14 +30,18 @@ function BarChart({ answersFreq, labels, chartLabel }) {
       y: {
         beginAtZero: true,
         ticks: {
-          fontSize: 30, // Adjust the font size as needed
+          fontSize: 10, // Adjust the font size as needed
         },
       },
     },
   };
 
-  ChartJS.defaults.font.size = 20;
-  return <Bar data={chartData} options={options} />;
+  ChartJS.defaults.font.size = 10;
+  return (
+    
+      <Bar data={chartData} options={options} />
+   
+  );
 }
 
 BarChart.propTypes = {

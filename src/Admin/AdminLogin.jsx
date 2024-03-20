@@ -1,11 +1,10 @@
-import '../css/TeacherLogin.css';
 import Icon from '../images/Icon.png';
 import { useNavigate } from "react-router-dom";
 import React, { useState, useContext } from "react";
 import { AdminContext } from "../contextCalls/adminContext/AdminContext";
 import { login } from "../contextCalls/adminContext/apiCalls";
-
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const TeacherLogin = () => {
@@ -23,16 +22,19 @@ const TeacherLogin = () => {
   };
 
 
+  
+
+  // Pass navigate to the login function
   const handleLogin = async (e) => {
     e.preventDefault();
-    try{
-    await login( inputValues , dispatch);
-    setIsLoggedIn(true);
-    navigate("/admin-dashboard");
-    } catch(err){
+    try {
+      await login(inputValues, dispatch, navigate); // Pass navigate here
+      setIsLoggedIn(true);
+    } catch (err) {
       console.log(err);
     }
-   };
+  };
+  
    
      const isFormValid = () => {
     // Check if email and password fields are not empty and email is valid
@@ -44,6 +46,7 @@ const TeacherLogin = () => {
 
   return (
     <div className="user-login" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+      <ToastContainer />
            <div className="logo" style={{ marginBottom: '20px' }}>
              <img src={Icon} alt="proctorpal-logo" />
            </div>
@@ -55,14 +58,16 @@ const TeacherLogin = () => {
                   type="email"
                   placeholder="Email"
                   value={inputValues.email || ""}
-                  onChange={(value) => handleInputChange("email", value)}
+                  onChange={(event) => handleInputChange("email", event)}
                   style={{ marginBottom: '10px' }}
                 />
+                  {!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputValues.email) && ( <span className='text-center' style={{ color: 'red', fontSize: '12px', marginBottom: '5px' }}>Invalid email format </span> )}
+          
                 <input
                   type="password"
                   placeholder="Password"
                   value={inputValues.password || ""}
-                  onChange={(value) => handleInputChange("password", value)}
+                  onChange={(event) => handleInputChange("password", event)}
                   style={{ marginBottom: '10px' }}
                 />
               </div>
@@ -75,6 +80,3 @@ const TeacherLogin = () => {
 };
 
 export default TeacherLogin;
-
-
-

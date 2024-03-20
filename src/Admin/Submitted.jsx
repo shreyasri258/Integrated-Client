@@ -6,7 +6,7 @@
 //       <div className="flex justify-center items-center p-6">
 //         <span className="ml-12 text-blue-500 text-3xl transition-colors duration-300 ease-in-out ">
 //           <Link to="/app">
-//             <span className="font-pacifico indigo_gradient">ProctorPal</span>
+//             <span className="font-pacifico blue_gradient">ProctorPal</span>
 //           </Link>
 //         </span>
 //       </div>
@@ -76,7 +76,7 @@ function Submitted() {
       <div className="flex justify-center items-center p-6">
         <span className="ml-12 text-blue-500 text-3xl transition-colors duration-300 ease-in-out ">
           <Link to="/app">
-            <span className="font-pacifico indigo_gradient">ProctorPal</span>
+            <span className="font-pacifico blue_gradient">ProctorPal</span>
           </Link>
         </span>
       </div>
@@ -85,7 +85,7 @@ function Submitted() {
         <h1 className="text-xl text-blue-500 font-bold pb-16">
           You have successfully submitted the form!
           <Button
-          classes={"self-start hover:ring-8 ring-indigo-200 text-lg py-2 px-4"}
+          classes={"self-start hover:ring-8 ring-blue-200 text-lg py-2 px-4"}
           type="submit"
           onClick={() => handleClick()}
         >

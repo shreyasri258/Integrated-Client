@@ -10,6 +10,10 @@ import { getDate } from "../utils/index";
 import axios from "axios";
 import { postToStudents } from "../../store/slices/newForm";
 
+import { ToastContainer, toast } from 'react-toastify';
+
+  import 'react-toastify/dist/ReactToastify.css';
+
 function FormsTable({ displayForms, setDisplayForms }) {
   const [order, setOrder] = useState("ASC");
   const [copied, setCopied] = useState({ show: false }); // State to track if copied box should be shown and its position
@@ -32,10 +36,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
 
   const handleCopy = (formId) => {
     copy(`${`http://localhost:5173`}/ansForm/${formId}`);
-    setCopied({ show: true }); // Show the copied box
-    setTimeout(() => {
-      setCopied({ show: false }); // Hide the copied box after 2 seconds
-    }, 2000);
+    toast.success("Copied", { position: "top-right" }); // Show a success toast
   };
   function sortByTitles() {
     if (order === "ASC") {
@@ -181,8 +182,24 @@ function FormsTable({ displayForms, setDisplayForms }) {
 
   return (
     <div>
+      {/* Place the ToastContainer at a high level in your component hierarchy */}
+      <ToastContainer
+
+position="top-right"
+  autoClose={5000}
+  hideProgressBar={false}
+  newestOnTop={false}
+  
+  rtl={false}
+ 
+  draggable
+  
+  
+  toastStyle={{ backgroundColor: "#000" }}
+/>
+
       {copied.show && (
-        <div className="p-3 text-xl tracking-wide text-center text-blue-700 font-bold">
+        <div className="p-3 text-xl tracking-wide text-blue-700 font-bold">
           Copied
         </div>
       )}

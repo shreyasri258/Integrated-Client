@@ -288,7 +288,7 @@ function AnsForm({ embeddedFormLink, examTitle }) {
         <div className="w-4/6">
           {hasError ? (
             <div className="flex justify-center items-center mt-16">
-              <p className="text-lg text-indigo-500">{errorMsg} !!</p>
+              <p className="text-lg text-bue-500">{errorMsg} !!</p>
             </div>
           ) : (
             <div className="mt-4">
@@ -321,7 +321,7 @@ function AnsForm({ embeddedFormLink, examTitle }) {
               })}
               <div className="flex items-center mt-6">
                 <Button
-                  classes={"self-start hover:ring-8 ring-indigo-200"}
+                  classes={"self-start hover:ring-8 ring-blue-200"}
                   type="submit"
                   onClick={() => handleSubmit()}
                 >

@@ -67,7 +67,6 @@ function Options({ type, options, questionIdx }) {
 
           )}
         </div>
-       
         
       </ul>
     </div>

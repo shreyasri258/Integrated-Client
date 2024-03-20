@@ -79,7 +79,7 @@ function NewForm() {
 
       <div className="w-full max-w-3xl px-4">
         <div className="text-2xl text-blue-700 font-semibold mb-4 text-center">
-          Create Exam
+          Create New Exam
         </div>
 
         <div className="  relative">
@@ -97,7 +97,7 @@ function NewForm() {
               
                 className="bg-transparent rounded-none  border-t-0 border-b-2 border-blue-700 border-l-0 border-r-0 text-lg  placeholder-black-600"
                 value={title}
-                placeholder="Enter Form Title"
+                placeholder="Enter Exam Title"
                 onChange={(e) => {
                   dispatch(updateTitle(e.target.value));
                   setMsg(null);
@@ -105,7 +105,7 @@ function NewForm() {
               />
             ) : (
               <p className="text-lg text-black-600">
-                {title || "Enter Form Title"}
+                {title || "Enter Exam Title"}
               </p>
             )}
           </div>
@@ -119,7 +119,7 @@ function NewForm() {
               <input
                 className="bg-transparent rounded-none border-t-0 border-b-2 border-blue-700 border-l-0 border-r-0 text-lg bg-color-slate placeholder-black-600"
                 value={timeDuration}
-                placeholder="Enter Form Duration (in minutes)"
+                placeholder="Enter Exam Duration (in minutes)"
                 onChange={(e) => {
                   dispatch(updateTimeDuration(e.target.value));
                   setMsg(null);
@@ -127,7 +127,7 @@ function NewForm() {
               />
             ) : (
               <p className="text-lg text-black-600">
-                {timeDuration || "Enter Form Duration"}
+                {timeDuration || "Enter Exam Duration"}
               </p>
             )}
           </div>
@@ -143,7 +143,7 @@ function NewForm() {
               <input
                 className="bg-transparent rounded-none border-t-0 border-b-2 border-blue-700 border-l-0 border-r-0 text-lg bg-color-slate placeholder-black-600"
                 value={description}
-                placeholder="Enter Form Description"
+                placeholder="Enter Exam Description"
                 onChange={(e) => {
                   dispatch(updateDescription(e.target.value));
                   setMsg(null);
@@ -151,7 +151,7 @@ function NewForm() {
               />
             ) : (
               <p className="text-lg text-black-600">
-                {description || "Enter Form Description"}
+                {description || "Enter Exam Description"}
               </p>
             )}
           </div>

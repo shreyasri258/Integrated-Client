@@ -39,9 +39,10 @@ function QuestionAns({ questionIdx, questionObj }) {
         <AnsOptions type={type} options={options} ansIdx={questionIdx} />
       )}
 
+
       {type === "short-ans" && (
         <input
-          className={`h-9 border-b-2 w-1/3 m-2 text-base focus:outline-none focus:border-indigo-500 ${
+          className={`h-9 border-b-2 w-1/3 m-2 text-base focus:outline-none focus:border-blue-500 ${
             hasMessage && "border-rose-500"
           } `}
           placeholder="Your Answer"
@@ -53,7 +54,7 @@ function QuestionAns({ questionIdx, questionObj }) {
       {type === "long-ans" && (
         <TextArea
           classes={
-            "focus:border-indigo-500 w-3/4 border-b-2 h-9 m-2 bg-white text-base"
+            "focus:border-blue-500 w-3/4 border-b-2 h-9 m-2 bg-white text-base"
           }
           placeholder="Your Answer"
           value={ans}
