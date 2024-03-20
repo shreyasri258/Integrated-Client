@@ -5,7 +5,9 @@ const initialState = {
   isLoading: false,
   triedSubmitting: false,
   isSubmitted:false,
+  // isTimeExpired:false,
   answers: [],
+  // malpracticeAttempts:0
 };
 
 const BASE_URL = 'http://localhost:8800';//8081
@@ -32,16 +34,45 @@ const ansFormSlice = createSlice({
     },
     setAns(state, action) {
       const { ansIdx, ans } = action.payload;
+      console.log('action in setAns - ',action);
       state.answers[ansIdx] = ans;
+      // state.answers = state.answers.map((item, index) => index === ansIdx ? ans : item);
+
     },
     setTriedSubmitting(state, action) {
       state.triedSubmitting = action.payload;
     },
     setSubmit(state,action){
-      state.isSubmitted=action.payload;
+      state.isSubmitted = action.payload;
     },
+    // setMalPracticeAttempts(state, action) {
+    //   return produce(state, draftState => {
+    //     draftState.malpracticeAttempts += action.payload;
+    //   });
+    // },
+    
+    // setTimeExpired(state,action){
+    //   console.log('action in setTimeExp - ', action)
+    //   state.isTimeExpired = action.payload;
+    // },
+    // incrementMalPracticeAttempts(state) {
+    //   return produce(state, draftState => {
+    //     draftState.malpracticeAttempts += 1;
+    //     console.log(`in incMAl - ${draftState}`);
+    //   });
+    // },
+    // decrementMalPracticeAttempts(state) {
+    //   return produce(state, draftState => {
+    //     draftState.malpracticeAttempts -= 1;
+    //   });
+    // },
+    
     resetAnsForm(state, action) {
-      return initialState;
+      return {
+        ...initialState,
+        answers: state.answers, // Preserve the answers array
+      };
+    
     },
     // updateAnswer(state, action) {
     //   const { ansIdx, ans } = action.payload;
@@ -57,25 +88,25 @@ const ansFormSlice = createSlice({
   },
 });
 
-export async function submitForm(answers, formId) {
-  const score = 0
-  const malpracticeAttempts = 0
-  const userLocalStorageString = localStorage.getItem('user');
-    const userLocalStorageObject = JSON.parse(userLocalStorageString);
-    const token = userLocalStorageObject.token;
-    console.log('admin - token - ', token);
-  const res = await axios
-    .post(`${BASE_URL}/exams/questionforms/${formId}/attempts`, { formId, answers , score , malpracticeAttempts }, {
-      headers: {
-        'x-auth-token': `${token}`,
-      },
-    })
-    .catch((error) => error.response);
-    console.log('form submitted - ', res.data);
-  return res;
-}
+export async function submitForm(answers, formId,malpracticeAttempts) {
+    const token = JSON.parse(localStorage.getItem('user')).token;
+    const res = await axios.post(
+      `${BASE_URL}/exams/questionforms/${formId}/attempts`,
+      { formId, answers, malpracticeAttempts },
+      {
+        headers: {
+          'x-auth-token': token,
+        },
+      }
+    ).catch((error) => error.response);
 
-export const { readyAns, setAns,setSubmit, setTriedSubmitting, resetAnsForm } =
+    console.log('form submitted - ', res.data);
+    return res;
+  };
+
+
+
+export const { readyAns, setAns,setSubmit, setTimeExpired, setTriedSubmitting, resetAnsForm } =
   ansFormSlice.actions;
 
 export default ansFormSlice.reducer;
@@ -93,3 +124,7 @@ export const getTriedSubmitting = (state) => {
 export const getSubmit = (state) => {
   return state.ansForm.isSubmitted;
 };
+// export const getMalPracticeAttempts = (state) => {
+//   console.log(JSON.stringify(state), `malPractice - ${state.ansForm.malpracticeAttempts}`);
+//   return state.ansForm.malpracticeAttempts;
+// }

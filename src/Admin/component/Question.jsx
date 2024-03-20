@@ -89,7 +89,7 @@ function Question({ questionObj, questionIdx }) {
           {hasOptions && (
             <>
               <Options type={type} options={options} questionIdx={questionIdx} />
-              {type === 'multiple-choice' && isQuestionActive && (
+              {isQuestionActive && (
                 <div className="flex items-center mt-2">
                   <input
                     type="text"

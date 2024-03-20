@@ -87,7 +87,7 @@ QuestionAns.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.number,
   ]),
-  setAnswer: PropTypes.func.isRequired, // Add setAnswer to propTypes
+  setAnswer: PropTypes.func, // Add setAnswer to propTypes
 };
 export default QuestionAns;
 
