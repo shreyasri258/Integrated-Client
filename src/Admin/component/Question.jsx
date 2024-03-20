@@ -91,6 +91,11 @@ function Question({ questionObj, questionIdx }) {
               <Options type={type} options={options} questionIdx={questionIdx} />
               {isQuestionActive && (
                 <div className="flex items-center mt-2">
+                  {type === "check-boxes" ? (
+                    <p>Enter comma seperated values for each option</p>
+                  ):(
+                    <p>Enter one value per line.</p>
+                  )}
                   <input
                     type="text"
                     className="border border-gray-400 p-1 mr-2"
