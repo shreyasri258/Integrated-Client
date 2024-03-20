@@ -33,13 +33,15 @@ function ShowCharts({ labels, answersFreq, chartLabel }) {
         </div>
       </div>
       {selectedChart === "bar" && (
-        <div className=" flex w-[60%] h-[60%] justify-center">
-          <BarChart
-            labels={labels}
-            answersFreq={answersFreq}
-            chartLabel={chartLabel}
-          />
-        </div>
+        <div className=" mt-9 flex w-96 h-96 justify-center ">
+        <BarChart
+          labels={labels}
+          answersFreq={answersFreq}
+          chartLabel={chartLabel}
+        />
+      </div>
+      
+      
       )}
 
       {selectedChart === "pie" && (
