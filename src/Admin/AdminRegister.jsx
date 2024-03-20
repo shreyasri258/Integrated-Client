@@ -15,7 +15,7 @@ const AdminRegister = () => {
       data[key] = value;
     });
     try {
-      await axios.post("http://localhost:8800/Server/admin/register", data);
+      let res = await axios.post("http://localhost:8800/Server/admin/register", data);
       setShowModal(true);
       console.log("Registration successful!");
     } catch (err) {

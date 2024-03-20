@@ -18,6 +18,7 @@ function ExamReportCard({ name, email,score, malpractices }) {
           <p>Score: {score}</p>
           <p className="mt-2">Malpractices: {malpractices}</p>
           <p className="mt-2">Email : {email}</p>
+        
         </div>
       </div>
     );

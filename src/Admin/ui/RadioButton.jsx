@@ -59,7 +59,7 @@ function RadioButton({ ansIdx, option, idx, disabled = false, type, answer }) {
 
 
 RadioButton.propTypes = {
-  ansIdx: PropTypes.string.isRequired,
+  ansIdx: PropTypes.number.isRequired,
   option: PropTypes.string.isRequired,
   idx: PropTypes.number.isRequired,
   disabled: PropTypes.bool,

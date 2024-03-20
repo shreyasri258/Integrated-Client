@@ -9,21 +9,10 @@ import TimerComponent from '../ExamChecks/TimerComp.jsx';
 import { useDispatch, useSelector } from "react-redux";
 import LeftColumn from '../ExamChecks/LeftCol.jsx';
 import EmbeddedForm from '../ExamChecks/FormComp.jsx';
-// import {
-//     getAnswers,
-//     getQuestionForm,
-//     getTriedSubmitting,
-//     readyAns,
-//     setTriedSubmitting,
-//     getSubmit,
-//     setSubmit,
-//     submitForm,
-//     setTimeExpired,
-//     getTimeExpired
-//     // updateAnswer,
-//   } from "../store/slices/ansForm";
+import {
+  } from "../store/slices/ansForm";
 // import Sound from './Sound.wav'
-import { setTimeExpired, getTimeExpired,setTime, getTime } from '../store/slices/examTimer.jsx';
+import { setTimeExpired, getTimeExpired,incrementMalPracticeAttempts, getMalPracticeAttempts } from '../store/slices/examTimer.jsx';
 import Warning from '../ExamChecks/Warning.wav'
 import Watermark from '../ExamChecks/Watermark.jsx';
 import { AlternateEmail } from '@mui/icons-material';
@@ -39,19 +28,11 @@ const Exam = () => {
     console.log('exam params -> ', examTitle, duration)
     const studentName = user.user.user.name; // Assuming this is a static value
     const studentEmail = user.user.user.email;
-    // const isSubmitted = useSelector(getSubmit);
     const dispatch = useDispatch();
-    // const answers = useSelector(getAnswers);
-    const formId = params.get("url").split("/").pop(); // Extract formId from the URL
-    // const [{title, description, questions }, setForm] = useState({});
-
-
-  // Now you have access to the formId
-  console.log(formId);
-
-    // console.log(`formId - ${formId}`)
+    const malpracticeAttempts = useSelector(getMalPracticeAttempts);
+//     const formId = params.get("url").split("/").pop(); // Extract formId from the URL
+//   console.log(formId);
     const isTimeExpired = useSelector(getTimeExpired);
-    // console.log(`import ${isTimeExpired}, ${isSubmitted} ,  ${getTimeExpired}`)
 
     const fullscreenRef = useRef(null);
     const countdownRef = useRef(null);
@@ -105,6 +86,7 @@ const Exam = () => {
         const startTabSwitchTimer = () => {
             tabSwitchTimer = setTimeout(() => {
                 setWarningCnt((warningCnt) => warningCnt + 1);
+                
                 Swal.fire({
                     icon: 'warning',
                     title: 'Warning',
@@ -117,6 +99,8 @@ const Exam = () => {
                     },
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        dispatch(incrementMalPracticeAttempts());
+                        alert(`MalPract after update - ${malpracticeAttempts}`)
                         handleFullscreen();
                     }
                 });
@@ -127,6 +111,7 @@ const Exam = () => {
         const startFullScreenTimer = () => {
             fullScreenTimer = setTimeout(() => {
                 setWarningCnt((warningCnt) => warningCnt + 1);
+                
                 Swal.fire({
                     title: 'Go back to Fullscreen',
                     text: `You are not in fullscreen mode. Go back to Full Screen mode. Warning count: ${warningCnt}`,
@@ -139,6 +124,8 @@ const Exam = () => {
                     },
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        dispatch(incrementMalPracticeAttempts());
+                        alert(`MalPract after update - ${malpracticeAttempts}`)
                         handleFullscreen();
                     }
                 });
@@ -188,6 +175,7 @@ const Exam = () => {
             setIsFullScreen(!!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement));
             if (!document.fullscreenElement && isFullScreen) {
                 setWarningCnt((warningCnt) => warningCnt + 1);
+                
                 sound.play()
                 Swal.fire({
                     title: 'Go back to Fullscreen',
@@ -201,6 +189,8 @@ const Exam = () => {
                     },
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        dispatch(incrementMalPracticeAttempts());
+                        alert(`MalPract after update - ${malpracticeAttempts}`)
                         handleFullscreen();
                     }
                 });
@@ -321,6 +311,7 @@ const Exam = () => {
             const sound = new Audio(Warning);
             if (event.detail.isOpen) {
                 setWarningCnt((warningCnt) => warningCnt + 1);
+                
                 sound.play()
                 setIsDevToolsOpen(true);
             }
@@ -333,6 +324,12 @@ const Exam = () => {
                     customClass: {
                         popup: 'my-popup-class',
                     },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        dispatch(incrementMalPracticeAttempts());
+                        alert(`MalPract after update - ${malpracticeAttempts}`)
+                       
+                    }
                 });
                 disableForm();
             } else {
@@ -347,7 +344,7 @@ const Exam = () => {
         return () => {
             window.removeEventListener('devtoolschange', devToolsChangeHandler);
         };
-    }, [isDevToolsOpen,warningCnt,terminateExam]);
+    }, [isDevToolsOpen,warningCnt,terminateExam, malpracticeAttempts]);
 
     
 
@@ -358,6 +355,7 @@ const Exam = () => {
             if ((event.ctrlKey && event.shiftKey && event.key === 'I') || (event.key === 'F12')) {
                 event.preventDefault();
                 setWarningCnt((warningCnt) => warningCnt + 1);
+                
                 sound.play();
                 Swal.fire({
                     icon: 'warning',
@@ -366,6 +364,12 @@ const Exam = () => {
                     customClass: {
                         popup: 'my-popup-class',
                     },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        dispatch(incrementMalPracticeAttempts());
+                        alert(`MalPract after update - ${malpracticeAttempts}`)
+                        
+                    }
                 });
                 disableForm();
                 terminateExam();
@@ -377,7 +381,7 @@ const Exam = () => {
         return () => {
             document.removeEventListener('keydown', keyDownHandler);
         };
-    }, [warningCnt]);
+    }, [warningCnt,malpracticeAttempts]);
 
     
     
@@ -387,6 +391,7 @@ const Exam = () => {
         const copyHandler = (event) => {
             event.preventDefault();
             setWarningCnt((warningCnt) => warningCnt + 1);
+            
             sound.play(); // Play the sound effect
             Swal.fire({
                 icon: 'warning',
@@ -395,6 +400,12 @@ const Exam = () => {
                 customClass: {
                     popup: 'my-popup-class',
                 },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(incrementMalPracticeAttempts());
+                    alert(`MalPract after update - ${malpracticeAttempts}`)
+                    
+                }
             });
             disableForm();
             terminateExam(); // Ensure that terminateExam is called
@@ -405,7 +416,7 @@ const Exam = () => {
         return () => {
             document.removeEventListener('copy', copyHandler);
         };
-    }, [warningCnt,terminateExam]);
+    }, [warningCnt,terminateExam,malpracticeAttempts]);
 
     useEffect(() => {
         const contextMenuHandler = (event) => {
@@ -422,7 +433,6 @@ const Exam = () => {
     useEffect(() => {
         const visibilityChangeHandler = () => {
             const sound = new Audio(Warning);
-            
             if (document.hidden) {
                 setWarningCnt((warningCnt) => warningCnt + 1);
                 sound.play();
@@ -438,6 +448,8 @@ const Exam = () => {
                     },
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        dispatch(incrementMalPracticeAttempts());
+                        alert(`MalPract after update - ${malpracticeAttempts}`)
                         handleFullscreen();
                     }
                 });
@@ -450,7 +462,7 @@ const Exam = () => {
         return () => {
             document.removeEventListener('visibilitychange', visibilityChangeHandler);
         };
-    }, [warningCnt,terminateExam]);
+    }, [warningCnt,terminateExam,malpracticeAttempts]);
     function disableForm() {
         // Implement disable form logic here
     }
@@ -474,7 +486,7 @@ const Exam = () => {
             <div ref={fullscreenRef}></div>
             <div className="exam-container">
                 <LeftColumn studentName={studentName} studentEmail={studentEmail} />
-                <EmbeddedForm embeddedFormLink={embeddedFormLink} examTitle={examTitle} />
+                <EmbeddedForm embeddedFormLink={embeddedFormLink} examTitle={examTitle} malpracticeAttempts={malpracticeAttempts}/>
                 <TimerComponent duration={duration} />
             </div>
         </div>

@@ -67,10 +67,7 @@ function Options({ type, options, questionIdx }) {
 
           )}
         </div>
-        <label>
-          Set Correct Answer:
-          <input type="text" value={value} onChange={handleInput}  style={{ width: '500px', margin:"20px"}} />
-        </label>
+       
         
       </ul>
     </div>
