@@ -22,6 +22,7 @@ const UserDashboard = () => {
   const [open, setOpen] = useState(false);
   const { user } = useContext(StudentContext);
   const [adminDetails, setAdminDetails] = useState({ name: "", email: "" });
+  const [startedExams, setStartedExams] = useState([]);
 
   const handleOpenDetails = () => {
     setAdminDetails({ name: user.user.user.name, email: user.user.user.email });
@@ -58,6 +59,33 @@ const UserDashboard = () => {
     }
   };
 
+  const handleStartExamPutCall = async (exam) => {
+    try {
+      const userDetails = user;
+      const { institution } = userDetails.user.user;
+      const { token } = userDetails;
+      console.log('formId in putCall - ',exam._id, token)
+      const questionFormId = exam._id
+      const response = await axios.put(
+        `http://localhost:8800/exams/${questionFormId}/start`,
+        null,
+        {
+          headers: {
+            "x-auth-token": token, // Include the token in header
+          },
+        }
+      );
+      // Update the state with the updated exam data
+      setExamData((prevData) => prevData.map((e) => (e._id === response.data._id ? response.data : e)));
+      setStartedExams((prevExams) => [...prevExams, exam._id]);
+
+    } catch (error) {
+      console.error("Error starting exam:", error.message);
+    }
+  };
+  
+
+
   useEffect(() => {
     fetchExamData();
   }, []);
@@ -76,6 +104,9 @@ const UserDashboard = () => {
     }).then((willStart) => {
       if (willStart) {
         // Proceed to instructions page
+        // console.log('exam at client',exam);
+        handleStartExamPutCall(exam);
+        
         window.open(`/instructions?title=${encodeURIComponent(
         exam.title
       )}&duration=${encodeURIComponent(
@@ -83,7 +114,8 @@ const UserDashboard = () => {
       )}&url=${encodeURIComponent(exam.googleFormLink)}`, "_blank", "noopener noreferrer");
      
         // Remove the exam card from the dashboard
-        setExamData((prevData) => prevData.filter((e) => e !== exam));
+        // setExamData((prevData) => prevData.filter((e) => e !== exam));
+        window.location.reload()
         
       }
     });
@@ -104,13 +136,8 @@ const UserDashboard = () => {
 
   return (
     <Card>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        className="dashboard-tabs"
-        aria-label="tabs example"
-      >
-        <Tab
+      
+        {/* <Tab
           className="dashboard-tab"
           icon={
             <img
@@ -119,7 +146,16 @@ const UserDashboard = () => {
               style={{ maxWidth: "50px", maxHeight: "50px" }}
             />
           }
-        />
+        /> */}
+        <a href="/student-dashboard">
+          <img src={Icon} alt="Logo" className="logo-image" style={{ maxWidth: '50px', maxHeight: '50px' }} />
+        </a>
+        <Tabs
+        value={value}
+        onChange={handleChange}
+        className="dashboard-tabs"
+        aria-label="tabs example"
+      >
         <Tab className="dashboard-tab" label="Available Exams" />
         <Tab className="dashboard-tab" label="Results" />
         <Button
@@ -171,6 +207,30 @@ const UserDashboard = () => {
       </Tabs>
 
       <div className="dashboard-content">
+        {/* {value === 0 && (
+          <div>
+            {examData.map((exam, index) => (
+              <Card key={index} className="exam-card">
+                <Typography variant="h6" gutterBottom>
+                  {exam.title}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  Exam Duration: {`${exam.timeDuration} minutes`}
+                </Typography>
+                <div className="button-container">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="start-button"
+                    onClick={() => handleStartExam(exam)}
+                  >
+                    Start Test
+                  </Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )} */}
         {value === 0 && (
           <div>
             {examData.map((exam, index) => (
@@ -178,48 +238,29 @@ const UserDashboard = () => {
                 <Typography variant="h6" gutterBottom>
                   {exam.title}
                 </Typography>
+                {exam.isStarted && (
+                    <p>exam started</p>
+                  )}
                 <Typography variant="body1" gutterBottom>
                   Exam Duration: {`${exam.timeDuration} minutes`}
                 </Typography>
                 <div className="button-container">
-                  <Button
+                <Button
                     variant="contained"
-                    color="primary"
+                    color={exam.isStarted ? "error" : "primary"} // Change color based on exam start status
                     className="start-button"
-                    onClick={() => handleStartExam(exam)}
+                    onClick={exam.isStarted ? null : () => handleStartExam(exam)}
+                    disabled={startedExams.includes(exam._id) && exam.isStarted} // Disable button if exam already started
                   >
-                    Start Test
+                    {exam.isStarted ? "Test Started" : "Start Test"} {/* Change button text based on exam start status */}
                   </Button>
+                  
                 </div>
               </Card>
             ))}
           </div>
         )}
-        {value === 1 && (
-          <div>
-            {examData.map((exam, index) => (
-              <Card key={index} className="exam-card">
-                <Typography variant="h6" gutterBottom>
-                  {exam.title}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  Exam Duration: {`${exam.timeDuration} minutes`}
-                </Typography>
-                <div className="button-container">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="start-button"
-                    onClick={() => handleStartExam(exam)}
-                  >
-                    Start Test
-                  </Button>
-                </div>
-              </Card>
-            ))}
-          </div>
-        )}
-        {value === 2 && <StudentResults />}
+        {value === 1 && <StudentResults />}
       </div>
     </Card>
   );

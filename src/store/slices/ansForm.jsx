@@ -35,8 +35,8 @@ const ansFormSlice = createSlice({
     setAns(state, action) {
       const { ansIdx, ans } = action.payload;
       console.log('action in setAns - ',action);
-      state.answers[ansIdx] = ans;
-      // state.answers = state.answers.map((item, index) => index === ansIdx ? ans : item);
+      // state.answers[ansIdx] = ans;
+      state.answers = state.answers.map((item, index) => index === ansIdx ? ans : item);
 
     },
     setTriedSubmitting(state, action) {
