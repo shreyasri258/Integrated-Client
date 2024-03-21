@@ -319,7 +319,7 @@ export const getRefinedForm = (form) => {
       if (type === "") {
         return { question, type: "short-ans", options, required };
       }
-      else if(type==="multiple-choice"){
+      else if(type==="multiple-choice" || type==='check-boxes' || type ==='dropdown'){
         return { question, type, options, required, correctAnswer };
       }
       return { question, type, options, required };
