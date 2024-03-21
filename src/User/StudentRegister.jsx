@@ -8,10 +8,12 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const inputField = ['email', 'username', 'password', 'institutionName'];
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const StudentRegister = () => {
   const [showModal, setShowModal] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [inputValues, setInputValues] = useState({
@@ -62,6 +64,9 @@ const StudentRegister = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
   const handleCapture = () => {
     const context = canvasRef.current.getContext('2d');
     context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
@@ -141,7 +146,25 @@ const StudentRegister = () => {
             <input type="text" name="username" placeholder="User Name" onChange={(e) => handleInputChange('username', e.target.value)} />
             <input type="text" name="institutionName" placeholder="Institution Name" onChange={(e) => handleInputChange('institutionName', e.target.value)} />
             <input type="email" name="email" placeholder="Email" onChange={(e) => handleInputChange('email', e.target.value)} />
-            <input type="password" name="password" placeholder="Password" onChange={(e) => handleInputChange('password', e.target.value)} />
+            <div className='relative w-full pr-25  px-4'>
+            <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={inputValues.password || ""}
+                onChange={(e) => handleInputChange("password", e.target.value)}
+                
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                onMouseDown={(e) => e.preventDefault()}
+                className="absolute right-2 top-2 cursor-pointer bg-transparent border-none text-black"
+            
+               >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+              </div>
+            
 
           </div>
           {/* <button type="submit">Register</button> */}

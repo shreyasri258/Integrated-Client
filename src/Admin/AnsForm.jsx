@@ -21,8 +21,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "./ui/Button";
 import { BsExclamationCircle } from "react-icons/bs";
 import LoadingSpinner from "./LoadingSpinner";
+import "../css/Exam.css"
+
 import Swal from "sweetalert2"; // Import SweetAlert
 import store from "../store/store";
+
 
 function disableHighlightAndPaste() {
   // Disable text selection
@@ -206,10 +209,13 @@ function AnsForm({ embeddedFormLink, examTitle }) {
       if(isTimeExpired){
         Swal.fire({
             title: "Time Expired, Your Response is submitted",
-            icon: "Success",
-            showCancelButton: true,
+            icon: "Info",
+            
             // confirmButtonText: 'Yes',
             // cancelButtonText: 'No'
+            customClass: {
+              popup: 'my-popup-class',
+          },
           }).then((result) => {
             if (result.isConfirmed) {
               isSubmitting = true; // Set flag to true to prevent multiple submissions
@@ -224,6 +230,9 @@ function AnsForm({ embeddedFormLink, examTitle }) {
           showCancelButton: true,
           confirmButtonText: "Yes",
           cancelButtonText: "No",
+          customClass: {
+            popup: 'my-popup-class',
+        },
         }).then((result) => {
           if (result.isConfirmed) {
             isSubmitting = true; // Set flag to true to prevent multiple submissions

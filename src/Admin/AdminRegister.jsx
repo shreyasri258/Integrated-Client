@@ -5,9 +5,12 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const AdminRegister = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [inputValues, setInputValues] = useState({});
   
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -37,6 +40,18 @@ const AdminRegister = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
+  const handleInputChange = (fieldName, event) => {
+    const value = event.target.value
+    setInputValues(prevValues => ({
+      ...prevValues,
+      [fieldName]: value,
+    }));
+  }
+
   return (
     <div className="user-register" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
       <div className="logo" >
@@ -49,7 +64,25 @@ const AdminRegister = () => {
             <input type="text" name="adminname" placeholder="Admin Name" />
             <input type="text" name="institutionName" placeholder="Institution Name" />
             <input type="email" name="email" placeholder="Email" />
-            <input type="password" name="password" placeholder="Password" />
+            <div className="relative w-full pr-25  px-4 " >
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={inputValues.password || ""}
+                onChange={(event) => handleInputChange("password", event)}
+                
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                onMouseDown={(e) => e.preventDefault()}
+                className="absolute right-2 top-2 cursor-pointer bg-transparent border-none text-black"
+            
+               >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+           
           </div>
           <button type="submit">Register</button>
         </form>

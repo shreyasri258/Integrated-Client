@@ -10,6 +10,7 @@ import { getDate } from "../utils/index";
 import axios from "axios";
 import { postToStudents } from "../../store/slices/newForm";
 
+
 import { ToastContainer, toast } from 'react-toastify';
 
   import 'react-toastify/dist/ReactToastify.css';
@@ -195,7 +196,7 @@ position="top-right"
   draggable
   
   
-  toastStyle={{ backgroundColor: "#000" }}
+ 
 />
 
       {copied.show && (
