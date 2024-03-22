@@ -121,9 +121,25 @@ function NewForm() {
                 value={timeDuration}
                 placeholder="Enter Exam Duration (in minutes)"
                 onChange={(e) => {
-                  dispatch(updateTimeDuration(e.target.value));
-                  setMsg(null);
+                  const duration = e.target.value;
+                  if (!/^\d+$/.test(duration)) {
+                    // If alphabets are entered, set the input box color to red
+                    e.target.style.borderColor = "red";
+                    // Show a toast message to enter only numbers
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Invalid Input',
+                      text: 'Please enter only numbers for the duration.',
+                    });
+                  } else {
+                    // If numbers are entered, reset the input box color
+                    e.target.style.borderColor = ""; // Reset border color
+                    // Update the duration in the Redux state
+                    dispatch(updateTimeDuration(duration));
+                    setMsg(null);
+                  }
                 }}
+                
               />
             ) : (
               <p className="text-lg text-black-600">

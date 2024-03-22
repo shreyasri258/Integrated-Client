@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { getDate } from "../utils/index";
 import axios from "axios";
 import { postToStudents } from "../../store/slices/newForm";
+import { deleteForm } from "../../store/slices/newForm";
 
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -35,6 +36,12 @@ function FormsTable({ displayForms, setDisplayForms }) {
     }
   };
 
+  const handleDelete =(formId)=> {
+    const res =  deleteForm(formId);
+    if (res.status === 200) {
+      navigate("/admin-dashboard");
+    }
+  }
   const handleCopy = (formId) => {
     copy(`${`http://localhost:5173`}/ansForm/${formId}`);
     toast.success("Copied", { position: "top-right" }); // Show a success toast
@@ -140,6 +147,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
       setOrder("ASC");
     }
   }
+
 
   function sortByStatus() {
     if (order === "ASC") {
@@ -275,7 +283,7 @@ position="top-right"
             <th className="p-3 font-semibold tracking-wide text-center">
               <span>View</span>
             </th>
-            <th className="p-3 font-semibold tracking-wide text-center">
+            {/* <th className="p-3 font-semibold tracking-wide text-center">
               <div
                 onClick={sortByStatus}
                 className="flex justify-center items-center cursor-pointer hover:underline underline-offset-4 transition-all duration-300 ease-in-out"
@@ -285,7 +293,21 @@ position="top-right"
                   <BiSort fontSize={"1.4rem"} />
                 </span>
               </div>
-            </th>
+            </th> */}
+            {/* <th className="p-3 font-semibold tracking-wide text-center">
+              <div
+                onClick={sortByStatus}
+                className="flex justify-center items-center cursor-pointer hover:underline underline-offset-4 transition-all duration-300 ease-in-out"
+              >
+                <span>Status</span>
+                <span>
+                  <BiSort fontSize={"1.4rem"} />
+                </span>
+              </div>
+            </th> */}
+            {/* <th className="p-3 font-semibold tracking-wide text-center">
+            <span>Delete</span>
+            </th> */}
             <th className="p-3 font-semibold tracking-wide text-center">
               <div
                 onClick={sortByPosted}
@@ -344,13 +366,23 @@ position="top-right"
                   <BsEyeFill fontSize={"1.5rem"} />
                 </button>
               </td>
-              <td className="p-3 tracking-wide text-center">
+              {/* <td className="p-3 tracking-wide text-center">
                 {form.accepting ? (
                   <Badge type={"accept"}>accepting</Badge>
                 ) : (
                   <Badge type={"reject"}>closed</Badge>
                 )}
-              </td>
+              </td> */}
+              {/* <td className="p-3 tracking-wide text-center">
+              <div className=" flex p-2 justify-center">
+          <button
+            onClick={() => handleDelete(form._id)}
+            className="uppercase p-1.5 font-bold bg-rose-200 rounded-md tracking-wide text-base text-rose-500  hover:bg-rose-500 hover:text-white transition-all duration-300 ease-in-out"
+          >
+            Delete Form
+          </button>
+        </div>
+              </td> */}
               <td className="p-3 tracking-wide text-center">
                 {form.postedForStudents ? (
                   <Badge type={"accept"} onClick={() => handlePost(form._id)}>
