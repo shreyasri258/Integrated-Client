@@ -36,12 +36,18 @@ function FormsTable({ displayForms, setDisplayForms }) {
     }
   };
 
-  const handleDelete =(formId)=> {
-    const res =  deleteForm(formId);
+  async function handleDelete(formId){
+    const res = await deleteForm(formId);
     if (res.status === 200) {
-      navigate("/admin-dashboard");
+      // navigate("/admin-dashboard");
+      toast.success("Form deleted Successfully", { position: "top-right" });
+      const updatedForms = displayForms.map((form) =>
+        form._id === formId ? { ...form, posted: !form.posted } : form
+      );
+      setDisplayForms(updatedForms);
     }
   }
+
   const handleCopy = (formId) => {
     copy(`${`http://localhost:5173`}/ansForm/${formId}`);
     toast.success("Copied", { position: "top-right" }); // Show a success toast
@@ -188,7 +194,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
       setOrder("ASC");
     }
   }
-
+  console.log('forms in dashboard - ', displayForms)
   return (
     <div>
       {/* Place the ToastContainer at a high level in your component hierarchy */}
@@ -203,7 +209,7 @@ position="top-right"
  
   draggable
   
-  
+ 
  
 />
 
@@ -305,9 +311,9 @@ position="top-right"
                 </span>
               </div>
             </th> */}
-            {/* <th className="p-3 font-semibold tracking-wide text-center">
+            <th className="p-3 font-semibold tracking-wide text-center">
             <span>Delete</span>
-            </th> */}
+            </th>
             <th className="p-3 font-semibold tracking-wide text-center">
               <div
                 onClick={sortByPosted}
@@ -373,7 +379,7 @@ position="top-right"
                   <Badge type={"reject"}>closed</Badge>
                 )}
               </td> */}
-              {/* <td className="p-3 tracking-wide text-center">
+              <td className="p-3 tracking-wide text-center">
               <div className=" flex p-2 justify-center">
           <button
             onClick={() => handleDelete(form._id)}
@@ -382,7 +388,7 @@ position="top-right"
             Delete Form
           </button>
         </div>
-              </td> */}
+              </td>
               <td className="p-3 tracking-wide text-center">
                 {form.postedForStudents ? (
                   <Badge type={"accept"} onClick={() => handlePost(form._id)}>

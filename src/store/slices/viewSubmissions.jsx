@@ -39,7 +39,12 @@ export async function getStudentData(formId){
     },
   });
   console.log('view-form-data - ',res.data);
-  return res.data;
+  if(res.status == 200){
+    return res.data
+  } else{
+    return "Server issue"
+  }
+  
   }catch(error){
 
   }
