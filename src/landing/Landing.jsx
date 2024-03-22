@@ -1,23 +1,29 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
-
-import CtaButton from '../GeneralFiles/CtaButton';
-import CommonInput from '../GeneralFiles/CommonInput';
 import Navbar from '../components/navbar/Navbar';
-//import infinite from './../../assets/infinite.svg';
-
 import './landing.css';
+import Devtool from '../images/devtool.jpg';
+import FaceVerification from '../images/face-verification.png';
+import FullScreen from '../images/full-screen.jpeg';
+import MultipleFaces from '../images/multiple-face.png';
+import MultipleTabs from '../images/multiple-tabs.jpg';
+
+
+
 
 const featureList = [
 	'Face Verification',
 	'Multiple People Detection',
-	'Voice Detection',
 	'Devtools Check',
 	'Full Screen Check',
 	'Multiple Tabs Check'
 ];
 
 const Landing = () => {
+	const carouselImageStyle = {
+        width: '70%',
+        margin: 'auto'
+    };
+
 	return (
 		<React.Fragment>
 			<Navbar />
@@ -25,9 +31,9 @@ const Landing = () => {
 			<div className="section-type landing-page">
 				<div className="landing-content">
 					<div className="headings">
-						<span className="sub-text">Advanced </span>
+						<span className="sub-text">AI - Based Smart</span>
 						<span className="main-heading gradient-text">
-							Proctoring Solution
+							 Examination Proctoring System
 						</span>
 					</div>
 
@@ -38,19 +44,6 @@ const Landing = () => {
 					</p>
 				</div>
 
-				{/* <div className="landing-cta">
-					<a href="/create">
-						<CtaButton text="Create a test" />
-					</a>
-
-					<p className="desc">OR</p>
-					<div className="input-item unique-link">
-						<CommonInput placeholderText="Unique test code" />
-						<span className="join-link">
-							<a href="/exam">Join</a>
-						</span>
-					</div>
-				</div> */}
 
 				<div className="features-content">
 					<div className="curr-heading">
@@ -66,41 +59,15 @@ const Landing = () => {
 						))}
 					</div>
 
-					{/* <div className="mid-cta">
-						<p className="phew">phew...</p>
-						<a href="/create">
-							<CtaButton />
-						</a>
-					</div> */}
-				</div>
-{/* 
-				<div className="final-features">
-					<div className="top-sec">
-						<div className="left-text">
-							<h3 className="gradient-text">
-								Effortlessly integrates with
-							</h3>
-							<h1 className="title-heading">
-								Google Forms or Microsoft Surveys
-							</h1>
-						</div>
-						{/* <div className="infinite">
-							<img src={infinite} alt="infinite" />
-						</div> 
-
-						<div className="right-text">
-							<h3 className="gradient-text">The best part?</h3>
-							<h1 className="title-heading">
-								Live Status on Admin Dashboard
-							</h1>
-						</div>
-						</div> */}
-
+		
+				
 					
-				{/* </div> */}
+				</div>
+
 			</div>
 		</React.Fragment>
 	);
 };
 
 export default Landing;
+
