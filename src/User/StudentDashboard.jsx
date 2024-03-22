@@ -133,44 +133,44 @@ const UserDashboard = () => {
     boxShadow: 24,
     p: 4,
   };
-
+  const handleIconClick = () => {
+    console.log("Clickcer")
+    window.location.reload();
+  };
+  
   return (
     <Card>
-      
-        {/* <Tab
-          className="dashboard-tab"
-          icon={
-            <img
-              src={Icon}
-              alt="Available Exams"
-              style={{ maxWidth: "50px", maxHeight: "50px" }}
-            />
-          }
-        /> */}
-        <a href="/student-dashboard">
-          <img src={Icon} alt="Logo" className="logo-image" style={{ maxWidth: '50px', maxHeight: '50px' }} />
-        </a>
-        <Tabs
+      <div className="icon-container" style={{ position: 'absolute', top: 0, left: 0 }} onClick={handleIconClick}>
+        <img
+          src={Icon}
+          alt="Logo"
+          className="logo-image"
+          style={{ maxWidth: '50px',marginLeft :"30px",marginTop:"20px", maxHeight: '50px', cursor: 'pointer' }}
+          
+        />
+      </div>
+      <Tabs
         value={value}
         onChange={handleChange}
         className="dashboard-tabs"
         aria-label="tabs example"
+        style={{height:"80px"}}
+        sx={{ paddingLeft: '80px' }}
       >
-        <Tab className="dashboard-tab" label="Available Exams" />
-        <Tab className="dashboard-tab" label="Results" />
+        <Tab className="dashboard-tab" style={{marginTop:"15px"}} label="Available Exams" />
+        <Tab className="dashboard-tab" style={{marginTop:"15px"}} label="Results" />
         <Button
           onClick={handleOpenDetails}
           variant="contained"
           color="primary"
           sx={{
             position: "absolute",
-            
             right: 20,
             margin: 1,
             borderRadius: "100%",
             width: "60px", // Set a fixed width to maintain circular shape
-  height: "60px", // Set a fixed height to maintain circular shape
-  minWidth: "auto",
+            height: "60px", // Set a fixed height to maintain circular shape
+            minWidth: "auto",
             boxShadow: "0  4px  8px rgba(0,  0,  0,  0.2)",
           }}
         >
@@ -205,32 +205,8 @@ const UserDashboard = () => {
           </Box>
         </Modal>
       </Tabs>
-
+  
       <div className="dashboard-content">
-        {/* {value === 0 && (
-          <div>
-            {examData.map((exam, index) => (
-              <Card key={index} className="exam-card">
-                <Typography variant="h6" gutterBottom>
-                  {exam.title}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  Exam Duration: {`${exam.timeDuration} minutes`}
-                </Typography>
-                <div className="button-container">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="start-button"
-                    onClick={() => handleStartExam(exam)}
-                  >
-                    Start Test
-                  </Button>
-                </div>
-              </Card>
-            ))}
-          </div>
-        )} */}
         {value === 0 && (
           <div>
             {examData.map((exam, index) => (
@@ -239,13 +215,13 @@ const UserDashboard = () => {
                   {exam.title}
                 </Typography>
                 {exam.isStarted && (
-                    <p>exam started</p>
-                  )}
+                  <p>exam started</p>
+                )}
                 <Typography variant="body1" gutterBottom>
                   Exam Duration: {`${exam.timeDuration} minutes`}
                 </Typography>
                 <div className="button-container">
-                <Button
+                  <Button
                     variant="contained"
                     color={exam.isStarted ? "error" : "primary"} // Change color based on exam start status
                     className="start-button"
@@ -254,7 +230,6 @@ const UserDashboard = () => {
                   >
                     {exam.isStarted ? "Test Started" : "Start Test"} {/* Change button text based on exam start status */}
                   </Button>
-                  
                 </div>
               </Card>
             ))}
@@ -264,6 +239,6 @@ const UserDashboard = () => {
       </div>
     </Card>
   );
+  
 };
-
 export default UserDashboard;
