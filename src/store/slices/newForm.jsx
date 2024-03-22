@@ -3,7 +3,7 @@ import axios from "axios";
 //import { useAuth } from "../../store/UserAuth";
 import { AdminContext } from "../../contextCalls/adminContext/AdminContext";
 import { useContext } from "react";
-
+import { toast } from 'react-toastify';
 
 const initialQuestion = {
   question: "",
@@ -185,6 +185,11 @@ export async function deleteForm(formId) {
         'x-auth-token': `${token}`,
       },
     });
+
+    if (res.status === 200) {
+      console.log("deleted")
+      toast.success('Deleted successfully');
+    }
 
     return res;
   } catch (error) {

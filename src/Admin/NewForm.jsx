@@ -2,6 +2,8 @@ import Question from "./component/Question";
 import Swal from 'sweetalert2';
 import Icon from "../images/Icon.png";
 import UniversalNavbar from "./universalNavbar";
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
 import {
   activateDescription,
@@ -48,15 +50,22 @@ function NewForm() {
   // const [adminDetails, setAdminDetails] = useState({ name: "", email: "" });
   console.log('form in create - ',form);
   async function handleCreatingForm(form) {
-    if (title !== "" && timeDuration !=="") {
+    if (title !== "" && timeDuration !== "") {
       const refinedForm = getRefinedForm(form);
-      const res = await postRefinedForm(refinedForm);
-      if (res.status === 201) {
-        dispatch(resetForm());
-        navigate("/admin-dashboard");
-      }
-      if (res.status === 401) {
-        //await authUser();
+      try {
+        const res = await postRefinedForm(refinedForm);
+        if (res.status === 201) {
+          dispatch(resetForm());
+          navigate("/admin-dashboard");
+        } else if (res.status === 401) {
+          //await authUser();
+        }
+      } catch (error) {
+        if (error.message === "Network Error" || error.status==500) {
+          toast.error('Network Error: Unable to connect to the server. Please check your internet connection.');
+        } else {
+          toast.error(`Network Error: Unable to connect to the server. Please check your internet connection.`);
+        }
       }
     } else {
       setMsg("Title and Duration are necessary to create the Exam");
@@ -67,7 +76,7 @@ function NewForm() {
     
     <div className="flex items-center justify-center w-screen mb-8 mt-4">
     <UniversalNavbar></UniversalNavbar>
-
+    <ToastContainer />
           <div className="fixed bottom-10 right-10 z-50">
     {/* <button
       className="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-full shadow-md"
@@ -122,7 +131,7 @@ function NewForm() {
                 placeholder="Enter Exam Duration (in minutes)"
                 onChange={(e) => {
                   const duration = e.target.value;
-                  if (!/^\d+$/.test(duration)) {
+                  if (!/^\d*$/.test(duration)) {
                     // If alphabets are entered, set the input box color to red
                     e.target.style.borderColor = "red";
                     // Show a toast message to enter only numbers
