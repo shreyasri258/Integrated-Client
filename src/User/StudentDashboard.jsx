@@ -16,12 +16,16 @@ import "../css/userDashboard.css"; // Import the stylesheet
 import { StudentContext } from "../contextCalls/studentContext/StudentContext";
 import swal from "sweetalert"; 
 
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const UserDashboard = () => {
   const [value, setValue] = useState(0);
   const [examData, setExamData] = useState([]);
   const [open, setOpen] = useState(false);
   const { user } = useContext(StudentContext);
   const [adminDetails, setAdminDetails] = useState({ name: "", email: "" });
+  const [startedExams, setStartedExams] = useState([]);
 
   const handleOpenDetails = () => {
     setAdminDetails({ name: user.user.user.name, email: user.user.user.email });
@@ -55,8 +59,38 @@ const UserDashboard = () => {
       setExamData(response.data);
     } catch (error) {
       console.error("Error fetching exam data:", error.message);
+      toast.error(`Error fetching exam data: ${error.message}`);
     }
   };
+  
+
+  const handleStartExamPutCall = async (exam) => {
+    try {
+      const userDetails = user;
+      const { institution } = userDetails.user.user;
+      const { token } = userDetails;
+      console.log('formId in putCall - ',exam._id, token)
+      const questionFormId = exam._id
+      const response = await axios.put(
+        `http://localhost:8800/exams/${questionFormId}/start`,
+        null,
+        {
+          headers: {
+            "x-auth-token": token, // Include the token in header
+          },
+        }
+      );
+      // Update the state with the updated exam data
+      setExamData((prevData) => prevData.map((e) => (e._id === response.data._id ? response.data : e)));
+      setStartedExams((prevExams) => [...prevExams, exam._id]);
+    } catch (error) {
+      console.error("Error starting exam:", error.message);
+      toast.error(`Error starting exam: ${error.message}`);
+    }
+  };
+  
+  
+
 
   useEffect(() => {
     fetchExamData();
@@ -76,6 +110,9 @@ const UserDashboard = () => {
     }).then((willStart) => {
       if (willStart) {
         // Proceed to instructions page
+        // console.log('exam at client',exam);
+        handleStartExamPutCall(exam);
+        
         window.open(`/instructions?title=${encodeURIComponent(
         exam.title
       )}&duration=${encodeURIComponent(
@@ -83,7 +120,8 @@ const UserDashboard = () => {
       )}&url=${encodeURIComponent(exam.googleFormLink)}`, "_blank", "noopener noreferrer");
      
         // Remove the exam card from the dashboard
-        setExamData((prevData) => prevData.filter((e) => e !== exam));
+        // setExamData((prevData) => prevData.filter((e) => e !== exam));
+        window.location.reload()
         
       }
     });
@@ -98,43 +136,49 @@ const UserDashboard = () => {
     width: 400,
     bgcolor: "background.paper",
     border: "2px solid #000",
+    borderRadius: 10,
     boxShadow: 24,
     p: 4,
   };
-
+  const handleIconClick = () => {
+    console.log("Clickcer")
+    window.location.reload();
+  };
+  
   return (
     <Card>
+      <ToastContainer/>
+      <div className="icon-container" style={{ position: 'absolute', top: 0, left: 0 }} onClick={handleIconClick}>
+        <img
+          src={Icon}
+          alt="Logo"
+          className="logo-image"
+          style={{ maxWidth: '50px',marginLeft :"30px",marginTop:"20px", maxHeight: '50px', cursor: 'pointer' }}
+          
+        />
+      </div>
       <Tabs
         value={value}
         onChange={handleChange}
         className="dashboard-tabs"
         aria-label="tabs example"
+        style={{height:"80px"}}
+        sx={{ paddingLeft: '80px' }}
       >
-        <Tab
-          className="dashboard-tab"
-          icon={
-            <img
-              src={Icon}
-              alt="Available Exams"
-              style={{ maxWidth: "50px", maxHeight: "50px" }}
-            />
-          }
-        />
-        <Tab className="dashboard-tab" label="Available Exams" />
-        <Tab className="dashboard-tab" label="Results" />
+        <Tab className="dashboard-tab" style={{marginTop:"15px"}} label="Available Exams" />
+        <Tab className="dashboard-tab" style={{marginTop:"15px"}} label="Results" />
         <Button
           onClick={handleOpenDetails}
           variant="contained"
           color="primary"
           sx={{
             position: "absolute",
-            
             right: 20,
             margin: 1,
             borderRadius: "100%",
             width: "60px", // Set a fixed width to maintain circular shape
-  height: "60px", // Set a fixed height to maintain circular shape
-  minWidth: "auto",
+            height: "60px", // Set a fixed height to maintain circular shape
+            minWidth: "auto",
             boxShadow: "0  4px  8px rgba(0,  0,  0,  0.2)",
           }}
         >
@@ -147,12 +191,24 @@ const UserDashboard = () => {
           aria-describedby="admin-details-description"
         >
           <Box sx={style}>
-            <Typography id="admin-details-modal" variant="h6" component="h2">
-              Admin Details
-            </Typography>
-            <Typography id="admin-details-description" sx={{ mt: 2 }}>
+            <Typography id="admin-details-modal" variant="h6" component="h2" sx={{marginLeft:12}}>
+              Examinee Details
+            </Typography >
+            <Typography id="admin-details-description" sx={{ mt: 2 ,marginLeft:7}}>
               Name: {adminDetails.name} <br />
               Email: {adminDetails.email}
+              <Box sx={{ mt: 3 ,marginLeft:7}}>
+    <Button
+      variant="contained"
+      color="error"
+      onClick={() => {
+        // Add the logout logic here
+        console.log('Logging out...');
+      }}
+    >
+      Logout
+    </Button>
+    </Box>
             </Typography>
             <IconButton
               aria-label="close"
@@ -169,60 +225,49 @@ const UserDashboard = () => {
           </Box>
         </Modal>
       </Tabs>
-
+  
       <div className="dashboard-content">
-        {value === 0 && (
-          <div>
-            {examData.map((exam, index) => (
+      {value === 0 && (
+        <div>
+          {examData.length === 0 ? (
+            <Typography variant="body1" gutterBottom>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+              You Currently don't have any Exams
+              </div>
+            </Typography>
+          ) : (
+            examData.map((exam, index) => (
               <Card key={index} className="exam-card">
                 <Typography variant="h6" gutterBottom>
                   {exam.title}
                 </Typography>
+                {exam.isStarted && (
+                  <p>exam started</p>
+                )}
                 <Typography variant="body1" gutterBottom>
                   Exam Duration: {`${exam.timeDuration} minutes`}
                 </Typography>
                 <div className="button-container">
                   <Button
                     variant="contained"
-                    color="primary"
+                    color={exam.isStarted ? "error" : "primary"} // Change color based on exam start status
                     className="start-button"
-                    onClick={() => handleStartExam(exam)}
+                    onClick={exam.isStarted ? null : () => handleStartExam(exam)}
+                    disabled={startedExams.includes(exam._id) && exam.isStarted} // Disable button if exam already started
                   >
-                    Start Test
+                    {exam.isStarted ? "Test Started" : "Start Test"} {/* Change button text based on exam start status */}
                   </Button>
                 </div>
               </Card>
-            ))}
-          </div>
-        )}
-        {value === 1 && (
-          <div>
-            {examData.map((exam, index) => (
-              <Card key={index} className="exam-card">
-                <Typography variant="h6" gutterBottom>
-                  {exam.title}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  Exam Duration: {`${exam.timeDuration} minutes`}
-                </Typography>
-                <div className="button-container">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="start-button"
-                    onClick={() => handleStartExam(exam)}
-                  >
-                    Start Test
-                  </Button>
-                </div>
-              </Card>
-            ))}
-          </div>
-        )}
-        {value === 2 && <StudentResults />}
-      </div>
-    </Card>
-  );
-};
+            ))
+          )}
+        </div>
+      )}
+      {value === 1 && <StudentResults />}
+    </div>
+  </Card>
 
+);
+  
+};
 export default UserDashboard;

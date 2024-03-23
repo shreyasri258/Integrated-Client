@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { getDate } from "../utils/index";
 import axios from "axios";
 import { postToStudents } from "../../store/slices/newForm";
+import { deleteForm } from "../../store/slices/newForm";
+import { MdDeleteOutline } from "react-icons/md";
 
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -24,16 +26,35 @@ function FormsTable({ displayForms, setDisplayForms }) {
   //const CLIENT_URL = `http://localhst:8800`//'http://localhost:8081';
   const BASE_URL = "http://localhost:8800"; // 8081
   const handlePost = async (formId) => {
-    const res = await postToStudents(formId);
-    if (res) {
-      console.log("form updated");
-      const updatedForms = displayForms.map((form) =>
-        form._id === formId ? { ...form, posted: !form.posted } : form
-      );
-      setDisplayForms(updatedForms);
-      window.location.reload(); // Reload the page
+    try {
+      const res = await postToStudents(formId);
+      if (res) {
+        console.log("form updated");
+        const updatedForms = displayForms.map((form) =>
+          form._id === formId ? { ...form, posted: !form.posted } : form
+        );
+        setDisplayForms(updatedForms);
+        window.location.reload(); // Reload the page
+      }
+    } catch (error) {
+      toast.error(`Error updating form: ${error.message}`);
     }
   };
+  
+
+  async function handleDelete(formId) {
+    try {
+      const res = await deleteForm(formId);
+      if (res.status === 200) {
+        toast.success("Form deleted successfully", { position: "top-right" });
+        const updatedForms = displayForms.filter((form) => form._id !== formId);
+        setDisplayForms(updatedForms);
+      }
+    } catch (error) {
+      toast.error(`Error deleting form: ${error.message}`);
+    }
+  }
+  
 
   const handleCopy = (formId) => {
     copy(`${`http://localhost:5173`}/ansForm/${formId}`);
@@ -141,6 +162,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
     }
   }
 
+
   function sortByStatus() {
     if (order === "ASC") {
       const sortedForms = displayForms.sort((a, b) => {
@@ -180,7 +202,7 @@ function FormsTable({ displayForms, setDisplayForms }) {
       setOrder("ASC");
     }
   }
-
+  console.log('forms in dashboard - ', displayForms)
   return (
     <div>
       {/* Place the ToastContainer at a high level in your component hierarchy */}
@@ -195,7 +217,7 @@ position="top-right"
  
   draggable
   
-  
+ 
  
 />
 
@@ -275,7 +297,7 @@ position="top-right"
             <th className="p-3 font-semibold tracking-wide text-center">
               <span>View</span>
             </th>
-            <th className="p-3 font-semibold tracking-wide text-center">
+            {/* <th className="p-3 font-semibold tracking-wide text-center">
               <div
                 onClick={sortByStatus}
                 className="flex justify-center items-center cursor-pointer hover:underline underline-offset-4 transition-all duration-300 ease-in-out"
@@ -285,6 +307,20 @@ position="top-right"
                   <BiSort fontSize={"1.4rem"} />
                 </span>
               </div>
+            </th> */}
+            {/* <th className="p-3 font-semibold tracking-wide text-center">
+              <div
+                onClick={sortByStatus}
+                className="flex justify-center items-center cursor-pointer hover:underline underline-offset-4 transition-all duration-300 ease-in-out"
+              >
+                <span>Status</span>
+                <span>
+                  <BiSort fontSize={"1.4rem"} />
+                </span>
+              </div>
+            </th> */}
+            <th className="p-3 font-semibold tracking-wide text-center">
+            <span>Delete Exam</span>
             </th>
             <th className="p-3 font-semibold tracking-wide text-center">
               <div
@@ -344,12 +380,25 @@ position="top-right"
                   <BsEyeFill fontSize={"1.5rem"} />
                 </button>
               </td>
-              <td className="p-3 tracking-wide text-center">
+              {/* <td className="p-3 tracking-wide text-center">
                 {form.accepting ? (
                   <Badge type={"accept"}>accepting</Badge>
                 ) : (
                   <Badge type={"reject"}>closed</Badge>
                 )}
+              </td> */}
+              <td className="p-3 tracking-wide text-center">
+              <div className="flex p-2 justify-center">
+  <button
+  style={{ background: "none", color: "#0a2147" }}
+    onClick={() => handleDelete(form._id)}
+    className={`hover:ring-8 bg-red-400 rounded-full hover:transition-all duration-500 ease-in-out`}
+                
+  >
+    <MdDeleteOutline fontSize={"1.6rem"}/>
+  </button>
+</div>
+
               </td>
               <td className="p-3 tracking-wide text-center">
                 {form.postedForStudents ? (

@@ -66,6 +66,7 @@ function PerPersonSubmissions() {
               key={idx}
               questionObj={question}
               answer={answers[idx]}
+              
             />
           );
         })}

@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const StudentResults = () => {
   // Sample results data
@@ -9,10 +10,17 @@ const StudentResults = () => {
     { examTitle: "History Exam", results: 70, numMalfunctions: 1 },
   ];
 
+  const navigate = useNavigate();
+
+  const handleViewDetail = (examTitle) => {
+    // Navigate to ViewResults page with examTitle as a query parameter
+    navigate(`/view-results?examTitle=${encodeURIComponent(examTitle)}`);
+  };
+
   return (
     <div>
       {sampleResultsData.map((result, index) => (
-        <div key={index} style={{  marginLeft:"20px",marginRight:"20px",marginTop:"20px" }}>
+        <div key={index} style={{ marginLeft: "20px", marginRight: "20px", marginTop: "20px" }}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -24,6 +32,9 @@ const StudentResults = () => {
               <Typography variant="body1" gutterBottom>
                 Number of Malfunctions: {result.numMalfunctions}
               </Typography>
+              <Button onClick={() => handleViewDetail(result.examTitle)} variant="outlined">
+                View in Detail
+              </Button>
             </CardContent>
           </Card>
         </div>

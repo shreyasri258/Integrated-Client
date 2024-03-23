@@ -3,7 +3,7 @@ import axios from "axios";
 //import { useAuth } from "../../store/UserAuth";
 import { AdminContext } from "../../contextCalls/adminContext/AdminContext";
 import { useContext } from "react";
-
+import { toast } from 'react-toastify';
 
 const initialQuestion = {
   question: "",
@@ -186,6 +186,11 @@ export async function deleteForm(formId) {
       },
     });
 
+    if (res.status === 200) {
+      console.log("deleted")
+      toast.success('Deleted successfully');
+    }
+
     return res;
   } catch (error) {
     console.log(error);
@@ -319,7 +324,7 @@ export const getRefinedForm = (form) => {
       if (type === "") {
         return { question, type: "short-ans", options, required };
       }
-      else if(type==="multiple-choice"){
+      else if(type==="multiple-choice" || type==='check-boxes' || type ==='dropdown'){
         return { question, type, options, required, correctAnswer };
       }
       return { question, type, options, required };

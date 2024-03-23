@@ -16,6 +16,8 @@ import { setTimeExpired, getTimeExpired,incrementMalPracticeAttempts, getMalPrac
 import Warning from '../ExamChecks/Warning.wav'
 import Watermark from '../ExamChecks/Watermark.jsx';
 import { AlternateEmail } from '@mui/icons-material';
+import { toast ,ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Exam = () => {
     const { user } = useContext(StudentContext);
@@ -472,8 +474,7 @@ const Exam = () => {
     }
     
 
-    
-    
+
     
 
     // TO EMBED
@@ -495,3 +496,4 @@ const Exam = () => {
 };
 
 export default Exam;
+
