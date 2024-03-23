@@ -11,7 +11,7 @@ import { GlobalStateProvider } from "./GlobalState";
 import StudentLogin from "./User/StudentLogin";
 import AdminLogin from "./Admin/AdminLogin";
 import LoginHandler from "./GeneralFiles/LoginHandler";
-import AdminDashboard from "./Admin/AdminDashboard";
+//import AdminDashboard from "./Admin/AdminDashboard";
 import StudentDashboard from "./User/StudentDashboard";
 import Exam from "./ExamChecks/Exam";
 import Landing from "./landing/Landing";
@@ -28,6 +28,7 @@ import SendByEmail from './Admin/SendByMail';
 import ExamReport from "./Admin/ExamReport";
 import viewResultDetail from "./Admin/ViewResultDetail";
 import axios from 'axios';
+import Footer from './Admin/ui/Footer';
 
 // Axios interceptor to handle server errors
 axios.interceptors.response.use(
@@ -83,7 +84,9 @@ const App = () => {
           <Route path="/exam/:title/:duration/:url" element={<Exam />} />
           {/* Dynamic route with parameters */}
         </Routes>
+        <Footer></Footer>
       </Router>
+      
       <ToastContainer />
     </GlobalStateProvider>
   );

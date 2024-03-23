@@ -136,6 +136,7 @@ const UserDashboard = () => {
     width: 400,
     bgcolor: "background.paper",
     border: "2px solid #000",
+    borderRadius: 10,
     boxShadow: 24,
     p: 4,
   };
@@ -190,12 +191,24 @@ const UserDashboard = () => {
           aria-describedby="admin-details-description"
         >
           <Box sx={style}>
-            <Typography id="admin-details-modal" variant="h6" component="h2">
-              Admin Details
-            </Typography>
-            <Typography id="admin-details-description" sx={{ mt: 2 }}>
+            <Typography id="admin-details-modal" variant="h6" component="h2" sx={{marginLeft:12}}>
+              Examinee Details
+            </Typography >
+            <Typography id="admin-details-description" sx={{ mt: 2 ,marginLeft:7}}>
               Name: {adminDetails.name} <br />
               Email: {adminDetails.email}
+              <Box sx={{ mt: 3 ,marginLeft:7}}>
+    <Button
+      variant="contained"
+      color="error"
+      onClick={() => {
+        // Add the logout logic here
+        console.log('Logging out...');
+      }}
+    >
+      Logout
+    </Button>
+    </Box>
             </Typography>
             <IconButton
               aria-label="close"
