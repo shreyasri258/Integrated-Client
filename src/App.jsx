@@ -1,4 +1,8 @@
+import React from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import RoleSelection from "./GeneralFiles/RoleSelection";
 import LoginRegister from "./GeneralFiles/LoginRegister";
 import AdminRegister from "./Admin/AdminRegister";
@@ -22,9 +26,32 @@ import AnsForm from './Admin/AnsForm';
 import Submitted from './Admin/Submitted';
 import SendByEmail from './Admin/SendByMail';
 import ExamReport from "./Admin/ExamReport";
+import viewResultDetail from "./Admin/ViewResultDetail";
+import axios from 'axios';
 
+// Axios interceptor to handle server errors
+axios.interceptors.response.use(
+  response => response,
+  error => {
+     if (error.response.status >= 500) {
+      // Server error
+      toast.error('Server error occurred');
+    }
+    return Promise.reject(error);
+  }
+);
 
 const App = () => {
+  useEffect(() => {
+    // Global error handler
+    window.addEventListener('error', (event) => {
+      // Check if the error is a network error
+      if (event.error && event.error.message.includes('net::ERR_CONNECTION_REFUSED')) {
+        // Display a toast for the connection error
+        toast.error('Server connection refused. Please try again later.');
+      }
+    });
+  }, []);
   return (
     <GlobalStateProvider>
       <Router>
@@ -41,6 +68,7 @@ const App = () => {
           <Route path="/admin-dashboard" element={<Home/>} />
           {/* <Route path="/admin-dashboard2" element={<AdminDashboard/>} /> */}
           <Route path="/student-dashboard" element={<StudentDashboard />} />
+          <Route path="/view-results/:formId" element={<viewResultDetail />} />
           <Route path="/instructions" element={<Instructions />} />
           <Route path="/exam" element={<Exam />} />
           <Route path="/create-form" element={<NewForm />} />
@@ -51,16 +79,14 @@ const App = () => {
             <Route path="stats" element={<PerQuestionStats />} />
             <Route path="sendbymail" element={<SendByEmail />} />
             <Route path="examreport" element={<ExamReport />} />
-
           </Route>
           <Route path="/exam/:title/:duration/:url" element={<Exam />} />
-
           {/* Dynamic route with parameters */}
         </Routes>
       </Router>
+      <ToastContainer />
     </GlobalStateProvider>
   );
 };
 
 export default App;
- 

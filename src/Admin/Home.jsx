@@ -1,7 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import { useAuth } from "../store/UserAuth";
 import { getFormsList } from "../store/slices/newForm";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LoadingSpinner from "../Admin/LoadingSpinner";
 import { AiOutlineSearch } from "react-icons/ai";
 import AdminDashboard from "./AdminDashboard";
@@ -30,6 +31,7 @@ function Home() {
   
   const [formsList, setFormsList] = useState([]);
   const [displayForms, setDisplayForms] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(0);
@@ -196,6 +198,8 @@ useEffect(() => {
 
       if (response.status === 200) {
         console.log("Exam successfully marked as posted.");
+        toast.success("Admin registered successfully", { position: "top-right" });
+        setShowModal(true);
       } else {
         console.error("Failed to mark exam as posted.");
         setExamData(examData);
@@ -206,6 +210,9 @@ useEffect(() => {
     }
   };
 
+   const handleMakeForm = () => {
+    navigate("/create-form");
+  };
   const handleRemoveExam = async (index) => {
     try {
       const adminDataString = localStorage.getItem("admin");
@@ -286,20 +293,125 @@ useEffect(() => {
 
   if (formsList.length === 0) {
     return (
+     <>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          className="dashboard-tabs"
+          aria-label="tabs example"
+        >
+          <Tab
+            className="dashboard-tab"
+            
+            icon={
+              <a href="/admin-dashboard">
+                <img
+                  src={Icon}
+                  alt="Logo"
+                  className="logo-image"
+                  style={{ maxWidth: "50px", maxHeight: "50px" ,margin:"10px"}}
+                 
+                />
+              </a>
+            }
+          />
+        
+          <Tab
+            className="dashboard-tab "
+            label="Create Exam"
+            onClick={handleMakeForm}
+          />
+          <div className="search-wrapper-navbar" style={{ width: "60%" }}>
+            <div   className="search-input-wrapper">
+              {/* <span className="search-icon">
+                <AiOutlineSearch />
+              </span> */}
+              <input
+                
+                className="search-input w-full"
+                
+                placeholder="Search Exam By Title..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                />
+                <InputAdornment className="search-icon" position="start">
+                <AiOutlineSearch />
+              </InputAdornment>
+               
+              {/* <span className="search-icon">
+                <AiOutlineSearch />
+              </span> */}
+            </div>
+          </div>
+          <Button
+            onClick={handleOpenDetails}
+            variant="contained"
+            color="primary"
+            className="details-button"
+            sx={{
+              position: "absolute",
+              top: 10,
+              right: 20,
+              margin: 1,
+              borderRadius: "100%",
+              width: "60px", // Set a fixed width to maintain circular shape
+    height: "60px", // Set a fixed height to maintain circular shape
+    minWidth: "auto",
+              boxShadow: "0  4px  8px rgba(0,  0,  0,  0.2)",
+            }}
+          >
+             {adminDetails && adminDetails.name ? adminDetails.name : 'Details'}
+          </Button>
+          <Modal
+            open={open}
+            onClose={handleCloseDetails}
+            aria-labelledby="admin-details-modal"
+            aria-describedby="admin-details-description"
+          >
+            <Box sx={style}>
+              <Typography id="admin-details-modal" variant="h6" component="h2">
+                Admin Details
+              </Typography>
+              <Typography
+                id="admin-details-description"
+                className="admin-details"
+              >
+                Name: {adminDetails.name} <br />
+                Email: {adminDetails.email}
+              </Typography>
+              <IconButton
+                aria-label="close"
+                onClick={handleCloseDetails}
+                className="close-button"
+                sx={{
+                  position: "absolute",
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          </Modal>
+        </Tabs>
+
+  
+
       <div className="flex min-h-screen justify-center items-center">
         <h3 className="mb-32 text-lg text-blue-600">
           Hi, you currently don't have any forms.
         </h3>
       </div>
+      </>
     );
   }
   
-  const handleMakeForm = () => {
-    navigate("/create-form");
-  };
+ 
 
   return (
     <>
+    <ToastContainer></ToastContainer>
       <Card>
         <Tabs
           value={value}
@@ -421,6 +533,7 @@ useEffect(() => {
      
         
         ) : (
+
           <div 
           className="forms-table" 
           style={{ marginTop: "10%" }}>

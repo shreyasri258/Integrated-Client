@@ -25,28 +25,35 @@ function FormsTable({ displayForms, setDisplayForms }) {
   //const CLIENT_URL = `http://localhst:8800`//'http://localhost:8081';
   const BASE_URL = "http://localhost:8800"; // 8081
   const handlePost = async (formId) => {
-    const res = await postToStudents(formId);
-    if (res) {
-      console.log("form updated");
-      const updatedForms = displayForms.map((form) =>
-        form._id === formId ? { ...form, posted: !form.posted } : form
-      );
-      setDisplayForms(updatedForms);
-      window.location.reload(); // Reload the page
+    try {
+      const res = await postToStudents(formId);
+      if (res) {
+        console.log("form updated");
+        const updatedForms = displayForms.map((form) =>
+          form._id === formId ? { ...form, posted: !form.posted } : form
+        );
+        setDisplayForms(updatedForms);
+        window.location.reload(); // Reload the page
+      }
+    } catch (error) {
+      toast.error(`Error updating form: ${error.message}`);
     }
   };
+  
 
-  async function handleDelete(formId){
-    const res = await deleteForm(formId);
-    if (res.status === 200) {
-      // navigate("/admin-dashboard");
-      toast.success("Form deleted Successfully", { position: "top-right" });
-      const updatedForms = displayForms.map((form) =>
-        form._id === formId ? { ...form, posted: !form.posted } : form
-      );
-      setDisplayForms(updatedForms);
+  async function handleDelete(formId) {
+    try {
+      const res = await deleteForm(formId);
+      if (res.status === 200) {
+        toast.success("Form deleted successfully", { position: "top-right" });
+        const updatedForms = displayForms.filter((form) => form._id !== formId);
+        setDisplayForms(updatedForms);
+      }
+    } catch (error) {
+      toast.error(`Error deleting form: ${error.message}`);
     }
   }
+  
 
   const handleCopy = (formId) => {
     copy(`${`http://localhost:5173`}/ansForm/${formId}`);

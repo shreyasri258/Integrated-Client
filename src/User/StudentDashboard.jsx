@@ -16,6 +16,9 @@ import "../css/userDashboard.css"; // Import the stylesheet
 import { StudentContext } from "../contextCalls/studentContext/StudentContext";
 import swal from "sweetalert"; 
 
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const UserDashboard = () => {
   const [value, setValue] = useState(0);
   const [examData, setExamData] = useState([]);
@@ -56,8 +59,10 @@ const UserDashboard = () => {
       setExamData(response.data);
     } catch (error) {
       console.error("Error fetching exam data:", error.message);
+      toast.error(`Error fetching exam data: ${error.message}`);
     }
   };
+  
 
   const handleStartExamPutCall = async (exam) => {
     try {
@@ -78,11 +83,12 @@ const UserDashboard = () => {
       // Update the state with the updated exam data
       setExamData((prevData) => prevData.map((e) => (e._id === response.data._id ? response.data : e)));
       setStartedExams((prevExams) => [...prevExams, exam._id]);
-
     } catch (error) {
       console.error("Error starting exam:", error.message);
+      toast.error(`Error starting exam: ${error.message}`);
     }
   };
+  
   
 
 
@@ -140,6 +146,7 @@ const UserDashboard = () => {
   
   return (
     <Card>
+      <ToastContainer/>
       <div className="icon-container" style={{ position: 'absolute', top: 0, left: 0 }} onClick={handleIconClick}>
         <img
           src={Icon}
@@ -207,9 +214,16 @@ const UserDashboard = () => {
       </Tabs>
   
       <div className="dashboard-content">
-        {value === 0 && (
-          <div>
-            {examData.map((exam, index) => (
+      {value === 0 && (
+        <div>
+          {examData.length === 0 ? (
+            <Typography variant="body1" gutterBottom>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+              You Currently don't have any Exams
+              </div>
+            </Typography>
+          ) : (
+            examData.map((exam, index) => (
               <Card key={index} className="exam-card">
                 <Typography variant="h6" gutterBottom>
                   {exam.title}
@@ -232,13 +246,15 @@ const UserDashboard = () => {
                   </Button>
                 </div>
               </Card>
-            ))}
-          </div>
-        )}
-        {value === 1 && <StudentResults />}
-      </div>
-    </Card>
-  );
+            ))
+          )}
+        </div>
+      )}
+      {value === 1 && <StudentResults />}
+    </div>
+  </Card>
+
+);
   
 };
 export default UserDashboard;
