@@ -10,6 +10,7 @@ import { getDate } from "../utils/index";
 import axios from "axios";
 import { postToStudents } from "../../store/slices/newForm";
 import { deleteForm } from "../../store/slices/newForm";
+import { MdDeleteOutline } from "react-icons/md";
 
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -319,7 +320,7 @@ position="top-right"
               </div>
             </th> */}
             <th className="p-3 font-semibold tracking-wide text-center">
-            <span>Delete</span>
+            <span>Delete Exam</span>
             </th>
             <th className="p-3 font-semibold tracking-wide text-center">
               <div
@@ -387,14 +388,17 @@ position="top-right"
                 )}
               </td> */}
               <td className="p-3 tracking-wide text-center">
-              <div className=" flex p-2 justify-center">
-          <button
-            onClick={() => handleDelete(form._id)}
-            className="uppercase p-1.5 font-bold bg-rose-200 rounded-md tracking-wide text-base text-rose-500  hover:bg-rose-500 hover:text-white transition-all duration-300 ease-in-out"
-          >
-            Delete Form
-          </button>
-        </div>
+              <div className="flex p-2 justify-center">
+  <button
+  style={{ background: "none", color: "#0a2147" }}
+    onClick={() => handleDelete(form._id)}
+    className={`hover:ring-8 bg-red-400 rounded-full hover:transition-all duration-500 ease-in-out`}
+                
+  >
+    <MdDeleteOutline fontSize={"1.6rem"}/>
+  </button>
+</div>
+
               </td>
               <td className="p-3 tracking-wide text-center">
                 {form.postedForStudents ? (

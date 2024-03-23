@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingSpinner from "../Admin/LoadingSpinner";
 import { AiOutlineSearch } from "react-icons/ai";
-import AdminDashboard from "./AdminDashboard";
+//import AdminDashboard from "./AdminDashboard";
 import FormsTable from "../Admin/component/FormsTable";
 import Card from "@mui/material/Card";
 import Tabs from "@mui/material/Tabs";
@@ -251,6 +251,7 @@ useEffect(() => {
     width: 400,
     bgcolor: "background.paper",
     border: "2px solid #000",
+    borderRadius: 10,
     boxShadow: 24,
     p: 4,
   };
@@ -379,6 +380,17 @@ useEffect(() => {
                 Name: {adminDetails.name} <br />
                 Email: {adminDetails.email}
               </Typography>
+              <Button
+    variant="contained"
+    color="secondary"
+    onClick={() => {
+      // Add the logout logic here
+      console.log('Logging out...');
+    }}
+    sx={{ mt: 2 }}
+  >
+    Logout
+  </Button>
               <IconButton
                 aria-label="close"
                 onClick={handleCloseDetails}
@@ -482,37 +494,45 @@ useEffect(() => {
              {adminDetails && adminDetails.name ? adminDetails.name : 'Details'}
           </Button>
           <Modal
-            open={open}
-            onClose={handleCloseDetails}
-            aria-labelledby="admin-details-modal"
-            aria-describedby="admin-details-description"
-          >
-            <Box sx={style}>
-              <Typography id="admin-details-modal" variant="h6" component="h2">
-                Admin Details
-              </Typography>
-              <Typography
-                id="admin-details-description"
-                className="admin-details"
-              >
-                Name: {adminDetails.name} <br />
-                Email: {adminDetails.email}
-              </Typography>
-              <IconButton
-                aria-label="close"
-                onClick={handleCloseDetails}
-                className="close-button"
-                sx={{
-                  position: "absolute",
-                  right: 8,
-                  top: 8,
-                  color: (theme) => theme.palette.grey[500],
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-            </Box>
-          </Modal>
+          open={open}
+          onClose={handleCloseDetails}
+          aria-labelledby="admin-details-modal"
+          aria-describedby="admin-details-description"
+        >
+          <Box sx={style}>
+            <Typography id="admin-details-modal" variant="h6" component="h2" sx={{marginLeft:12}}>
+              Admin Details
+            </Typography >
+            <Typography id="admin-details-description" sx={{ mt: 2 ,marginLeft:7}}>
+              Name: {adminDetails.name} <br />
+              Email: {adminDetails.email}
+              <Box sx={{ mt: 3 ,marginLeft:7}}>
+    <Button
+      variant="contained"
+      color="error"
+      onClick={() => {
+        // Add the logout logic here
+        console.log('Logging out...');
+      }}
+    >
+      Logout
+    </Button>
+    </Box>
+            </Typography>
+            <IconButton
+              aria-label="close"
+              onClick={handleCloseDetails}
+              sx={{
+                position: "absolute",
+                right: 8,
+                top: 8,
+                color: (theme) => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        </Modal>
         </Tabs>
 
         
