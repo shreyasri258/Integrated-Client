@@ -320,14 +320,15 @@ export const getRefinedForm = (form) => {
     description: form.description,
     timeDuration:form.timeDuration,
     questions: form.questions.map((q) => {
-      const { question, type, options, required,correctAnswer  } = q;
+      const { question, type, options, required, correctAnswer  } = q;
       if (type === "") {
-        return { question, type: "short-ans", options, required };
+        let correctAnswer=""
+        return { question, type: "short-ans", options, required, correctAnswer };
       }
       else if(type==="multiple-choice" || type==='check-boxes' || type ==='dropdown'){
         return { question, type, options, required, correctAnswer };
       }
-      return { question, type, options, required };
+      return { question, type, options, required, correctAnswer };
     }),
   };
   console.log('refined-form - ', refinedForm)

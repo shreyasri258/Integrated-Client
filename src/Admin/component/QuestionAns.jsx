@@ -13,11 +13,11 @@ function QuestionAns({ questionIdx, questionObj }) {
   const hasOptions =
     type === "multiple-choice" || type === "check-boxes" || type === "dropdown";
 
-  const hasMessage = triedSubmitting && required && ans === undefined;
+  const hasMessage = triedSubmitting && required && ans === null;
 
   function handleChangedInput(e) {
     if (e.target.value === "") {
-      dispatch(setAns({ ansIdx: questionIdx, ans: undefined }));
+      dispatch(setAns({ ansIdx: questionIdx, ans: null }));
     } else {
       dispatch(setAns({ ansIdx: questionIdx, ans: e.target.value }));
     }

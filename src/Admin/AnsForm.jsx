@@ -25,6 +25,7 @@ import "../css/Exam.css"
 
 import Swal from "sweetalert2"; // Import SweetAlert
 import store from "../store/store";
+import { NullableBooleanInputClasses } from "react-admin";
 
 
 function disableHighlightAndPaste() {
@@ -188,7 +189,7 @@ function AnsForm({ embeddedFormLink, examTitle }) {
     // console.log("handleSubmit called - ",malpracticeAttempts, " ", isTimeExpired);
     let canSubmit = true;
     for (let i = 0; i < answers.length; i++) {
-      if (questions[i].required === true && answers[i] === undefined) {
+      if (questions[i].required === true && answers[i] === NullableBooleanInputClasses) {
         dispatch(setTriedSubmitting(true));
         setErrorMsg("Answer all the required questions before submitting");
         canSubmit = false;
@@ -266,6 +267,9 @@ function AnsForm({ embeddedFormLink, examTitle }) {
   }
 
   async function submitFormAndHandleResponse(malpracticeAttempts) {
+    console.log(answers)
+    alert('ans - ',JSON.stringify(answers))
+    
     const res = await submitForm(answers, formId,malpracticeAttempts);
     console.log(res);
     dispatch(setSubmit(true));

@@ -75,15 +75,31 @@ function Question({ questionObj, questionIdx }) {
       <div className="px-2 pb-3 flex justify-between flex-col">
         <div className="">
           {type === "short-ans" && (
-            <p className="text-base  underline-offset-2 text-slate-400 decoration-blue-900">
+            <><p className="text-base  underline-offset-2 text-slate-400 decoration-blue-900">
               Short answer text
-            </p>
+            </p><div className="flex items-center mt-2">
+                <p>Enter answer.</p>
+                <input
+                  type="text"
+                  className="border border-gray-400 p-1 mr-2"
+                  placeholder="Enter correct answer"
+                  value={correctAnswer || ''}
+                  onChange={handleCorrectAnswerChange} />
+              </div></>
           )}
 
           {type === "long-ans" && (
-            <p className="text-base  underline-offset-2 text-slate-400 decoration-blue-900">
-              Long answer text
-            </p>
+             <><p className="text-base  underline-offset-2 text-slate-400 decoration-blue-900">
+             Long answer text
+           </p><div className="flex items-center mt-2">
+               <p>Enter answer.</p>
+               <input
+                 type="text"
+                 className="border border-gray-400 p-1 mr-2"
+                 placeholder="Enter correct answer"
+                 value={correctAnswer || ''}
+                 onChange={handleCorrectAnswerChange} />
+             </div></>
           )}
 
           {hasOptions && (
