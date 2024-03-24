@@ -1,0 +1,44 @@
+/* Custom CSS for Footer component */
+
+footer {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    padding: 2rem 0;
+  }
+  
+  footer .container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  footer .col-md-4 {
+    flex: 0 0 calc(33.333% - 1rem);
+  }
+  
+  footer h6 {
+    margin-top: 0;
+  }
+  
+  footer .list-unstyled {
+    margin-top: 0.5rem;
+    padding-left: 0;
+  }
+  
+  footer .social-icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  footer .social-icons > span {
+    margin-bottom: 0.5rem;
+  }
+  
+  footer .social-icons > div > a {
+    margin-right: 1rem;
+  }
+  
+  footer .copyright {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
