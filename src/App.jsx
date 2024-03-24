@@ -26,7 +26,7 @@ import AnsForm from './Admin/AnsForm';
 import Submitted from './Admin/Submitted';
 import SendByEmail from './Admin/SendByMail';
 import ExamReport from "./Admin/ExamReport";
-import viewResultDetail from "./Admin/ViewResultDetail";
+import ViewResultDetail from "./Admin/ViewResultDetail";
 import axios from 'axios';
 import Footer from './Admin/ui/Footer';
 
@@ -69,7 +69,7 @@ const App = () => {
           <Route path="/admin-dashboard" element={<Home/>} />
           {/* <Route path="/admin-dashboard2" element={<AdminDashboard/>} /> */}
           <Route path="/student-dashboard" element={<StudentDashboard />} />
-          <Route path="/view-results/:formId" element={<viewResultDetail />} />
+          <Route path="/view-results" element={<ViewResultDetail />} />
           <Route path="/instructions" element={<Instructions />} />
           <Route path="/exam" element={<Exam />} />
           <Route path="/create-form" element={<NewForm />} />

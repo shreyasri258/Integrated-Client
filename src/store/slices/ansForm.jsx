@@ -28,7 +28,7 @@ const ansFormSlice = createSlice({
       const numOfQuestions = action.payload;
       const answers = [];
       for (let i = 0; i < numOfQuestions; i++) {
-        answers.push(undefined);
+        answers.push(null);
       }
       state.answers = answers;
     },

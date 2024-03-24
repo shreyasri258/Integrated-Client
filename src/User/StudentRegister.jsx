@@ -150,6 +150,7 @@ const StudentRegister = () => {
             <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
+                name="password"
                 value={inputValues.password || ""}
                 onChange={(e) => handleInputChange("password", e.target.value)}
                 

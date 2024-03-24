@@ -26,6 +26,7 @@ const UserDashboard = () => {
   const { user } = useContext(StudentContext);
   const [adminDetails, setAdminDetails] = useState({ name: "", email: "" });
   const [startedExams, setStartedExams] = useState([]);
+  const [buttonProps, setButtonProps] = useState({});
 
   const handleOpenDetails = () => {
     setAdminDetails({ name: user.user.user.name, email: user.user.user.email });
@@ -55,6 +56,14 @@ const UserDashboard = () => {
           institution: institution, // institution name as  query params
         },
       });
+      const examLocalStorage = JSON.parse(localStorage.getItem("exams")) || {};
+      const initialButtonProps = {};
+      response.data.forEach((exam) => {
+        initialButtonProps[exam._id] = examLocalStorage[exam._id]?.isStarted
+          ? { color: "error", text: "Test Started" }
+          : { color: "primary", text: "Start Test" };
+      });
+      setButtonProps(initialButtonProps);
       console.log(response.data);
       setExamData(response.data);
     } catch (error) {
@@ -67,12 +76,12 @@ const UserDashboard = () => {
   const handleStartExamPutCall = async (exam) => {
     try {
       const userDetails = user;
-      const { institution } = userDetails.user.user;
+      const { institution , id } = userDetails.user.user;
       const { token } = userDetails;
-      console.log('formId in putCall - ',exam._id, token)
+      console.log('formId in putCall - ',id, token)
       const questionFormId = exam._id
       const response = await axios.put(
-        `http://localhost:8800/exams/${questionFormId}/start`,
+        `http://localhost:8800/exams/${id}/start`,
         null,
         {
           headers: {
@@ -81,6 +90,19 @@ const UserDashboard = () => {
         }
       );
       // Update the state with the updated exam data
+      if (response.status === 200) {
+        // Update local storage with the isStarted status for this exam
+        const examLocalStorage = JSON.parse(localStorage.getItem("exams")) || {};
+        examLocalStorage[exam._id] = { isStarted: true };
+        localStorage.setItem("exams", JSON.stringify(examLocalStorage));
+
+        // Update button properties for this exam in state
+        setButtonProps((prevButtonProps) => ({
+          ...prevButtonProps,
+          [exam._id]: { color: "error", text: "Test Started" },
+        }));
+      }
+
       setExamData((prevData) => prevData.map((e) => (e._id === response.data._id ? response.data : e)));
       setStartedExams((prevExams) => [...prevExams, exam._id]);
     } catch (error) {
@@ -121,7 +143,7 @@ const UserDashboard = () => {
      
         // Remove the exam card from the dashboard
         // setExamData((prevData) => prevData.filter((e) => e !== exam));
-        window.location.reload()
+        // window.location.reload()
         
       }
     });
@@ -248,15 +270,21 @@ const UserDashboard = () => {
                   Exam Duration: {`${exam.timeDuration} minutes`}
                 </Typography>
                 <div className="button-container">
-                  <Button
-                    variant="contained"
-                    color={exam.isStarted ? "error" : "primary"} // Change color based on exam start status
-                    className="start-button"
-                    onClick={exam.isStarted ? null : () => handleStartExam(exam)}
-                    disabled={startedExams.includes(exam._id) && exam.isStarted} // Disable button if exam already started
-                  >
-                    {exam.isStarted ? "Test Started" : "Start Test"} {/* Change button text based on exam start status */}
-                  </Button>
+                <Button
+                  variant="contained"
+                  color={buttonProps[exam._id].color} // Change color based on exam start status
+                  className="start-button"
+                  onClick={() => handleStartExam(exam)}
+                  disabled={startedExams.includes(exam._id) || buttonProps[exam._id].color === 'error'} // Disable button if exam already started
+                  sx={{
+                    "&:disabled": {
+                      backgroundColor: buttonProps[exam._id].color === 'error' ? "#f44336" : "#e0e0e0", // Override disabled background color to red if color is red, otherwise grey
+                      color: buttonProps[exam._id].color === 'error' ? "#fff" : "rgba(0, 0, 0, 0.87)", // Override text color to white if color is red, otherwise default text color
+                    },
+                  }}
+                >
+                  {buttonProps[exam._id].text} {/* Change button text based on exam start status */}
+                </Button>
                 </div>
               </Card>
             ))

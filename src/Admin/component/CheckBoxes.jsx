@@ -11,7 +11,7 @@ function CheckBoxes({ options, ansIdx }) {
     if (selected.length > 0) {
       dispatch(setAns({ ansIdx, ans: selected }));
     } else {
-      dispatch(setAns({ ansIdx, ans: undefined }));
+      dispatch(setAns({ ansIdx, ans: null }));
     }
   }, [selected, ansIdx, dispatch]);
 
