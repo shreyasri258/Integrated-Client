@@ -1,20 +1,48 @@
-import React from "react";
+import React, { useState, useEffect , useContext} from "react";
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import axios for making HTTP requests
+import { StudentContext } from "../contextCalls/studentContext/StudentContext";
 
 const StudentResults = () => {
-  // Sample results data
-  const sampleResultsData = [
-    { examTitle: "Math Exam", results: 37, numMalfunctions: 0 },
-    { examTitle: "Science Exam", results: 47, numMalfunctions: 2 },
-    { examTitle: "History Exam", results: 70, numMalfunctions: 1 },
-  ];
+  const { user } = useContext(StudentContext);
+  const BASE_URL = `http://localhost:8800`; // Corrected BASE_URL format
+  const [sampleResultsData, setSampleResultsData] = useState([]); // State to hold results data
+
+  useEffect(() => {
+    // Function to fetch results data from the API
+    async function fetchResultsData() {
+      try {
+        const userDetails = user;
+      const { institution ,id } = userDetails.user.user;
+      const { token } = userDetails;
+     
+      console.log(token);
+      if (!token) {
+        console.error("No token available");
+        return;
+      }
+      const res = await axios.get(`http://localhost:8800/exams/questionforms/${id}/attempts`, {
+        headers: {
+          "x-auth-token": token, // Include the token in header
+        },
+      });
+     
+      console.log('res got - ',res.data)
+        setSampleResultsData(res.data); // Set fetched data to state
+      } catch (error) {
+        console.error("Error fetching results data:", error);
+      }
+    }
+
+    fetchResultsData(); // Call the fetchResultsData function when component mounts
+  }, []); // Empty dependency array to ensure this effect runs only once after initial render
 
   const navigate = useNavigate();
 
-  const handleViewDetail = (examTitle) => {
-    // Navigate to ViewResults page with examTitle as a query parameter
-    navigate(`/view-results?examTitle=${encodeURIComponent(examTitle)}`);
+  const handleViewDetail = (questionFormId,attemptId) => {
+    console.log('view detail clicked , ',questionFormId,attemptId);
+    navigate(`/view-results?formId=${encodeURIComponent(questionFormId)}&attemptId=${encodeURIComponent(attemptId)}`);
   };
 
   return (
@@ -27,12 +55,12 @@ const StudentResults = () => {
                 {result.examTitle}
               </Typography>
               <Typography variant="body1" gutterBottom>
-                Results: {result.results}
+                timeDuration: {result.time}
               </Typography>
               <Typography variant="body1" gutterBottom>
-                Number of Malfunctions: {result.numMalfunctions}
+                Score :  {result.score}
               </Typography>
-              <Button onClick={() => handleViewDetail(result.examTitle)} variant="outlined">
+              <Button onClick={() => handleViewDetail(result.questionFormId,result.attemptId)} variant="outlined">
                 View in Detail
               </Button>
             </CardContent>

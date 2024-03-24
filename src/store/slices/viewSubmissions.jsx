@@ -80,28 +80,46 @@ export const getQuestionIdx = (state) => state.viewSubmissions.questionIdx;
 
 export const getForm = (state) => state.viewSubmissions.form;
 
+// export const getOptionsFreq = (questionIdx) => (state) => {
+//   const question = state.viewSubmissions.form.questions[questionIdx];
+//   const numOptions = question.options.length;
+//   const freq = [];
+//   for (let i = 0; i < numOptions; i++) {
+//     freq.push(0);
+//   }
+//   if (question.type === "multiple-choice" || question.type === "dropdown") {
+//     state.viewSubmissions.form.ansForms.forEach((ansForm, idx) => {
+//       freq[ansForm[questionIdx]] += 1;
+//     });
+//   }
+
+//   if (question.type === "check-boxes") {
+//     state.viewSubmissions.form.ansForms.forEach((ansForm, idx) => {
+//       if (ansForm[questionIdx]) {
+//         ansForm[questionIdx].forEach((ans, idx) => {
+//           freq[ans] += 1;
+//         });
+//       }
+//     });
+//   }
+
+//   return freq;
+// };
 export const getOptionsFreq = (questionIdx) => (state) => {
   const question = state.viewSubmissions.form.questions[questionIdx];
   const numOptions = question.options.length;
-  const freq = [];
-  for (let i = 0; i < numOptions; i++) {
-    freq.push(0);
-  }
-  if (question.type === "multiple-choice" || question.type === "dropdown") {
-    state.viewSubmissions.form.ansForms.forEach((ansForm, idx) => {
-      freq[ansForm[questionIdx]] += 1;
-    });
-  }
+  const freq = Array(numOptions).fill(0); // Initialize frequency array
 
-  if (question.type === "check-boxes") {
-    state.viewSubmissions.form.ansForms.forEach((ansForm, idx) => {
-      if (ansForm[questionIdx]) {
-        ansForm[questionIdx].forEach((ans, idx) => {
-          freq[ans] += 1;
-        });
-      }
-    });
-  }
+  state.viewSubmissions.form.ansForms.forEach((ansForm) => {
+    const answer = ansForm[questionIdx];
+    if (Array.isArray(answer)) { // Check if the answer is an array
+      answer.forEach((ans) => {
+        freq[ans] += 1;
+      });
+    } else { // Otherwise, treat it as a single value
+      freq[answer] += 1;
+    }
+  });
 
   return freq;
 };

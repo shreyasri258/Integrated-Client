@@ -63,7 +63,7 @@ CheckBox.propTypes = {
   idx: PropTypes.number.isRequired,
   selected: PropTypes.arrayOf(PropTypes.number).isRequired,
   setSelected: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   type: PropTypes.string.isRequired,
   // answers: PropTypes.arrayOf(PropTypes.number),
 };
