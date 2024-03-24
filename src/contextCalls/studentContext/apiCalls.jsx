@@ -14,7 +14,7 @@ export const login = async (user, dispatch,navigate) => {
     navigate("/student-dashboard");
   } catch (err) {
     
-      if(err.response.status === 400){
+      if(err.status === 400){
         toast.error("Invalid Credentials!");
       }
       else
