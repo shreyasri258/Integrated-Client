@@ -11,9 +11,12 @@ import infinite from "../assets/infinite.svg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import Button from "@mui/material/Button";
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
+  const navigate = useNavigate();
   const settings = {
     dots: true,
     infinite: true,
@@ -33,6 +36,9 @@ const Landing = () => {
     ],
   };
 
+  const handleClick=()=>{
+    navigate("/role-selection");
+  }
   return (
     <React.Fragment>
       <Navbar />
@@ -49,6 +55,11 @@ const Landing = () => {
           <p className="desc">
             A straightforward framework built for online proctoring to create
             online tests within minutes, <i>effortlessly</i>.
+            <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={handleClick}
+            style={{marginTop:"60px"}}>Get Started<KeyboardDoubleArrowRightIcon /></Button>
           </p>
         </div>
 
@@ -61,19 +72,6 @@ const Landing = () => {
           </div>
 
           <div className="carousel-container">
-            {/* <Slider {...settings}>
-              {[
-                Devtool,
-                FaceVerification,
-                FullScreen,
-                MultipleFaces,
-                MultipleTabs,
-              ].map((image, index) => (
-                <div key={index} className="single-feature">
-                  <img src={image} alt={`Feature ${index}`} />
-                </div>
-              ))}
-            </Slider> */}
             <Slider {...settings}>
               {[
                 { image: Devtool, text: "Devtools Check" },
@@ -96,7 +94,7 @@ const Landing = () => {
             <div className="left-text">
               <h3 className="gradient-text">Effortlessly integrates with</h3>
               <h1 className="title-heading">
-                Google Forms or Microsoft Surveys
+                Creates Customized Exams
               </h1>
             </div>
             <div className="infinite">

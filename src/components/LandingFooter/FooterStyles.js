@@ -4,8 +4,11 @@ export const Box = styled.div`
     padding: 5% 2.5%;
     background: #f0f0f0; /* Change background color to light color */
     bottom: 0;
-    width: 100%;
- 
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
     @media (max-width: 1000px) {
         // padding: 70px 30px;
     }
