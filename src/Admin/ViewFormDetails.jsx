@@ -180,7 +180,7 @@ return (
 </div>
 
 
-        <div className="flex items-center p-2 justify-between ">
+        {/* <div className="flex items-center p-2 justify-between ">
           {acceptingStatus ? (
             <Badge type={"accept"}>accepting</Badge>
           ) : (
@@ -192,7 +192,7 @@ return (
             startState={acceptingStatus.toString()}
             setStatus={setAcceptingStatus}
           />
-        </div>
+        </div> */}
 
         <div className=" flex p-2 justify-center">
           <button

@@ -288,7 +288,10 @@ const UserDashboard = () => {
                 </div>
               </Card>
             ))
-          )}
+          )
+         
+           }
+            <hr className="my-5 " />
         </div>
       )}
       {value === 1 && <StudentResults />}

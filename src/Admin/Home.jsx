@@ -565,7 +565,9 @@ useEffect(() => {
             />
           </div>
           </div>
+              
         )}
+        <hr className="my-5 " />
       </div>
     </>
   );
