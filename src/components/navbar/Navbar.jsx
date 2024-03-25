@@ -10,16 +10,16 @@ import BookIcon from '@mui/icons-material/Book';
 const NavLinks = () => (
 	<React.Fragment>
 		<p>
-			<a href="/"><BookIcon />Blog
+			<a href="/" className="nav-link"><BookIcon />Blog
 			</a>
 		</p>
 		<p>
-			<a href="/"><ShoppingCartCheckoutIcon />Product
+			<a href="/" className="nav-link"><ShoppingCartCheckoutIcon />Product
 			</a>
 
 		</p>
 		<p>
-		<Link to="/role-selection"><LoginIcon />Login </Link>
+		<Link to="/role-selection" className="nav-link"><LoginIcon />Get Started </Link>
 		</p>
 	
 		

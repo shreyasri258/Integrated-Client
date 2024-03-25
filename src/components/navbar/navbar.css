@@ -18,7 +18,15 @@
 	display: flex;
 	font-weight: 500;
 	font-size: 1.1rem;
-	margin: 0 12rem;
+	margin: 0 10rem;
+}
+
+.landing-navbar .landing-navbar-links .nav-link {
+	color: var(--color-navlinks);
+	transition: 0.2s all ease;
+	display: flex; /* Added to ensure icon and text are on the same line */
+	align-items: center; /* Added to vertically center icon and text */
+	gap: 0.6rem; /* Adjust the space between icon and text */
 }
 
 .landing-navbar .landing-navbar-links p {
