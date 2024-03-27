@@ -45,16 +45,16 @@ function PerPersonSubmissions() {
 
   return (
     <div className=" flex flex-col justify-center items-center relative pb-32">
-      <div className="w-3/4">
+      <div className="w-max">
         <p
-          className="h-10  text-lg  font-semibold mt-5"
+          className="h-10  text-lg  font-semibold mt-5 text-blue-700 text-center"
           style={{ border: "2px solid transparent" }}
         >
           {title}
         </p>
         {description && (
           <p
-            className="h-6 text-base mb-10"
+            className="h-6 text-base mb-10 text-center text-blue-500"
             style={{ border: "2px solid transparent" }}
           >
             {description}

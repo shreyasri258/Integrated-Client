@@ -39,16 +39,18 @@ function Question({ questionObj, questionIdx }) {
     >
       <div className="p-2 flex flex-row justify-between">
         {isQuestionActive ? (
-          <input
-            className="h-9 w-3/4 text-base focus:outline-none focus:border-b-2 border-blue-700 "
-            placeholder="Please Enter Question"
-            value={question}
-            onChange={(e) => {
-              dispatch(
-                updateQuestion({ questionIdx, question: e.target.value })
-              );
-            }}
-          />
+         <input
+         className={`h-9 w-3/4 text-base focus:outline-none focus:border-b-2 border-blue-700 ${
+           !question && isQuestionActive ? 'border-red-500 !important' : ''
+         }`}
+         placeholder="Please Enter Question"
+         value={question}
+         onChange={(e) => {
+           dispatch(updateQuestion({ questionIdx, question: e.target.value }));
+         }}
+       />
+       
+        
         ) : (
           <p className="text-base border-blue">
             {question || (
@@ -78,10 +80,10 @@ function Question({ questionObj, questionIdx }) {
             <><p className="text-base  underline-offset-2 text-slate-400 decoration-blue-900">
               Short answer text
             </p><div className="flex items-center mt-2">
-                <p>Enter answer.</p>
+                {/* <p>Enter answer.</p> */}
                 <input
                   type="text"
-                  className="border border-gray-400 p-1 mr-2"
+                  className="border border-gray-400 p-1 mr-2 w-3/5"
                   placeholder="Enter correct answer"
                   value={correctAnswer || ''}
                   onChange={handleCorrectAnswerChange} />
@@ -92,10 +94,10 @@ function Question({ questionObj, questionIdx }) {
              <><p className="text-base  underline-offset-2 text-slate-400 decoration-blue-900">
              Long answer text
            </p><div className="flex items-center mt-2">
-               <p>Enter answer.</p>
+               {/* <p>Enter answer.</p> */}
                <input
                  type="text"
-                 className="border border-gray-400 p-1 mr-2"
+                 className="border border-gray-400 p-1 mr-2 w-4/5"
                  placeholder="Enter correct answer"
                  value={correctAnswer || ''}
                  onChange={handleCorrectAnswerChange} />
@@ -107,14 +109,10 @@ function Question({ questionObj, questionIdx }) {
               <Options type={type} options={options} questionIdx={questionIdx} />
               {isQuestionActive && (
                 <div className="flex items-center mt-2">
-                  {type === "check-boxes" ? (
-                    <p>Enter comma seperated values for each option</p>
-                  ):(
-                    <p>Enter one value per line.</p>
-                  )}
+                 
                   <input
                     type="text"
-                    className="border border-gray-400 p-1 mr-2"
+                    className="border border-gray-400 p-1 mr-2 w-3/5 ml-6"
                     placeholder="Enter correct answer"
                     value={correctAnswer || ''}
                     onChange={handleCorrectAnswerChange}

@@ -155,12 +155,11 @@ const Instructions = () => {
   return (
     <StyledBox>
       <StyledTitle variant="h4">Instructions for the Exam</StyledTitle>
-      <Typography variant="body1">Current OS: {currentOS}</Typography>
+      
       
       <StyledList>
         <StyledListItem>Ensure that you are in a quiet and well-lit room for the duration of the exam.</StyledListItem>
-        {/* Add more instructions here */}
-        {/* Add more instructions here */}
+
         <StyledListItem>Make sure your webcam is positioned to capture your face and surroundings clearly throughout the exam.</StyledListItem>
         <StyledListItem>Close all unnecessary applications, browser tabs, and windows on your computer before starting the exam.</StyledListItem>
         <StyledListItem>Keep your government-issued photo ID ready for identity verification.</StyledListItem>
@@ -187,7 +186,9 @@ const Instructions = () => {
       >
         Start Exam
       </StyledButton>
+
     </StyledBox>
+    
   );
 };
 

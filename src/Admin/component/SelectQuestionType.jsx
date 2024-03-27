@@ -12,7 +12,7 @@ function SelectQuestionType({
   return (
     <div className="relative">
       <button
-        className="bg-blue-700 text-white p-1.5 w-52 rounded-md hover:bg-blue-600"
+        className="bg-blue-700 text-white ml-4 p-1.5 w-48 rounded-md hover:bg-blue-600"
         onClick={() => setIsSelectOpen(!isSelectOpen)}
       >
         {type ? (

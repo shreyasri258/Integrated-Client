@@ -1,18 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom'; 
 import './../../components/navbar/navbar.css';
 import Name from '../../images/Proctorpal.png'
+import LoginIcon from '@mui/icons-material/Login';
+import { IconButton } from '@mui/material';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import BookIcon from '@mui/icons-material/Book';
 
 const NavLinks = () => (
 	<React.Fragment>
 		<p>
-			<a href="/">Blog</a>
+			<a href="/" className="nav-link"><BookIcon />Blog
+			</a>
 		</p>
 		<p>
-			<a href="/">Product</a>
+			<a href="/" className="nav-link"><ShoppingCartCheckoutIcon />Product
+			</a>
+
 		</p>
 		<p>
-		<Link to="/role-selection">Login</Link> {/* Replace <a> with <Link> */}
+		<Link to="/role-selection" className="nav-link"><LoginIcon />Get Started </Link>
 		</p>
 	
 		
