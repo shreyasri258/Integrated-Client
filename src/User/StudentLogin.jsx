@@ -58,7 +58,7 @@ const StudentLogin = () => {
       <div className="logo" style={{ marginBottom: '20px' }}>
         <img src={Icon} alt="proctorpal-logo" />
       </div>
-      <div className="login-form" style={{ border: '1px solid #ccc', borderRadius: '14px', padding: '20px', boxShadow: '0 0 20px rgba(0, 0, 0, 0.2)' }}>
+      <div className="login-form  shadow-md" style={{ border: '1px solid #ccc', borderRadius: '14px', padding: '20px', boxShadow: '0 0 20px rgba(0, 0, 0, 0.2)' }}>
         <h1 className="title-heading" style={{ textAlign: 'center', marginBottom: '20px' }}>Examinee Login</h1>
         <form onSubmit={handleLogin}>
           <div className="input-fields" style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
