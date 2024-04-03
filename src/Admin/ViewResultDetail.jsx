@@ -56,7 +56,8 @@ function ViewResultDetail() {
         </p>
         {questions.map((question, idx) => {
           const attemptedAnswer = report.questions.find(ans => ans.question === question.question)?.attemptedAnswer;
-          const isCorrect = attemptedAnswer === question.correctAnswer;
+          const isCorrect = attemptedAnswer?.replace(/[\s,]/g, "") === question.correctAnswer?.replace(/[\s,]/g, "");
+        
           const highlightColor = isCorrect ? "bg-green-200" : "bg-red-200";
           return (
             <div key={idx} className="p-4 mb-4 border-2">
@@ -68,7 +69,8 @@ function ViewResultDetail() {
               ))}
               <div className={`p-2 m-2 ${highlightColor}`}>
                 <p style={{ fontWeight: "bold", color: "#1E40AF" }}>Your Answer: </p>
-                <p style={{ color: "#1E40AF" }}>{attemptedAnswer}</p>
+                <p style={{ color: "#1E40AF" }}>{attemptedAnswer?.replace(/\s/g, '')}</p>
+
               </div>
               <div className={`p-2 m-2 ${highlightColor}`}>
                 <p style={{ fontWeight: "bold", color: "#1E40AF" }}>Correct Answer: </p>
