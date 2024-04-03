@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from 'react-toastify';
-import { loginFailure, loginStart, loginSuccess } from "./StudentActions";
+import { loginFailure, loginStart, loginSuccess, userLogout } from "./StudentActions";
 
 export const login = async (user, dispatch,navigate) => {
   dispatch(loginStart());
@@ -25,3 +25,10 @@ export const login = async (user, dispatch,navigate) => {
     dispatch(loginFailure());
   }
 };
+
+export const logout = (dispatch, navigate) => {
+  localStorage.removeItem("user"); 
+  dispatch(userLogout()); 
+  navigate("/"); 
+};
+

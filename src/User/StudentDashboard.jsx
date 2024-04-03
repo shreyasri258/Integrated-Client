@@ -15,18 +15,20 @@ import StudentResults from "./StudentResults"; // Import the ResultsTab componen
 import "../css/userDashboard.css"; // Import the stylesheet
 import { StudentContext } from "../contextCalls/studentContext/StudentContext";
 import swal from "sweetalert"; 
-
+import {logout} from "../contextCalls/studentContext/apiCalls"
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 const UserDashboard = () => {
   const [value, setValue] = useState(0);
   const [examData, setExamData] = useState([]);
   const [open, setOpen] = useState(false);
-  const { user } = useContext(StudentContext);
+  const { user , dispatch } = useContext(StudentContext);
   const [adminDetails, setAdminDetails] = useState({ name: "", email: "" });
   const [startedExams, setStartedExams] = useState([]);
   const [buttonProps, setButtonProps] = useState({});
+  const navigate = useNavigate()
 
   const handleOpenDetails = () => {
     setAdminDetails({ name: user.user.user.name, email: user.user.user.email });
@@ -36,6 +38,10 @@ const UserDashboard = () => {
   const handleCloseDetails = () => {
     setOpen(false);
   };
+
+  const handleLogout = ()=>{
+    logout(dispatch, navigate);
+  }
 
   // Retrieve exam data from local storage on component mount
   const fetchExamData = async () => {
@@ -220,17 +226,14 @@ const UserDashboard = () => {
               Name: {adminDetails.name} <br />
               Email: {adminDetails.email}
               <Box sx={{ mt: 3 ,marginLeft:7}}>
-    <Button
-      variant="contained"
-      color="error"
-      onClick={() => {
-        // Add the logout logic here
-        console.log('Logging out...');
-      }}
-    >
-      Logout
-    </Button>
-    </Box>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+              </Box>
             </Typography>
             <IconButton
               aria-label="close"

@@ -24,6 +24,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import '../css/userDashboard.css';
 import InputAdornment from "@mui/material/InputAdornment";
 import { useNavigate } from "react-router-dom";
+import {logout} from "../contextCalls/adminContext/apiCalls"
 // import { AdminContext } from "../contextCalls/adminContext/AdminContext"; // Import 
 
 function Home() {
@@ -38,7 +39,7 @@ function Home() {
   const [showCreateExamPopup, setShowCreateExamPopup] = useState(false);
   const [examData, setExamData] = useState([]);
   const [open, setOpen] = useState(false);
-  const { admin } = useContext(AdminContext);
+  const { admin, dispatch } = useContext(AdminContext);
   const [adminDetails, setAdminDetails] = useState({ name: "", email: "" });
   const navigate = useNavigate(); 
 
@@ -52,7 +53,9 @@ function Home() {
   const handleCloseDetails = () => {
     setOpen(false);
   };
-
+  const handleLogout = ()=>{
+    logout(dispatch, navigate);
+  }
   // useEffect(() => {
   //   fetchExamData();
   // }, []);
@@ -381,16 +384,13 @@ useEffect(() => {
                 Email: {adminDetails.email}
               </Typography>
               <Button
-    variant="contained"
-    color="secondary"
-    onClick={() => {
-      // Add the logout logic here
-      console.log('Logging out...');
-    }}
-    sx={{ mt: 2 }}
-  >
-    Logout
-  </Button>
+                variant="contained"
+                color="secondary"
+                onClick={handleLogout}
+                sx={{ mt: 2 }}
+              >
+                Logout
+              </Button>
               <IconButton
                 aria-label="close"
                 onClick={handleCloseDetails}
@@ -507,17 +507,14 @@ useEffect(() => {
               Name: {adminDetails.name} <br />
               Email: {adminDetails.email}
               <Box sx={{ mt: 3 ,marginLeft:7}}>
-    <Button
-      variant="contained"
-      color="error"
-      onClick={() => {
-        // Add the logout logic here
-        console.log('Logging out...');
-      }}
-    >
-      Logout
-    </Button>
-    </Box>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+                </Box>
             </Typography>
             <IconButton
               aria-label="close"
