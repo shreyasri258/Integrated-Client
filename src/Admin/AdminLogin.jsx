@@ -36,6 +36,11 @@ const TeacherLogin = () => {
       console.log(err);
     }
   };
+  const handleButtonHover = () => {
+    if (!isFormValid()) {
+      toast.error("Please fill in both email and password fields");
+    }
+  };
   
   const isFormValid = () => {
     return inputValues.email && inputValues.email.trim() !== "" &&
@@ -44,15 +49,15 @@ const TeacherLogin = () => {
   };
 
   return (
-    <div className="user-login flex flex-col items-center justify-center h-screen">
+    <div className="user-login" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
       <ToastContainer />
-      <div className="logo mb-20">
+      <div className="logo" style={{ marginBottom: '20px' }}>
         <img src={Icon} alt="proctorpal-logo" />
       </div>
-      <div className="login-form border border-gray-300 rounded-lg p-5 shadow-md">
-        <h1 className="title-heading text-center mb-5">Examiner Login</h1>
+      <div className="login-form  shadow-md" style={{ border: '1px solid #ccc', borderRadius: '14px', padding: '20px', boxShadow: '0 0 20px rgba(0, 0, 0, 0.2)' }}>
+      <h1 className="title-heading" style={{ textAlign: 'center', marginBottom: '20px' }}>Examiner Login</h1>
         <form onSubmit={handleLogin}>
-          <div className="input-fields flex flex-col mb-5 relative">
+        <div className="input-fields" style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
           <input
   type="email"
   placeholder="Email"
@@ -79,7 +84,7 @@ const TeacherLogin = () => {
                 type="button"
                 onClick={togglePasswordVisibility}
                 onMouseDown={(e) => e.preventDefault()}
-                className="absolute right-2 top-2 cursor-pointer bg-transparent border-none text-black"
+                className="absolute right-2 top-2 cursor-pointer bg-transparent border-none text-black rounded"
             
                >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -87,8 +92,8 @@ const TeacherLogin = () => {
             </div>
            
 
-            <button type="submit" disabled={!isFormValid()} className="w-full bg-blue-500 text-white py-2 rounded-md">Login</button>
-          </div>
+            <button type="submit" disabled={!isFormValid()} style={{ width: '100%' }} onMouseEnter={handleButtonHover}>Login</button>
+       </div>
         </form>
       </div>
     </div>
