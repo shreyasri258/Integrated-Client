@@ -131,9 +131,9 @@ function AnsForm({ embeddedFormLink, examTitle }) {
       if (event.ctrlKey && event.key === "c") {
         event.preventDefault(); // Disable copying (Ctrl+C)
       }
-      // if (event.ctrlKey && event.shiftKey && event.key === "I") {
-      //   event.preventDefault(); // Disable opening the dialog box
-      // }
+      if (event.ctrlKey && event.shiftKey && event.key === "I") {
+        event.preventDefault(); // Disable opening the dialog box
+      }
     };
 
     document.addEventListener("keydown", handleKeyDown);
@@ -268,7 +268,7 @@ function AnsForm({ embeddedFormLink, examTitle }) {
 
   async function submitFormAndHandleResponse(malpracticeAttempts) {
     console.log(answers)
-    alert('ans - ',JSON.stringify(answers))
+    // alert('ans - ',JSON.stringify(answers))
     
     const res = await submitForm(answers, formId,malpracticeAttempts);
     console.log(res);

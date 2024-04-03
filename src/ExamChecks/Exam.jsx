@@ -102,7 +102,7 @@ const Exam = () => {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         dispatch(incrementMalPracticeAttempts());
-                        alert(`MalPract after update - ${malpracticeAttempts}`)
+                        // alert(`MalPract after update - ${malpracticeAttempts}`)
                         handleFullscreen();
                     }
                 });
@@ -127,7 +127,7 @@ const Exam = () => {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         dispatch(incrementMalPracticeAttempts());
-                        alert(`MalPract after update - ${malpracticeAttempts}`)
+                        // alert(`MalPract after update - ${malpracticeAttempts}`)
                         handleFullscreen();
                     }
                 });
@@ -192,7 +192,7 @@ const Exam = () => {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         dispatch(incrementMalPracticeAttempts());
-                        alert(`MalPract after update - ${malpracticeAttempts}`)
+                        // alert(`MalPract after update - ${malpracticeAttempts}`)
                         handleFullscreen();
                     }
                 });
@@ -329,7 +329,7 @@ const Exam = () => {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         dispatch(incrementMalPracticeAttempts());
-                        alert(`MalPract after update - ${malpracticeAttempts}`)
+                        // alert(`MalPract after update - ${malpracticeAttempts}`)
                        
                     }
                 });
@@ -369,7 +369,7 @@ const Exam = () => {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         dispatch(incrementMalPracticeAttempts());
-                        alert(`MalPract after update - ${malpracticeAttempts}`)
+                        // alert(`MalPract after update - ${malpracticeAttempts}`)
                         
                     }
                 });
@@ -405,7 +405,7 @@ const Exam = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     dispatch(incrementMalPracticeAttempts());
-                    alert(`MalPract after update - ${malpracticeAttempts}`)
+                    // alert(`MalPract after update - ${malpracticeAttempts}`)
                     
                 }
             });
@@ -451,7 +451,7 @@ const Exam = () => {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         dispatch(incrementMalPracticeAttempts());
-                        alert(`MalPract after update - ${malpracticeAttempts}`)
+                        // alert(`MalPract after update - ${malpracticeAttempts}`)
                         handleFullscreen();
                     }
                 });

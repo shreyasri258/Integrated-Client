@@ -29,6 +29,8 @@ import ExamReport from "./Admin/ExamReport";
 import ViewResultDetail from "./Admin/ViewResultDetail";
 import axios from 'axios';
 import Footer from './Admin/ui/Footer';
+import UserAuthorize from './Routes/UserAuthorize';
+import AdminAuthorize from './Routes/AdminAuthorize';
 
 // Axios interceptor to handle server errors
 axios.interceptors.response.use(
@@ -66,9 +68,9 @@ const App = () => {
           <Route path="/login" element={<LoginHandler />} />
           <Route path="/student-login" element={<StudentLogin />} />
           <Route path="/teacher-login" element={<AdminLogin />} />
-          <Route path="/admin-dashboard" element={<Home/>} />
+          <Route path="/admin-dashboard" element={<AdminAuthorize><Home/></AdminAuthorize>} />
           {/* <Route path="/admin-dashboard2" element={<AdminDashboard/>} /> */}
-          <Route path="/student-dashboard" element={<StudentDashboard />} />
+          <Route path="/student-dashboard" element={<UserAuthorize><StudentDashboard /></UserAuthorize>} />
           <Route path="/view-results" element={<ViewResultDetail />} />
           <Route path="/instructions" element={<Instructions />} />
           <Route path="/exam" element={<Exam />} />
