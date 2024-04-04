@@ -10,7 +10,7 @@ import BookIcon from '@mui/icons-material/Book';
 const NavLinks = () => (
 	<React.Fragment>
 		<p>
-			<a href="/" className="nav-link"><BookIcon />Blog
+			<a href="https://github.com/shreyasri258/Integrated-Client" className="nav-link"><BookIcon />Blog
 			</a>
 		</p>
 		<p>
