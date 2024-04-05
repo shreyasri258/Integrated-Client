@@ -98,11 +98,15 @@ const StudentRegister = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target); // Pass the event target directly to FormData constructor
-    const data = {};
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
+    // console.log(e.target.value)
+    // const formData = new FormData(e.target); // Pass the event target directly to FormData constructor
+    // console.log(formData)
+    console.log(inputValues)
+    const data = inputValues;
+    // inputValues.forEach((value, key) => {
+    //   data[key] = value;
+    // });
+    console.log('data - ',data)
     try {
       let res=await axios.post("http://localhost:8800/Server/user/register", data);
       
@@ -141,7 +145,7 @@ const StudentRegister = () => {
       </div>
       <div className="register-form" style={{ border: '1px solid #ccc', borderRadius: '14px', padding: '20px', boxShadow: '0 0 20px rgba(0, 0, 0, 0.2)' }}>
         <h1 className="title-heading" style={{ textAlign: 'center', marginBottom: '20px' }}>Examinee Register</h1>
-        <form onSubmit={handleRegister}>
+        <form >
         <div className="input-fields" style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
             <input type="text" name="username" placeholder="User Name" onChange={(e) => handleInputChange('username', e.target.value)} />
             <input type="text" name="institutionName" placeholder="Institution Name" onChange={(e) => handleInputChange('institutionName', e.target.value)} />
@@ -175,9 +179,9 @@ const StudentRegister = () => {
         {capturedImage && <img src={capturedImage} alt="captured" />}
         <video ref={videoRef} autoPlay playsInline style={{ display: 'none' }} />
         <canvas ref={canvasRef} style={{ display: 'none' }} />
-        <button onClick={startCamera}>Start Camera</button>
-        <button onClick={handleCapture}>Capture Image</button>
-        <button type="submit"  disabled={numPeopleDetected !== 1}>
+        <button type="button" onClick={startCamera}>Start Camera</button>
+        <button type="button" onClick={handleCapture}>Capture Image</button>
+        <button type="button" onClick={handleRegister}  disabled={numPeopleDetected !== 1}>
           Register
         </button>
         </form>
