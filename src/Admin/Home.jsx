@@ -544,7 +544,7 @@ useEffect(() => {
         {displayForms.length === 0 ? (
        <div className="flex justify-center items-center h-screen">
        <div className="no-results">
-         <p className="no-results-text" >No Exam With Such Title </p>
+         <p className="no-results-text" >No Exams Created </p>
        </div>
      </div>
      
