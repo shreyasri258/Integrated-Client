@@ -127,10 +127,10 @@ function Question({ questionObj, questionIdx }) {
       <div className="flex justify-end">
         {isQuestionActive && (
           <div className="flex gap-2">
-            <div className="flex items-center p-6 gap-4 ">
-              <span className="text-base text-slate-400">Required</span>
+            {/* <div className="flex items-center p-6 gap-4 ">
+               <span className="text-base text-slate-400">Required</span>
               <Switch questionIdx={questionIdx} startState={required} type="toggleRequired" />
-            </div>
+            </div>  */}
 
             <div className="flex items-center">
               <button
