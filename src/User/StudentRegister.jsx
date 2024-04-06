@@ -107,11 +107,11 @@ const StudentRegister = () => {
       let res=await axios.post("http://localhost:8800/Server/user/register", data);
       
       if (res.status === 201) {
-        toast.success("Admin registered successfully", { position: "top-right" });
+        toast.success("Student registered successfully", { position: "top-right" });
         setShowModal(true);}
     } catch (error) {
       if (error.response.status === 400) {
-        toast.error("Admin is already registered");
+        toast.error("Student is already registered");
       } 
      else if (error.response.status === 403) {
         toast.error("Socket Error");
