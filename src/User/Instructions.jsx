@@ -93,7 +93,6 @@ const Instructions = () => {
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
   };
-
   const handleStartExam = () => {
     // Your start exam logic here
     const url = `/exam?title=${encodeURIComponent(examTitle)}&duration=${encodeURIComponent(examDuration)}&url=${encodeURIComponent(googleFormLink)}`;
@@ -111,14 +110,17 @@ const Instructions = () => {
       // Listen for the beforeunload event to detect when the new window is closed
       newWindow.onbeforeunload = () => {
         enableWindowOpen();
-
+  
         // Close the main application window so that it can be re-opened by the user
         disableMainWindow();
       }
-
+  
       // Disable the button after the exam has started
       setExamStarted(true);
-
+  
+      // Disable the button and persist the disabled state
+      localStorage.setItem('examStarted', true);
+  
       // Show a SweetAlert
       Swal.fire({
         title: 'Exam Started',
@@ -130,6 +132,26 @@ const Instructions = () => {
       alert('Please disable your pop-up blocker to start the exam.');
     }
   };
+  
+  // Check if the exam has already started and disable the button if so
+  useEffect(() => {
+    const isExamStarted = localStorage.getItem('examStarted');
+    if (isExamStarted === 'true') {
+      setExamStarted(true);
+      // Show a SweetAlert indicating that the exam has already started
+      Swal.fire({
+        title: 'Exam Already Started',
+        text: 'You cannot start the exam again.',
+        icon: 'info',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        showCancelButton: false,
+      });
+    }
+  }, []);
+  
+  
+  
   
   const disableWindowOpen = () => {
     window.open = () => null;
