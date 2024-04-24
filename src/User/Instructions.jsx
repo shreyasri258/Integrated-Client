@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 import Swal from 'sweetalert2'; // Import SweetAlert as Swal
-
 const StyledBox = styled(Box)(({ theme }) => ({
   maxWidth: 800,
   margin: 'auto',
@@ -17,24 +16,19 @@ const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   textAlign: 'left',
 }));
-
 const StyledTitle = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(4),
 }));
-
 const StyledList = styled('ul')(({ theme }) => ({
   paddingLeft: theme.spacing(4),
   marginBottom: theme.spacing(4),
 }));
-
 const StyledListItem = styled('li')(({ theme }) => ({
   marginBottom: theme.spacing(1),
 }));
-
 const StyledButton = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(4),
 }));
-
 const Instructions = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -49,7 +43,6 @@ const Instructions = () => {
   const [isBluetoothEnabled, setIsBluetoothEnabled] = useState(true); // Assume Bluetooth is enabled initially
   const [connectedDeviceName, setConnectedDeviceName] = useState('');
   const [examStarted, setExamStarted] = useState(false); // State to track if the exam has started
-
   useEffect(() => {
     // Check for video and audio permissions here
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -61,10 +54,8 @@ const Instructions = () => {
         setIsVideoPermissionGranted(false);
         setIsAudioPermissionGranted(false);
       });
-
     // Get current OS
     setCurrentOS(navigator.platform);
-
     // Check Bluetooth status periodically
     const intervalId = setInterval(() => {
       navigator.bluetooth.getAvailability()
@@ -75,24 +66,21 @@ const Instructions = () => {
           console.error('Bluetooth check error:', error);
         });
     }, 5000); // Check every 5 seconds
-
     // Listen for device connection
     navigator.bluetooth.addEventListener('deviceconnected', (event) => {
       const device = event.device;
       setConnectedDeviceName(device.name);
     });
-
     return () => {
       clearInterval(intervalId);
       enableMainWindow();
-
     };
     
   }, []);
-
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
   };
+
   const handleStartExam = () => {
     // Your start exam logic here
     const url = `/exam?title=${encodeURIComponent(examTitle)}&duration=${encodeURIComponent(examDuration)}&url=${encodeURIComponent(googleFormLink)}`;
@@ -110,17 +98,14 @@ const Instructions = () => {
       // Listen for the beforeunload event to detect when the new window is closed
       newWindow.onbeforeunload = () => {
         enableWindowOpen();
-  
+
         // Close the main application window so that it can be re-opened by the user
         disableMainWindow();
       }
-  
+
       // Disable the button after the exam has started
       setExamStarted(true);
-  
-      // Disable the button and persist the disabled state
-      localStorage.setItem('examStarted', true);
-  
+
       // Show a SweetAlert
       Swal.fire({
         title: 'Exam Started',
@@ -132,48 +117,22 @@ const Instructions = () => {
       alert('Please disable your pop-up blocker to start the exam.');
     }
   };
-  
-  // Check if the exam has already started and disable the button if so
-  useEffect(() => {
-    const isExamStarted = localStorage.getItem('examStarted');
-    if (isExamStarted === 'true') {
-      setExamStarted(true);
-      // Show a SweetAlert indicating that the exam has already started
-      Swal.fire({
-        title: 'Exam Already Started',
-        text: 'You cannot start the exam again.',
-        icon: 'info',
-        allowOutsideClick: false,
-        showConfirmButton: false,
-        showCancelButton: false,
-      });
-    }
-  }, []);
-  
-  
-  
-  
+
   const disableWindowOpen = () => {
     window.open = () => null;
   };
-
   const enableWindowOpen = () => {
     window.open = windowOpenBackup;
   };
-
   const windowOpenBackup = window.open;
-
   const disableMainWindow = () => {
     window.blur();
       //window.disabled = true;
   };
-
   const enableMainWindow = () => {
     window.focus();
-
       window.disabled = false;
   };
-
   return (
     <StyledBox>
       <StyledTitle variant="h4">Instructions for the Exam</StyledTitle>
@@ -181,7 +140,6 @@ const Instructions = () => {
       
       <StyledList>
         <StyledListItem>Ensure that you are in a quiet and well-lit room for the duration of the exam.</StyledListItem>
-
         <StyledListItem>Make sure your webcam is positioned to capture your face and surroundings clearly throughout the exam.</StyledListItem>
         <StyledListItem>Close all unnecessary applications, browser tabs, and windows on your computer before starting the exam.</StyledListItem>
         <StyledListItem>Keep your government-issued photo ID ready for identity verification.</StyledListItem>
@@ -208,10 +166,8 @@ const Instructions = () => {
       >
         Start Exam
       </StyledButton>
-
     </StyledBox>
     
   );
 };
-
 export default Instructions;
